@@ -6,6 +6,7 @@
     <title>{% block title %}Web-{% endblock %}</title>
     <script src="/bundles/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
     {% endblock %}
     {% block bootstrap %}
         <link rel="stylesheet" type="text/css" href="/bundles/bootstrap-4.0.0/css/bootstrap.min.css">
@@ -27,7 +28,7 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{path('web_about_us')}}">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -35,8 +36,9 @@
                         Account
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Change Password</a>
+                        <a class="dropdown-item" href="{{path('web_signup')}}">Create Account</a>
                         <a class="dropdown-item" href="#">Change Profile</a>
+                        <a class="dropdown-item" href="#">Change Password</a>
                         <div class="dropdown-divider"></div>
                         {% if app.user %}
                             <a class="dropdown-item" href="#">Logout</a>

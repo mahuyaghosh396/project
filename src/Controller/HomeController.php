@@ -12,7 +12,6 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
         ]);
     }
 
@@ -20,7 +19,13 @@ class HomeController extends AbstractController
     public function aboutUs(): Response
     {
         return $this->render('home/about_us.html.twig', [
-            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/signup', name: 'web_signup')]
+    public function signup(): Response
+    {
+        return $this->render('home/signup.html.twig', [
         ]);
     }
 }
