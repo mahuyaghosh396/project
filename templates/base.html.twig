@@ -47,6 +47,23 @@
                         {% endif %}
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        NOTICE
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{path('web_signup')}}">6th Semester Examination</a>
+                        <a class="dropdown-item" href="#">5th semester Result </a>
+                        <a class="dropdown-item" href="#">2022 Admismission to Diploma</a>
+                        <div class="dropdown-divider"></div>
+                        {% if app.user %}
+                            <a class="dropdown-item" href="#">Logout</a>
+                        {% else %}
+                            <a class="dropdown-item" href="#">Login</a>
+                        {% endif %}
+                    </div>
+                </li>
             </ul>
             <div>
                 {% if app.user %}
