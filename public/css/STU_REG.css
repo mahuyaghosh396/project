@@ -3,7 +3,7 @@
     padding: 0%;
 }
 
-div.back{
+.back{
     width:100% ;
     height: 100%;
     background-color:rgb(85, 179, 185);
@@ -29,7 +29,7 @@ div.container{
         background: rgba(39, 9, 101, 0.467);
         width: 50%;
         border: 1px solid black;
-         opacity: 0.1;
+         opacity: 0.9;
         margin-top: 2%;
         /* text-align: center; */
         padding-left: 126px;

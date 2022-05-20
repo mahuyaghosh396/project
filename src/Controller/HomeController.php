@@ -29,9 +29,15 @@ class HomeController extends AbstractController
         ]);
     }
     #[Route('/admission', name: 'web_admission')]
-    public function notice(): Response
+    public function admission(): Response
     {
         return $this->render('admission.html.twig', [
+        ]);
+    }
+    #[Route('/result', name: 'web_result')]
+    public function result(): Response
+    {
+        return $this->render('result.html.twig', [
         ]);
     }
 }
