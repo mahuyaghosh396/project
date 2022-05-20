@@ -1,8 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Homepage{% endblock %}
+{% block title %}{{parent()}}Homepage{% endblock %}
 
-{% block body %}{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" type="text/css" href="/bundles/bxslider/jquery.bxslider.min.css">
+{% endblock %}
+
+{% block body %}
+    <ul id="slider">
+        <li>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Oahu_Landscape.jpg" alt="Pic">
+        </li>
+        <li>
+            <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-after/Landscape-BW.jpg" alt="Pic">
+        </li>
+        <li>            
+            <img src="https://thumbs.dreamstime.com/b/sun-rays-mountain-landscape-5721010.jpg" alt="Pic">
+        </li>
+        <li>            
+            <img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="Pic">
+        </li>
+    </ul>
+{% endblock %}
 
 {% block javascripts %}
+    <script src="/bundles/bxslider/jquery.bxslider.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#slider').bxSlider();
+        });
+    </script>
 {% endblock %}
