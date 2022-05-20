@@ -1,0 +1,77 @@
+*{
+    margin:0%;
+    padding: 0%;
+}
+
+div.back{
+    width:100% ;
+    height: 100%;
+    background-color:rgb(85, 179, 185);
+    background-size: 100%;
+    
+
+
+}
+
+div.main{
+    padding: 2%;
+    text-align: center;
+    font-family:sans-serif ;
+    box-shadow: 0 10px 2px 1px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgb(16, 16, 15);
+    background: rgba(241, 81, 222, 0.467);
+}
+
+div.container{
+    
+
+        margin: 300px;
+        background: rgba(39, 9, 101, 0.467);
+        width: 50%;
+        border: 1px solid black;
+         opacity: 0.1;
+        margin-top: 2%;
+        /* text-align: center; */
+        padding-left: 126px;
+        padding-bottom: 34px;
+        padding-top:14px ;
+
+        
+}
+label{
+    text-decoration: bold;
+    font-style:normal;
+    text-align: left;
+    font-weight: bold;
+    font-weight:900;
+    font-size: 23px;
+
+    
+}
+#NAME{
+    height: 30px;
+    width: 300px;
+    
+}
+#NAME1{
+    height: 30px;
+    width: 300px;
+    
+}
+
+
+span{
+    text-decoration:wavy;
+    font-size: 23px;
+}
+
+
+
+button{
+    height: 40px;
+    width: 250px;
+    background-color: #080ce2;
+    color: white;
+    text-decoration-style: double ;
+
+}

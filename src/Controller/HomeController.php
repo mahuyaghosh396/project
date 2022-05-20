@@ -28,10 +28,10 @@ class HomeController extends AbstractController
         return $this->render('home/signup.html.twig', [
         ]);
     }
-    #[Route('/notice', name: 'web_notice')]
+    #[Route('/admission', name: 'web_admission')]
     public function notice(): Response
     {
-        return $this->render('home/signup.html.twig', [
+        return $this->render('admission.html.twig', [
         ]);
     }
 }
