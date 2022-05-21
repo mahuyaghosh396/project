@@ -40,4 +40,10 @@ class HomeController extends AbstractController
         return $this->render('result.html.twig', [
         ]);
     }
+    #[Route('/accomodation', name: 'web_accomodation')]
+    public function Accomodation(): Response
+    {
+        return $this->render('accomodation.html.twig', [
+        ]);
+    }
 }

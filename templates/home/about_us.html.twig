@@ -3,20 +3,46 @@
 {% block title %}{{parent()}}About{% endblock %}
 
 {% block body %}
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus unde, voluptatum ducimus ipsum placeat hic natus
-    ullam? Deserunt laudantium, corporis nihil illo dicta libero dignissimos adipisci quam? Repellat, repudiandae
-    officiis cupiditate sed atque rem ad dicta culpa veritatis animi molestias optio. Sit similique impedit debitis!
-    Dolorem ullam sapiente, eum sunt perspiciatis necessitatibus? Distinctio accusantium et ad quasi vitae ullam nemo
-    eos eaque, corrupti veniam possimus aliquam deleniti quidem dolore laboriosam in culpa tenetur nulla modi! Aliquid
-    labore accusamus, obcaecati minima, numquam dolore, sit praesentium voluptatum animi sequi impedit totam itaque
-    eaque omnis. Aliquam amet saepe doloremque accusamus recusandae nesciunt nisi laudantium sapiente distinctio tenetur
-    dignissimos in dicta iste, voluptates aspernatur neque enim ullam nihil maiores eius laboriosam, harum impedit! Odio
-    quasi unde totam repellendus accusamus, corrupti ipsam excepturi illum maxime, dicta aliquid, consectetur alias
-    quidem quos placeat consequuntur a perferendis id ab enim. Excepturi, laborum. Sit porro aperiam ex pariatur.
-    Necessitatibus, exercitationem praesentium ipsum aperiam odio dicta vitae aut facere, ad a minima nulla illum omnis
-    quas porro numquam deleniti culpa fugiat nemo itaque eveniet perferendis distinctio nostrum excepturi. Iure
-    laboriosam facilis accusamus! Esse consequuntur, iste velit numquam itaque temporibus tempora veniam id
-    exercitationem quibusdam fugit vel ab dolorum adipisci?</p>
+<div class="container position-absolute top-0 start-0 ">
+  <div class="row py-1 ">
+    <div class="col-sm-4">
+
+      <div class="card  ">
+        <h5 class="card-title text-center">Facilities</h5>
+        <img src="https://katakcomel.my/wp-content/uploads/2020/04/mukabbir_library.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">The facilities and services <br> WPC renders to the students, faculty .....</p>
+          <a href="#" class="btn btn-primary">Show more</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+
+      <div class="card">
+        <h5 class="card-title text-center">Lab Infrastructure</h5>
+        <img src="https://www.pscmr.ac.in/images/computers/cse3.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">The Institute have developped well<br> equipped laboratories covering various featured...</p>
+          <a href="#" class="btn btn-primary">Show more</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+
+      <div class="card ">
+        <h5 class="card-title text-center">Accomodaation</h5>
+        <img src="https://rmd.ac.in/images/campus/hoster_3.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">The college offers hostel facilities including<br> food and lodging for the boys only.... </p>
+          <a href="{{path('web_accomodation')}}" class="btn btn-primary">Show more</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 {% endblock %}
 
 {% block javascripts %}
