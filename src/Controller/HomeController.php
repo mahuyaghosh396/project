@@ -28,22 +28,26 @@ class HomeController extends AbstractController
         return $this->render('home/signup.html.twig', [
         ]);
     }
-    #[Route('/admission', name: 'web_admission')]
-    public function admission(): Response
+
+    #[Route('/view/notice', name: 'web_all_notice')]
+    public function viewNotice(): Response
     {
-        return $this->render('admission.html.twig', [
+        return $this->render('home/notice.html.twig', [
+            'title'=>"notice"
         ]);
     }
-    #[Route('/result', name: 'web_result')]
-    public function result(): Response
+    #[Route('/add/notice', name: 'web_add_notice')]
+    public function addNotice(): Response
     {
-        return $this->render('result.html.twig', [
+        return $this->render('home/add-notice.html.twig', [
+            'title'=>"notice"
         ]);
     }
-    #[Route('/accomodation', name: 'web_accomodation')]
-    public function Accomodation(): Response
+    #[Route('/contact', name: 'web_contact')]
+    public function contact(): Response
     {
-        return $this->render('accomodation.html.twig', [
+        return $this->render('home/contact.html.twig', [
+            'title'=>"contact"
         ]);
     }
 }
