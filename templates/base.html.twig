@@ -42,11 +42,29 @@
                         <div class="dropdown-divider"></div>
                         {% if app.user %}
                             <a class="dropdown-item" href="#">Logout</a>
-                        {% else %}
-                            <a class="dropdown-item" href="#">Login</a>
+                        {# {% else %}
+                            <a class="dropdown-item" href="#">Login</a> #}
                         {% endif %}
                     </div>
                 </li>
+
+                     <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Notice
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{path('web_all_notice')}}">view all notice</a>
+                        <a class="dropdown-item" href="#">current Notice</a>
+                        <a class="dropdown-item" href="{{path('web_add_notice')}}">Create Notice</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{path('web_contact')}}">Contact Us</a>
+                </li>
+
             </ul>
             <div>
                 {% if app.user %}
