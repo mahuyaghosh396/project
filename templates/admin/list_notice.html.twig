@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Manage Notice{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block body %}
+    <table id="list-notice" class="table">
+        <thead>
+            <tr>
+                <th>Notice Id</th>
+                <th>Notice Name</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in notices %}
+                <tr>
+                    <td>{{record.id}}</td>
+                    <td>{{record.name}}</td>
+                    <td>{{record.noticeFrom|date('d-m-Y @ h:i')}}</td>
+                    <td>{{record.noticeTo|date('d-m-Y @ h:i')}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#list-notice').DataTable();
+    } );
+</script>
+{% endblock %}
