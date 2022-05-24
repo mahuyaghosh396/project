@@ -21,7 +21,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/add/user', name: 'app_admin_add_user')]
+    #[Route('admin/add/user', name: 'app_admin_add_user')]
     public function addUser(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
         $em = $doctrine->getManager();
