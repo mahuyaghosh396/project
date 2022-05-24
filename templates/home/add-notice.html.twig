@@ -5,53 +5,80 @@
 {% block stylesheets %}
 {{parent()}}
 <style>
-    .pd {
-        padding-top: 13%;
-
-    }
-
+   .back-img{
+       background: url(https://cdn.wallpapersafari.com/22/82/0yjurN.jpg);
+   }
     body {
         background-color: #2F4F4F;
     }
+    section{
+        padding: 150px;
+        
+    }
+
 </style>
 {% endblock %}
 {% block body %}
+<body class="back-img">
+    <section>
+        <div class="container-fluid text-black pad-top">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-lg-4">
 
-<div class="container-fluid text-black pd" align="center">
-    <div class="col-lg-4"></div>
-    <form>
-        <div class="col-lg-5 bg-light">
-            <div>
-                <h1>Add Notice<h1>
-            </div>
-            <div class="row">
-                <div class="col"></div>
-                <div class="col-md-6">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" class="form-control">
+                    </div>
+                    <div class="col-lg-4 bg-light">
+                        <h1 class="text-center">Add Notice</h1>
+                        <table class="table">
+
+                            <tr>
+                                <td> {{ form_row(form.name) }}</td>
+                            </tr>
+                          
+                            <tr>
+                                <td> {{ form_row(form.noticeFrom) }}</td>
+                            </tr>
+
+                            <tr>
+                                <td> {{ form_row(form.noticeTo) }}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="submit" name="sub" value="upload" id="submit"></td>
+                            
+                            </tr>
+   
+                        </table>
+                    </div>
+                    <div class="col-lg-4">
+                    </div>
                 </div>
-                <div class="col-md-5">
-                    <label for="file">upload notice</label>
-                    <input type="file" name="notice" id="notice" class="form-control">
-                </div>
-            </div>
-            <div class="form-group ">
-                <div>
-                    <br>
-                </div>
-                <input type="submit" name="upload" value="upload" class="btn btn-success mr-4">
-                <div>
-                    <br>
-                </div>
-                <div>
-                    <br>
-                </div>
-            </div>
-            <div class="col-lg-4"></div>
-        </div>
-    </form>
+ 
+    {{ form_rest(form) }}
+	{{ form_end(form) }}
+</section>
 </div>
 {% endblock %}
 {% block javascripts %}
 {{parent()}}
-{% endblock %}
+{% endblock %} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
