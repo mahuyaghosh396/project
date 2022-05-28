@@ -43,7 +43,7 @@ class AdminController extends AbstractController
     public function manageNotice(Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        
+
         if ($request->getMethod() == "POST") {
             $notice = new Notice();
             $notice->setName($request->get('name'));
@@ -59,10 +59,28 @@ class AdminController extends AbstractController
 
     #[Route('/admin/list/notice', name: 'app_admin_list_notice')]
     public function listNotice(ManagerRegistry $doctrine): Response
-    {        
+    {
         $notices = $doctrine->getRepository(Notice::class)->findAll();
         return $this->render('admin/list_notice.html.twig', [
             "notices" => $notices
         ]);
+    }
+
+    #[Route('/admin/download/{path}/{file}', name: 'app_admin_download')]
+    public function download($path, $file): Response
+    {
+        $filename = $path."/".$file;
+        // Generate response
+        $response = new Response();
+
+        // Set headers
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($filename));
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($filename) . '";');
+        $response->headers->set('Content-length', filesize($filename));
+        // Send headers before outputting anything
+        $response->sendHeaders();
+        $response->setContent(file_get_contents($filename));
+        return $response;
     }
 }
