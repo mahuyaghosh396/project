@@ -35,6 +35,9 @@ class Notice
     #[Gedmo\Timestampable(on: 'update')]
     private $updated;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $file;
+
     public function __construct()
     {
         $this->status = 'Active';
@@ -113,6 +116,18 @@ class Notice
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
