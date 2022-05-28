@@ -51,37 +51,36 @@ class HomeController extends AbstractController
     public function viewNotice(ManagerRegistry $doctrine): Response
     {
        
-        $notices = $doctrine->getRepository(Notice::class)->findAll();
         $em = $doctrine->getManager();
         $today = new \DateTime();
-        $query = $em->createQuery("SELECT u.name from App:Notice u where u.noticeTo < :today");
+        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeTo > :today");
         $query->setParameter('today', $today);
-        //dd($query->getResult());
-        
-        
-        if($query){
-        // $fs=new Filesystem();
 
-        // // $notice = $media->getNotice();
-        // // $em->remove($media);
-        // $em->flush();
-
-        // return $this->redirectToRoute('web_add_notice');
-    
-
-        //dd($path='%kernel.project_dir%/public/uploads/notices'.$query);
-        // $fs->remove($path);
-        // $em->flush();
-
-           // unlink('upload_directory').'/uploads/notices/';
-       // $fs->remove('/uploads/notices/'.$query->getResult());
-        // dd($fs);
-        // $em->flush();
-        // dd("123");
-        }
-       
-        
         return $this->render('home/notice.html.twig', [
+            "notices" => $query->getResult()
+        ]);
+    }
+
+    #[Route('/current/notice', name: 'web_current_notice')]
+    public function currentNotice(ManagerRegistry $doctrine): Response
+    {
+       
+        $em = $doctrine->getManager();
+        $yesterday = new \DateTime("yesterday");
+        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom > :yesterday");
+        $query->setParameter('yesterday', $yesterday);
+
+        return $this->render('home/current_notice.html.twig', [
+            "notices" => $query->getResult()
+        ]);
+    }
+
+    #[Route('/admin/all/notice', name: 'web_view_notice')]
+    public function allNotice(ManagerRegistry $doctrine): Response
+    {
+       
+        $notices = $doctrine->getRepository(Notice::class)->findAll();
+        return $this->render('home/view_notice.html.twig', [
             "notices" => $notices
         ]);
     }
