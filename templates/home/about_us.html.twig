@@ -1,22 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{parent()}}About{% endblock %}
-
+{% block stylesheets %}
+{{parent()}}
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" type="text/css" href="/css/about.css">
+{% endblock %}
 {% block body %}
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus unde, voluptatum ducimus ipsum placeat hic natus
-    ullam? Deserunt laudantium, corporis nihil illo dicta libero dignissimos adipisci quam? Repellat, repudiandae
-    officiis cupiditate sed atque rem ad dicta culpa veritatis animi molestias optio. Sit similique impedit debitis!
-    Dolorem ullam sapiente, eum sunt perspiciatis necessitatibus? Distinctio accusantium et ad quasi vitae ullam nemo
-    eos eaque, corrupti veniam possimus aliquam deleniti quidem dolore laboriosam in culpa tenetur nulla modi! Aliquid
-    labore accusamus, obcaecati minima, numquam dolore, sit praesentium voluptatum animi sequi impedit totam itaque
-    eaque omnis. Aliquam amet saepe doloremque accusamus recusandae nesciunt nisi laudantium sapiente distinctio tenetur
-    dignissimos in dicta iste, voluptates aspernatur neque enim ullam nihil maiores eius laboriosam, harum impedit! Odio
-    quasi unde totam repellendus accusamus, corrupti ipsam excepturi illum maxime, dicta aliquid, consectetur alias
-    quidem quos placeat consequuntur a perferendis id ab enim. Excepturi, laborum. Sit porro aperiam ex pariatur.
-    Necessitatibus, exercitationem praesentium ipsum aperiam odio dicta vitae aut facere, ad a minima nulla illum omnis
-    quas porro numquam deleniti culpa fugiat nemo itaque eveniet perferendis distinctio nostrum excepturi. Iure
-    laboriosam facilis accusamus! Esse consequuntur, iste velit numquam itaque temporibus tempora veniam id
-    exercitationem quibusdam fugit vel ab dolorum adipisci?</p>
+<div class="section">
+    <div class="container">
+        <div class="content-section">
+            <div class="title">
+                <h1>About Us</h1>
+            </div>
+            <div class="content">
+                <h3>Lorem ipsum dolor sit amet consectetur adipisicing</h3>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus unde, voluptatum ducimus ipsum
+                    placeat hic natus
+                    ullam? Deserunt laudantium, corporis nihil illo dicta libero dignissimos adipisci quam? Repellat,
+                    repudiandae
+                    officiis cupiditate sed atque rem ad dicta culpa veritatis animi molestias optio. Sit similique
+                    impedit debitis!
+                    eaque omnis. Aliquam amet saepe doloremque accusamus recusandae nesciunt nisi laudantium sapiente
+                    distinctio tenetur
+                    dignissimos in dicta iste, voluptates aspernatur neque enim ullam nihil maiores eius laboriosam,
+                    harum impedit! Odio
+                    laboriosam facilis accusamus! Esse consequuntur, iste velit numquam itaque temporibus tempora veniam
+                    id
+                    exercitationem quibusdam fugit vel ab dolorum adipisci?</p>
+                <div class="button">
+                    <a href="">Read More</a>
+                </div>
+            </div>
+            <div class="social">
+                <a href=""><i class="fa fa-facebook"></i></a>
+                <a href=""><i class="fa fa-twitter"></i></a>
+                <a href=""><i class="fa fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="image-section">
+            <img src="https://tse3.mm.bing.net/th?id=OIP.yFTgcsyp28vH4soNPEJ-rQAAAA&pid=Api&P=0&w=331&h=165">
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
