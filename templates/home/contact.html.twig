@@ -12,22 +12,24 @@
 {% endblock %}
 
 {% block body %}
-
-{{ form_start(form) }}
+<form>
 	<div class="title">
 		<h2>CONTACT</h2>
 	</div>
 	<div class="half">
 		<div class="item">
-			{{ form_row(form.name) }}
+			<label for="">Name</label>
+            <input type="text" name="name"  required>
 		</div>
 
 		<div class="item">
-			{{ form_row(form.email) }}
+			<label for="">Email</label>
+            <input type="email" name="email"  required>
 		</div>
 	</div>
 	<div class="full">
-		{{ form_row(form.message) }}
+		<label for="">Message</label>
+           <textarea name="" id="message"></textarea>
 	</div>
 	<div class="action">
 		<input type="submit" value="Send Message">
@@ -39,8 +41,7 @@
 		<a href="" class="fa fa-instagram"></a>
 		<a href="" class="fa fa-github"></a>
 	</div>
-	{{ form_rest(form) }}
-	{{ form_end(form) }}
+</form>
 {% endblock %}
 {% block javascripts %}
 {{parent()}}

@@ -101,17 +101,20 @@ form .action input[type="reset"]{
 
 form .icons a{
     border: 1px solid white;
-    border-radius: 50%;
+    border-radius: 60%;
     line-height: 36px;
     text-align: center;
     font-weight: 600;
     width: 38px;
     margin-right: 10px;
+    color: #f7efef;
+    font-size: 30px;
+    padding: 0px;
  
 }
 
 form .half .item input:focus, form .full textarea:focus, form .action input[type="reset"]:hover,form .icons a:hover{
-    background: rgba(255, 255, 255, 0.075);
+    background: rgba(238, 216, 216, 0.747);
 }
 @media(max-width:480px){
     form .half{
