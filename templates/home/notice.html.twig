@@ -20,7 +20,10 @@
             <span class="number">{{record.id}}</span>
             <i class="bi bi-card-list"></i>
             <h3>{{record.name}}</h3>
-            <p>{{record.file}}</p>
+            <p>{{record.file}} </p>
+            <a href="http://localhost:8000/uploads/notices/{{record.file}}" target="parent">notice</a>
+               
+            
         </div>
 
         {% endfor %}

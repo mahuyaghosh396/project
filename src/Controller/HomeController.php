@@ -22,35 +22,31 @@ class HomeController extends AbstractController
     #[Route('/', name: 'web_homepage')]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-        ]);
+        return $this->render('home/index.html.twig', []);
     }
 
     #[Route('/front', name: 'web_frontpage')]
     public function home(): Response
     {
-        return $this->render('home/home.html.twig', [
-        ]);
+        return $this->render('home/home.html.twig', []);
     }
 
     #[Route('/about', name: 'web_about_us')]
     public function aboutUs(): Response
     {
-        return $this->render('home/about_us.html.twig', [
-        ]);
+        return $this->render('home/about_us.html.twig', []);
     }
 
     #[Route('/signup', name: 'web_signup')]
     public function signup(): Response
     {
-        return $this->render('home/signup.html.twig', [
-        ]);
+        return $this->render('home/signup.html.twig', []);
     }
 
     #[Route('/view/notice', name: 'web_all_notice')]
     public function viewNotice(ManagerRegistry $doctrine): Response
     {
-       
+
         $em = $doctrine->getManager();
         $today = new \DateTime();
         $query = $em->createQuery("SELECT u from App:Notice u where u.noticeTo > :today");
@@ -64,7 +60,7 @@ class HomeController extends AbstractController
     #[Route('/current/notice', name: 'web_current_notice')]
     public function currentNotice(ManagerRegistry $doctrine): Response
     {
-       
+
         $em = $doctrine->getManager();
         $yesterday = new \DateTime("yesterday");
         $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom > :yesterday");
@@ -78,14 +74,14 @@ class HomeController extends AbstractController
     #[Route('/admin/all/notice', name: 'web_view_notice')]
     public function allNotice(ManagerRegistry $doctrine): Response
     {
-       
+
         $notices = $doctrine->getRepository(Notice::class)->findAll();
         return $this->render('home/view_notice.html.twig', [
             "notices" => $notices
         ]);
     }
     #[Route('/admin/add/notice', name: 'web_add_notice')]
-    public function addNotice(Request $request, ManagerRegistry $doctrine,SluggerInterface $slugger): Response
+    public function addNotice(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
 
     {
 
@@ -93,7 +89,7 @@ class HomeController extends AbstractController
         $form = $this->createForm(NoticeType::class, $notice);
         $form->handleRequest($request);
         if ($request->getMethod() == "POST") {
-            
+
             if ($form->isSubmitted() and $form->isValid()) {
 
                 /** @var UploadedFile $upload */
@@ -125,24 +121,24 @@ class HomeController extends AbstractController
 
                     //set file name....with it's new file name....
                     $notice->setFile($newFilename);
-                  
 
-                
-               
-                $em = $doctrine->getManager();
-                
-                $em->persist($notice);
 
-                $em->flush();
 
-                $request->getSession()->getFlashBag()->add("successmsg", "Notice uploaded Successfully");
-                return $this->redirect($this->generateUrl('web_add_notice'));
-            } else {
-                $request->getSession()->getFlashBag()->add("errormsg", "something went wrong!!");
-                return $this->redirect($this->generateUrl('web_add_notice'));
+
+                    $em = $doctrine->getManager();
+
+                    $em->persist($notice);
+
+                    $em->flush();
+
+                    $request->getSession()->getFlashBag()->add("successmsg", "Notice uploaded Successfully");
+                    return $this->redirect($this->generateUrl('web_add_notice'));
+                } else {
+                    $request->getSession()->getFlashBag()->add("errormsg", "something went wrong!!");
+                    return $this->redirect($this->generateUrl('web_add_notice'));
+                }
             }
         }
-    }
 
         return $this->render('home/add-notice.html.twig', [
             'title' => "Add Notice",
@@ -156,10 +152,10 @@ class HomeController extends AbstractController
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
         if ($request->getMethod() == "POST") {
-            
+
             if ($form->isSubmitted() and $form->isValid()) {
-                
-               
+
+
                 $em = $doctrine->getManager();
                 $em->persist($contact);
                 $em->flush();
@@ -176,6 +172,4 @@ class HomeController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    }
-
-
+}
