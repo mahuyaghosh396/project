@@ -56,13 +56,9 @@
 							Notice
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							{% if app.user %}
-								<a class="dropdown-item" href="{{path('web_view_notice')}}">view all notice</a>
-							{% else %}
 								<a class="dropdown-item" href="{{path('web_all_notice')}}">view all notice</a>
-							{% endif %}
 							<a class="dropdown-item" href="{{path('web_current_notice')}}">current Notice</a>
-							<a class="dropdown-item" href="{{path('web_add_notice')}}">Create Notice</a>
+							<a class="dropdown-item" href="{{path('web_manage_notice')}}">Create Notice</a>
 							<div class="dropdown-divider"></div>
 						</div>
 

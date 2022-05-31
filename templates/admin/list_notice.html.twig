@@ -15,6 +15,7 @@
                 <th>From</th>
                 <th>To</th>
                 <th>Action</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +25,12 @@
                     <td>{{record.name}}</td>
                     <td>{{record.noticeFrom|date('d-m-Y @ h:i')}}</td>
                     <td>{{record.noticeTo|date('d-m-Y @ h:i')}}</td>
-                    <td><a href="{{path('app_admin_download', {path: 'upload/notices', file: record.file})}}">Download</a></td>
+                    <td><a href="{{path('app_admin_download', {path:"notices" , file: record.file})}}">Download</a></td>
+                     <td><a onclick="return confirm('Are you sure?')" href="{{path('app_update_notice',{id: record.id})}}">
+                           {{record.status}}</a></td>
+                        </tr>
+
+
                 </tr>
             {% endfor %}
         </tbody>
