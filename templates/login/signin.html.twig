@@ -1,3 +1,6 @@
+
+ 
+
 {% extends 'base.html.twig' %}
 
 {% block title %}{{parent()}}Signup{% endblock %}
@@ -8,8 +11,10 @@
         height: 150px;
         width: 120px;
         background-image: linear linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-        padding-left: 400px;
+        padding-left: 500px;
         background-size: cover;
+
+
     }
 
     body {
@@ -18,19 +23,42 @@
     }
 
     .form-box {
-        width: 800px;
-        height: 800px;
+        width: 500px;
+        height: 500px;
+        position: absolute;
         margin: 5% auto;
         background: rgba(53, 80, 88, 0.315);
+        padding: 40px;
+        overflow: hidden;
     }
 
+    /* .form-box1 {
+        width: 800px;
+        height: 900px;
+        position: absolute;
+        margin: 5% auto;
+        background: rgba(53, 80, 88, 0.315);
+        padding: 40px;
+        overflow: hidden;
+    } */
     .button-box {
+        width: 220px;
+        margin: 10px auto;
+        position: relative;
+        box-shadow: 0 0 5px 5px #ff61241f;
+        border-radius: 10px;
+    }
 
+    .toggle-btn {
+        padding: 15px 27px;
+        background: transparent;
+        border: 0;
+        outline: none;
         position: relative;
 
+
     }
 
-    
     #btn {
         top: 0;
         left: 0;
@@ -41,25 +69,34 @@
         border-radius: .5s;
     }
 
-
+    .input-group-login {
+        top: 150px;
+        position: absolute;
+        width: 280px;
+        transition: .5s;
+    }
 
     .input-group-register {
         top: 120px;
-        padding-left: 100px;
-        width: 700px;
+        position: absolute;
+        width: 280px;
         transition: .5s;
 
     }
 
     .input-feild {
-        width: 300px;
-        margin: 16px 0;
-
+        width: 100%;
+        padding: 10px 0;
+        margin: 5px 0;
+        border-left: 0;
+        border-top: 0;
+        border-right: 0;
+        border-bottom: 0;
     }
 
     .submit-btn {
         width: 120px;
-        padding: 13px 15px;
+        padding: 10px 30px;
         cursor: pointer;
         display: block;
         margin: auto;
@@ -71,19 +108,26 @@
     }
 
     .check-box {
-        margin: 7px 5px 7px 18px;
+        margin: 30px 10px 34px 10px;
 
     }
 
     span {
         color: rgb(17, 17, 17);
-        font-size: 16px;
-        
+        font-size: 12px;
+        bottom: 68px;
         position: absolute;
 
     }
 
+    #login {
+        left: 50px;
+    }
 
+    #login input {
+        color: black;
+        font-size: 15px;
+    }
 
     #register {
         left: 450px;
@@ -105,126 +149,24 @@
             </div>
             <div id="login-form" class="login-page">
                 <div class="form-box">
-                    <h1 style="text-align:center">Register Here</h1>
-
-
-                    <form id="register" class="input-group-register" action="" method="post">
-                        <br>
+                   
                         
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="">First Name: </label>
-                                <input type="text" name="firstname" class="input-field form-control" placeholder="First name"
-                                    required>
-                            </div>
-                            <div class="col-6">
-                                <label for="">Last Name: </label>
-                                <input type="text" name="lastname" class="input-field form-control" placeholder="last name"
-                                    required>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="">email:</label>
-                                <input type="email" name="email"class="input-field form-control" placeholder="Email Id" required>
-                            </div>
+                    <form id="login" class="input-group-login" action="" method="get">
+                        <label for="">email:</label>
+                        <input type="email" class="input-field form-control" placeholder="Email Id" required>
+                        <label for="">password:</label>
+                        <input type="password" class="input-field form-control" placeholder="Enter password" required><br><br><br><br>
+                        <button type="submit" class="submit-btn">Log in</button>
+                    </form>
+                
 
-
-                            <div class="col-6">
-                                <label for="">cell phone no:</label>
-                                <input type="tel" name="tel" pattern="[0-9]{10}" class="input-field form-control"
-                                    placeholder="phone no" required>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="">Academic year:</label>
-                                <input type="number" name="year" class="input-field form-control" placeholder="DOB"
-                                    required>
-
-                            </div>
-
-                            <div class="col-6">
-                                <label for="">DOB:</label>
-                                <input type="Date" name="DOB" class="input-field form-control" placeholder="name"
-                                    required>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="">Registration no:</label>
-                                <input type="number" name="reg_no" class="input-field form-control" placeholder="Reg no"
-                                    required>
-                            </div>
-
-
-                            <div class="col-6">
-
-                                <label for="">Roll no:</label>
-                                <input type="number" name="roll_no" class="input-field form-control" placeholder="Roll no"
-                                    required>
-                            </div>
-                        </div>
-                        <br>
-
-
-
-                        <br>
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Department:</label>
-
-                                <Select name="Dept" id="sem" class="input-field form-control" required>
-                                    <option value="">select</option>
-                                    <option value="CST">CST</option>
-                                    <option value="ETC">ETC</option>
-                                    <option value="ARCH">ARCH</option>
-
-                                </Select>
-                            </div>
-                            <div class="col-6">
-                                <label>Department:</label>
-                                <Select name=role[] id="sem" class="input-field form-control" required>
-                                    <option value=>select</option>
-                                    <option value=Admin>Admin</option>
-                                    <option value=Lecturer>Lecturer</option>
-                                    <option value=Student>Student</option>
-
-                                </Select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">password:</label>
-                                <input type="password" name="password" class="input-field form-control"
-                                    placeholder="Enter password" required>
-                            </div>
-
-                            <div class="col-6">
-                                <label for="">confirm password:</label>
-                                <input type="password" name="confirmpassword" class="input-field form-control"
-                                    placeholder="Confirm password" required>
-                            </div>
-
-                        </div>
-                        <br>
-                        <input type="checkbox" class="check-box"><span>I agree to the terms &
-                            Conditions</span>
-
-
-                             <br>
-                        <button type="submit" class="submit-btn">Register</button>
-
+        
                 </div>
-                </form>
             </div>
         </div>
     </div>
-    </div>
+
+
 </body>
 
 
@@ -448,4 +390,29 @@
 {% endblock %}
 
 {% block javascripts %}
+<script>
+    var x = document.getElementById('login');
+    var y = document.getElementById('register');
+    var z = document.getElementById('btn');
+
+    function register() {
+        x.style.left = '-400px';
+        y.style.left = '50px';
+        z.style.left = '110px';
+    }
+
+    function login() {
+        x.style.left = '50px';
+        y.style.left = '450px';
+        z.style.left = '0px';
+    }
+</script>
+<script>
+    var modal = document.getElementById('login form');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
 {% endblock %}

@@ -48,14 +48,14 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/admission', name: 'web_admission')]
-    public function admission(): Response
-    {
-        return $this->render('home/admit.html.twig', [
-            'title'=>"admission"
-        ]);
+    // #[Route('/admission', name: 'web_admission')]
+    // public function admission(): Response
+    // {
+    //     return $this->render('home/admit.html.twig', [
+    //         'title'=>"admission"
+    //     ]);
        
-    }
+    // }
 
     #[Route('/details', name: 'web_personal_details')]
     public function details(): Response
@@ -67,28 +67,5 @@ class HomeController extends AbstractController
 
 
 
-    #[Route('/admission', name: 'manage_admission')]
-    public function manageAdmission(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $em = $doctrine->getManager();
-        
-        if ($request->getMethod() == "POST") {
-            $admission = new Admission();
-            $admission->setName($request->get('name'));
-            $admission->setEmail($request->get('email'));
-            $admission->setPhoneNo($request->get('phone_no'));
-            $admission->setadress($request->get('adress'));
-            $admission->setzipno($request->get('zip_no'));
-            $admission->setState($request->get('state'));
-            $admission->setDistrict($request->get('district'));
-            $admission->setTrade($request->get('trade'));
-
-            $em->persist($admission);
-            $em->flush();
-        }
-
-        return $this->render('home/admit.html.twig', [
-        
-        ]);
-    }
+   
 }

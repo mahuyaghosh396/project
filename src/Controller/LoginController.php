@@ -51,6 +51,7 @@ class LoginController extends AbstractController
 
         $msg = " ";
         $em = $doctrine->getManager();
+       $date= intval($request->get('DOB'));
 
         if ($request->get('password') == $request->get('confirmpassword')) {
 
@@ -60,14 +61,15 @@ class LoginController extends AbstractController
         if ($request->getMethod() == "POST") {
             $regis = new User();
             $regis->setLastName($request->get('lastname'));
+            $regis->setFirstName($request->get('firstname'));
             $regis->setEmail($request->get('email'));
             $regis->setRoles($request->get('role'));
             $regis->setCellphone($request->get('tel'));
             $regis->setRollNumber($request->get('roll_no'));
             $regis->setRegistrationNumber($request->get('reg_no'));
             $regis->setDepartment($request->get('Dept'));
-            $regis->setDob($request->get('DOB'));
-            $regis->setDepartment($request->get('Dept'));
+            $regis->setDob(intval($request->get('DOB')));
+            $regis->setAcademicYear($request->get('year'));
             
 
             $plainPassword=$request->get('password');
@@ -81,7 +83,7 @@ class LoginController extends AbstractController
         return $this->render('/login/signup.html.twig', []);
     }
 
-    #[Route('/login/admissionLogin', name: 'admission_Login')]
+    #[Route('/login/signin', name: 'signin')]
     public function Login(Request $request, ManagerRegistry $doctrine): Response
     {
         // $msg = "";
@@ -104,6 +106,6 @@ class LoginController extends AbstractController
         //         $msg = "invalid credential";
         // }
 
-        return $this->render('/login/admissionLogin.html.twig', []);
+        return $this->render('/login/signin.html.twig', []);
     }
 }
