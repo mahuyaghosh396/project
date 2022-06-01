@@ -8,9 +8,9 @@
         height: 150px;
         width: 120px;
         background-image: linear linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-        padding-left:600px;
+        padding-left: 600px;
         background-size: cover;
-     
+
 
     }
 
@@ -20,8 +20,8 @@
     }
 
     .form-box {
-        width: 445px;
-        height: 510px;
+        width: 805px;
+        height: 900px;
         position: absolute;
         margin: 5% auto;
         background: rgba(53, 80, 88, 0.315);
@@ -29,6 +29,15 @@
         overflow: hidden;
     }
 
+    /* .form-box1 {
+        width: 800px;
+        height: 900px;
+        position: absolute;
+        margin: 5% auto;
+        background: rgba(53, 80, 88, 0.315);
+        padding: 40px;
+        overflow: hidden;
+    } */
     .button-box {
         width: 220px;
         margin: 10px auto;
@@ -142,42 +151,74 @@
                         <button type="button" onclick="login()" class="toggle-btn">Log in</button>
                         <button type="button" onclick="register()" class="toggle-btn">Register</button>
                     </div>
-                    <form id="login" class="input-group-login" action="" method="post">
+                    <form id="login" class="input-group-login" action="" method="get">
                         <label for="">email:</label>
                         <input type="email" class="input-field form-control" placeholder="Email Id" required>
                         <label for="">password:</label>
-                        <input type="password" class="input-field form-control" placeholder="Enter password"
-                            required><br><br><br><br>
+                        <input type="password" class="input-field form-control" placeholder="Enter password" required><br><br><br><br>
                         <button type="submit" class="submit-btn">Log in</button>
                     </form>
+                
+
+                
                     <form id="register" class="input-group-register" action="" method="post">
-                        <label for="">name:</label>
-                        <input type="text" name="name" class="input-field form-control" placeholder="name" required>
+                        <label for="">First Name:</label>
+                        <input type="text" name="firstname" class="input-field form-control" placeholder="name" required>
+
+                        <label for="">Last Name:</label>
+                        <input type="text" name="lastname" class="input-field form-control" placeholder="name" required>
+
+                        <label for="">cell phone no:</label>
+                        <input type="tel" name="tel" pattern="[0-9]{10}" class="input-field form-control" placeholder="name" required>
+
+
+
+                        <label for="">Academic year:</label>
+                        <input type="number" name="year" class="input-field form-control" placeholder="name" required>
+
+
+
+                        <label for="">Registration no:</label>
+                        <input type="number" name="lastname" class="input-field form-control" placeholder="name" required>
+
+
+
+                        <label for="">Roll no:</label>
+                        <input type="number" name="lastname" class="input-field form-control" placeholder="name" required>
+
+
+                        <label for="">Department:</label>
+                        <input type="text" name="Dept" class="input-field form-control" placeholder="name" required>
+
+                        <label for="">DOB:</label>
+                        <input type="Date" name="DOB" class="input-field form-control" placeholder="name" required>
+
+
                         <label for="">email:</label>
-                        <input type="email" class="input-field form-control" placeholder="Email Id" required>
+                        <input type="email" name="email" class="input-field form-control" placeholder="Email Id" required>
                         <div class="row">
                             <div class="col-md-5">
-                                <label>semester:</label>
+                                <label>Role:</label>
 
-                                <Select name="Sem" id="sem" class="input-field form-control" required>
-                                    <option value="">select</option>
-                                    <option value="CST">CST</option>
-                                    <option value="ETC">ETC</option>
-                                    <option value="ARCH">ARCH</option>
+
+                                <Select name=role[] id="sem" class="input-field form-control" required>
+                                    <option value=>select</option>
+                                    <option value=Admin>Admin</option>
+                                    <option value=Lecturer>Lecturer</option>
+                                    <option value=Student>Student</option>
 
                                 </Select>
+
                             </div>
                             <div class="col-md-7">
                                 <label for="">password:</label>
-                                <input type="password" class="input-field form-control" placeholder="Enter password"
-                                    required>
+                                <input type="password" name="password" class="input-field form-control" placeholder="Enter password" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-7">
                                 <label for="">confirm password:</label>
-                                <input type="password" class="input-field form-control" placeholder="Confirm password"
-                                    required>
+      f                          <input type="password" name="confirmpassword" class="input-field form-control" placeholder="Confirm password" required>
                             </div>
                             <div class="col-md-5">
                                 <input type="checkbox" class="check-box"><span>I agree to the terms & Conditions</span>
@@ -189,6 +230,8 @@
             </div>
         </div>
     </div>
+
+
 </body>
 
 
@@ -416,21 +459,22 @@
     var x = document.getElementById('login');
     var y = document.getElementById('register');
     var z = document.getElementById('btn');
+
     function register() {
         x.style.left = '-400px';
         y.style.left = '50px';
         z.style.left = '110px';
     }
+
     function login() {
         x.style.left = '50px';
         y.style.left = '450px';
         z.style.left = '0px';
     }
-
 </script>
 <script>
     var modal = document.getElementById('login form');
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
         }

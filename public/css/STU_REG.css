@@ -19,14 +19,14 @@ div.main{
     font-family:sans-serif ;
     box-shadow: 0 10px 2px 1px rgba(0, 0, 0, 0.5);
     border: 1px solid rgb(16, 16, 15);
-    background: rgba(241, 81, 222, 0.467);
+    background: rgba(151, 13, 59, 0.467);
 }
 
 div.container{
     
 
         margin: 300px;
-        background: rgba(39, 9, 101, 0.467);
+        background:  #ffffff;
         width: 50%;
         border: 1px solid black;
          opacity: 0.9;

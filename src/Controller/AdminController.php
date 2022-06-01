@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Admission;
 use App\Entity\Notice;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
@@ -65,4 +66,7 @@ class AdminController extends AbstractController
             "notices" => $notices
         ]);
     }
+
+
+  
 }
