@@ -8,10 +8,8 @@
         height: 150px;
         width: 120px;
         background-image: linear linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-        padding-left:600px;
+        padding-left: 600px;
         background-size: cover;
-     
-
     }
 
     body {
@@ -20,25 +18,20 @@
     }
 
     .form-box {
-        width: 445px;
-        height: 510px;
-        position: absolute;
+        width: 805px;
+        height: 900px;
         margin: 5% auto;
         background: rgba(53, 80, 88, 0.315);
-        padding: 40px;
-        overflow: hidden;
     }
 
     .button-box {
-        width: 220px;
-        margin: 10px auto;
+
         position: relative;
-        box-shadow: 0 0 5px 5px #ff61241f;
-        border-radius: 10px;
+
     }
 
     .toggle-btn {
-        padding: 15px 27px;
+        padding: 15px;
         background: transparent;
         border: 0;
         outline: none;
@@ -57,29 +50,20 @@
         border-radius: .5s;
     }
 
-    .input-group-login {
-        top: 150px;
-        position: absolute;
-        width: 280px;
-        transition: .5s;
-    }
+
 
     .input-group-register {
         top: 120px;
-        position: absolute;
-        width: 280px;
+        padding-left: 100px;
+        width: 500px;
         transition: .5s;
 
     }
 
     .input-feild {
-        width: 100%;
-        padding: 10px 0;
+        width: 400px;
         margin: 5px 0;
-        border-left: 0;
-        border-top: 0;
-        border-right: 0;
-        border-bottom: 0;
+      
     }
 
     .submit-btn {
@@ -108,14 +92,7 @@
 
     }
 
-    #login {
-        left: 50px;
-    }
 
-    #login input {
-        color: black;
-        font-size: 15px;
-    }
 
     #register {
         left: 450px;
@@ -139,51 +116,91 @@
                 <div class="form-box">
                     <div class="button-box">
                         <div id="btn"></div>
-                        <button type="button" onclick="login()" class="toggle-btn">Log in</button>
                         <button type="button" onclick="register()" class="toggle-btn">Register</button>
                     </div>
-                    <form id="login" class="input-group-login" action="" method="post">
-                        <label for="">email:</label>
-                        <input type="email" class="input-field form-control" placeholder="Email Id" required>
-                        <label for="">password:</label>
-                        <input type="password" class="input-field form-control" placeholder="Enter password"
-                            required><br><br><br><br>
-                        <button type="submit" class="submit-btn">Log in</button>
-                    </form>
+
                     <form id="register" class="input-group-register" action="" method="post">
-                        <label for="">name:</label>
-                        <input type="text" name="name" class="input-field form-control" placeholder="name" required>
-                        <label for="">email:</label>
-                        <input type="email" class="input-field form-control" placeholder="Email Id" required>
                         <div class="row">
-                            <div class="col-md-5">
-                                <label>semester:</label>
-
-                                <Select name="Sem" id="sem" class="input-field form-control" required>
-                                    <option value="">select</option>
-                                    <option value="CST">CST</option>
-                                    <option value="ETC">ETC</option>
-                                    <option value="ARCH">ARCH</option>
-
-                                </Select>
+                            <div class="col-6">
+                                <label for="">First Name:  </label>
+                                <input type="text" name="firstname" class="input-field form-control" placeholder="name"
+                                    required>
                             </div>
-                            <div class="col-md-7">
-                                <label for="">password:</label>
-                                <input type="password" class="input-field form-control" placeholder="Enter password"
+                            <div class="col-6">
+                                <label for="">Last Name:  </label>
+                                <input type="text" name="lastname" class="input-field form-control" placeholder="name"
                                     required>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-7">
-                                <label for="">confirm password:</label>
-                                <input type="password" class="input-field form-control" placeholder="Confirm password"
+                            <div class="col-6">
+                                <label for="">cell phone no:</label>
+                                <input type="tel" name="tel" pattern="[0-9]{10}" class="input-field form-control"
+                                    placeholder="phone no" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="">Academic year:</label>
+                                <input type="number" name="year" class="input-field form-control" placeholder="name"
                                     required>
                             </div>
-                            <div class="col-md-5">
-                                <input type="checkbox" class="check-box"><span>I agree to the terms & Conditions</span>
-                                <button type="submit" class="submit-btn">Register</button>
-                            </div>
-                        </div>
+                                <label for="">email:</label>
+                                <input type="email" class="input-field form-control" placeholder="Email Id" required>
+                                <label for="">Academic year:</label>
+                                <input type="number" name="year" class="input-field form-control" placeholder="name"
+                                    required>
+
+
+
+                                <label for="">Registration no:</label>
+                                <input type="number" name="lastname" class="input-field form-control" placeholder="name"
+                                    required>
+
+
+
+                                <label for="">Roll no:</label>
+                                <input type="number" name="lastname" class="input-field form-control" placeholder="name"
+                                    required>
+
+                                <label for="">DOB:</label>
+                                <input type="Date" name="DOB" class="input-field form-control" placeholder="name"
+                                    required>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label>Department:</label>
+
+                                        <Select name="Dept" id="sem" class="input-field form-control" required>
+                                            <option value="">select</option>
+                                            <option value="CST">CST</option>
+                                            <option value="ETC">ETC</option>
+                                            <option value="ARCH">ARCH</option>
+
+                                        </Select>
+                                    </div>
+                                    <Select name=role[] id="sem" class="input-field form-control" required>
+                                        <option value=>select</option>
+                                        <option value=Admin>Admin</option>
+                                        <option value=Lecturer>Lecturer</option>
+                                        <option value=Student>Student</option>
+
+                                    </Select>
+                                    <div class="col-md-7">
+                                        <label for="">password:</label>
+                                        <input type="password" name="password" class="input-field form-control"
+                                            placeholder="Enter password" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label for="">confirm password:</label>
+                                        <input type="password" name="confirmpassword" class="input-field form-control"
+                                            placeholder="Confirm password" required>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="checkbox" class="check-box"><span>I agree to the terms &
+                                            Conditions</span>
+                                        <button type="submit" class="submit-btn">Register</button>
+                                    </div>
+                                </div>
                     </form>
                 </div>
             </div>
@@ -412,28 +429,4 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-    var x = document.getElementById('login');
-    var y = document.getElementById('register');
-    var z = document.getElementById('btn');
-    function register() {
-        x.style.left = '-400px';
-        y.style.left = '50px';
-        z.style.left = '110px';
-    }
-    function login() {
-        x.style.left = '50px';
-        y.style.left = '450px';
-        z.style.left = '0px';
-    }
-
-</script>
-<script>
-    var modal = document.getElementById('login form');
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-</script>
 {% endblock %}
