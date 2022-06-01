@@ -59,10 +59,16 @@ class LoginController extends AbstractController
 
         if ($request->getMethod() == "POST") {
             $regis = new User();
-            $regis->setFirstName($request->get('firstname'));
             $regis->setLastName($request->get('lastname'));
             $regis->setEmail($request->get('email'));
             $regis->setRoles($request->get('role'));
+            $regis->setCellphone($request->get('tel'));
+            $regis->setRollNumber($request->get('roll_no'));
+            $regis->setRegistrationNumber($request->get('reg_no'));
+            $regis->setDepartment($request->get('Dept'));
+            $regis->setDob($request->get('DOB'));
+            $regis->setDepartment($request->get('Dept'));
+            
 
             $plainPassword=$request->get('password');
 
