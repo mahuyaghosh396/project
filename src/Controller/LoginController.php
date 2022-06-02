@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\StudentRegis;
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use PhpParser\Node\Expr\BinaryOp\Equal;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,6 +61,8 @@ class LoginController extends AbstractController
 
         if ($request->getMethod() == "POST") {
             $regis = new User();
+            $date = new DateTimeImmutable($request->get('DOB'));
+
             $regis->setLastName($request->get('lastname'));
             $regis->setFirstName($request->get('firstname'));
             $regis->setEmail($request->get('email'));
@@ -68,7 +71,7 @@ class LoginController extends AbstractController
             $regis->setRollNumber($request->get('roll_no'));
             $regis->setRegistrationNumber($request->get('reg_no'));
             $regis->setDepartment($request->get('Dept'));
-            $regis->setDob(intval($request->get('DOB')));
+            $regis->setDob($date);
             $regis->setAcademicYear($request->get('year'));
             
 
