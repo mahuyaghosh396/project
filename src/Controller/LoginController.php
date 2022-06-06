@@ -52,14 +52,16 @@ class LoginController extends AbstractController
 
         $msg = " ";
         $em = $doctrine->getManager();
-       $date= intval($request->get('DOB'));
+     
 
-        if ($request->get('password') == $request->get('confirmpassword')) {
+        if ($request->get('password') != $request->get('confirmpassword')) {
 
             $msg = "confirm password and password should match!!!";
         }
 
-        if ($request->getMethod() == "POST") {
+        elseif ($request->getMethod() == "POST") {
+
+            $date= intval($request->get('DOB'));
             $regis = new User();
             $date = new DateTimeImmutable($request->get('DOB'));
 
@@ -91,23 +93,24 @@ class LoginController extends AbstractController
     {
         // $msg = "";
 
-        // if ($request->getMethod() == "POST") {
-        //     $em = $doctrine->getManager();
-        //     $email = $request->get('email');
-        //     $password = $request->get('password');
-        //     // dd("SELECT u from App:StudentRegis u where u.email= '$email' and u.password ='$password'  ");
+        if ($request->getMethod() == "POST") {
+            $em = $doctrine->getManager();
+            $email = $request->get('email');
+            $password = $request->get('password');
+            // dd("SELECT u from App:StudentRegis u where u.email= '$email' and u.password ='$password'  ");
+          
 
-        //     // $code=$doctrine->getRepository('App:StudentRegis')->findBy( ['email'=>$request->get('email')] && ['password'=>$request->get('password') ]);
-        //     $query = $em->createQuery("SELECT u from App:StudentRegis u where u.email= '$email' and u.password ='$password'  ");
-        //     $result =  $query->getResult();
-        //     dd($result);
+            // $code=$doctrine->getRepository('App:StudentRegis')->findBy( ['email'=>$request->get('email')] && ['password'=>$request->get('password') ]);
+            $query = $em->createQuery("SELECT u from App:User u where u.email= '$email' AND   password_verify( $password,u.password)==true");
+            $result =  $query->getResult();
+            dd($result);
 
-        //     if (count($result) > 0) {
+            if (count($result) > 0) {
 
-        //         return $this->redirect($this->generateUrl('manage_admission'));
-        //     } else
-        //         $msg = "invalid credential";
-        // }
+                return $this->redirect($this->generateUrl('web_add_notice'));
+            } else
+                $msg = "invalid credential";
+        }
 
         return $this->render('/login/signin.html.twig', []);
     }
