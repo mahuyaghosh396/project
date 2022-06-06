@@ -12,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -28,7 +29,22 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/update/notice/{id}', name: 'app_update_notice')]
+    #[Route('/admin', name: 'admin_dashboard')]
+    public function adminDashboard(): Response
+    {
+
+        return $this->redirect($this->generateUrl('web_homepage'));
+    }
+    #[Route('/student', name: 'student_dashboard')]
+    public function studentDashboard(): Response
+    {
+
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('admin/update/notice/{id}', name: 'app_update_notice')]
     public function updateNotice(ManagerRegistry $doctrine, $id): Response
     {
 
@@ -45,6 +61,56 @@ class AdminController extends AbstractController
         }
         return $this->redirect($this->generateUrl('web_all_notice'));
     }
+    #[Route('admin/update/user/{id}', name: 'app_update_user')]
+    public function updateUser(ManagerRegistry $doctrine, $id): Response
+    {
+
+        $em = $doctrine->getManager();
+        $user = $doctrine->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
+        if ($user->getStatus() == "Active") {
+            $user->setStatus("Deleted");
+            $user->setEnable(0);
+            $em->persist($user);
+            $em->flush();
+        } else {
+            $user->setStatus("Active");
+            $user->setEnable(0);
+            $em->persist($user);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('app_admin_list_user'));
+    }
+    #[Route('admin/view/user', name: 'web_view_ajax_user')]
+    public function ajaxView(ManagerRegistry $mr,Request $request): JsonResponse
+    {
+       
+        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $request->get('id')]);
+        $html= $this->renderView('admin/ajax_view.html.twig', [
+            'title' => "View User",
+            'record' => $user,
+            'value'=>$user->getRoles()
+        ]);
+        $response = new JsonResponse();
+        $response->setData($html);
+        return $response;
+    }
+    #[Route('admin/view/{id}', name: 'app_admin_view_user')]
+    public function userView(ManagerRegistry $mr, $id): Response
+    {
+      
+        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
+       
+        return $this->render('admin/user_view.html.twig', [
+            'title' => "View User",
+            'title' => "View",
+            'record' => $user,
+            'value'=>$user->getRoles()
+            
+
+        ]);
+       
+    }
+
 
     #[Route('admin/add/user', name: 'app_admin_add_user')]
     public function addUser(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
@@ -71,6 +137,14 @@ class AdminController extends AbstractController
         $notices = $doctrine->getRepository(Notice::class)->findAll();
         return $this->render('admin/list_notice.html.twig', [
             "notices" => $notices
+        ]);
+    }
+    #[Route('/admin/list/user', name: 'app_admin_list_user')]
+    public function listUser(ManagerRegistry $doctrine): Response
+    {
+        $users = $doctrine->getRepository(User::class)->findAll();
+        return $this->render('admin/list_user.html.twig', [
+            "users" => $users
         ]);
     }
 
@@ -109,14 +183,17 @@ class AdminController extends AbstractController
 
             $query = $em->createQuery("SELECT u from App:Notice u");
             $query->getResult();
+            $num="1";
         } else {
             $today = new \DateTime();
             $query = $em->createQuery("SELECT u from App:Notice u where u.noticeTo > :today and u.status ='active'");
             $query->setParameter('today', $today);
+            $num="0";
         }
 
         return $this->render('admin/list_notice.html.twig', [
-            "notices" => $query->getResult()
+            "notices" => $query->getResult(),
+            "value"=> $num
         ]);
     }
 
