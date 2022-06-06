@@ -131,4 +131,15 @@ class Notice
 
         return $this;
     }
+
+    public function isNew(): bool
+    {
+        $isNew = false;
+        $today = new \DateTime();
+        $today->modify('-7 day');
+        if ($this->getNoticeFrom() > $today) {
+            $isNew = true;
+        }
+        return $isNew;
+    }
 }
