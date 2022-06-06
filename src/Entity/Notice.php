@@ -35,6 +35,9 @@ class Notice
     #[Gedmo\Timestampable(on: 'update')]
     private $updated;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $file;
+
     public function __construct()
     {
         $this->status = 'Active';
@@ -115,5 +118,28 @@ class Notice
         $this->updated = $updated;
 
         return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    public function isNew(): bool
+    {
+        $isNew = false;
+        $today = new \DateTime();
+        $today->modify('-7 day');
+        if ($this->getNoticeFrom() > $today) {
+            $isNew = true;
+        }
+        return $isNew;
     }
 }

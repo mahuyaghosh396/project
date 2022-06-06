@@ -1,89 +1,106 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Web-{% endblock %}</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    {% block stylesheets %}
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-    {% endblock %}
-    {% block bootstrap %}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-    {% endblock %}
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Web-
+			{% endblock %}
+		</title>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		{% block stylesheets %}
+			<link rel="stylesheet" type="text/css" href="/css/style.css">
+		{% endblock %}
+		{% block bootstrap %}
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+		{% endblock %}
+	</head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Logo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="/">Logo</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{path('web_about_us')}}">About</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Account
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{path('web_signup')}}">Create Account</a>
-                        <a class="dropdown-item" href="#">Change Profile</a>
-                        <a class="dropdown-item" href="#">Change Password</a>
-                        <div class="dropdown-divider"></div>
-                        {% if app.user %}
-                            <a class="dropdown-item" href="#">Logout</a>
-                        {# {% else %}
-                            <a class="dropdown-item" href="#">Login</a> #}
-                        {% endif %}
-                    </div>
-                </li>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Home
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('web_about_us')}}">About</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Account
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{path('web_signup')}}">Create Account</a>
+							<a class="dropdown-item" href="#">Change Profile</a>
+							<a class="dropdown-item" href="#">Change Password</a>
+							<div class="dropdown-divider"></div>
+							{% if app.user %}
+								<a class="dropdown-item" href="#">Logout</a>
+							{% else %}
+								<a class="dropdown-item" href="#">Login</a>
+							{% endif %}
+						</div>
+					</li>
+                        
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Notice
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="{{path('web_all_notice')}}">view all notice</a>
+							<a class="dropdown-item" href="{{path('web_current_notice')}}">current Notice</a>
+							<a class="dropdown-item" href="{{path('web_manage_notice')}}">Create Notice</a>
+							<div class="dropdown-divider"></div>
+						</div>
 
-                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Notice
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{path('web_all_notice')}}">view all notice</a>
-                        <a class="dropdown-item" href="#">Admission open</a>
-                        <a class="dropdown-item" href="{{path('web_add_notice')}}">Create Notice</a>
-                        <div class="dropdown-divider"></div>
-                    </div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{path('web_contact')}}">Contact Us</a>
+					</li>
 
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="{{path('web_contact')}}">Contact Us</a>
-                </li>
-
-            </ul>
-            <div>
-                {% if app.user %}
-                    <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
-                {% else %}
-                    <a href="/login/signin" class="btn btn-outline-success my-2 my-sm-0">Login</a>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
-    <div class="web-custom p-3">
-        <div class="row">
-            <div class="col-12">
-                {% block body %}{% endblock %}
-            </div>
-        </div>
-    </div>
-    {% block javascripts %}
-    {% endblock %}
-</body>
+				</ul>
+				<div>
+					{% if app.user %}
+						<a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+					{% else %}
+						<a href="/login" class="btn btn-outline-success my-2 my-sm-0">Login</a>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
+		<div class="row px-3">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-12">
+						{% for flashMessage in app.session.flashbag.get('successmsg') %}
+							<div class="alert alert-success alert-dismissible" role="alert">
+								<strong>
+									<i class="fa fa-check scgreen"></i>
+									Success!</strong>
+								{{ flashMessage }}</div>
+						{% endfor %}
+						{% for flashMessage in app.session.flashbag.get('errormsg') %}
+							<div class="alert alert-danger alert-dismissible" role="alert">
+								<strong>
+									<i class="fa fa-check scred"></i>
+									Error!</strong>
+								{{ flashMessage }}</div>
+						{% endfor %}
+					</div>
+				</div>
+				{% block body %}{% endblock %}
+			</div>
+		</div>
+		{% block javascripts %}{% endblock %}
+	</body>
 
 </html>
