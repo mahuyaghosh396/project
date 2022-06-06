@@ -47,65 +47,92 @@ class LoginController extends AbstractController
 
 
     #[Route('/login/signup', name: 'web_signup')]
-    public function regis(Request $request, ManagerRegistry $doctrine,UserPasswordHasherInterface $passwordHasher): Response
+    public function regis(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
 
         $msg = " ";
         $em = $doctrine->getManager();
-     
 
-        if ($request->get('password') != $request->get('confirmpassword')) {
 
-            $msg = "confirm password and password should match!!!";
-        }
 
-        elseif ($request->getMethod() == "POST") {
 
-            $date= intval($request->get('DOB'));
-            $regis = new User();
-            $date = new DateTimeImmutable($request->get('DOB'));
+        if ($request->getMethod() == "POST") {
 
-            $regis->setLastName($request->get('lastname'));
-            $regis->setFirstName($request->get('firstname'));
-            $regis->setEmail($request->get('email'));
-            $regis->setRoles($request->get('role'));
-            $regis->setCellphone($request->get('tel'));
-            $regis->setRollNumber($request->get('roll_no'));
-            $regis->setRegistrationNumber($request->get('reg_no'));
-            $regis->setDepartment($request->get('Dept'));
-            $regis->setDob($date);
-            $regis->setAcademicYear($request->get('year'));
+            $email =  $request->get('email');
+
+            $query = $em->createQuery("SELECT  u from App:User u where u.email= '$email' ");
+            $result =  $query->getResult();
+
+            if (count($result) == 1) {
+
+               $request->getSession()->getFlashBag()->add("errormsg","Email already Exist!!!");
+             
+            }
+
+            elseif ($request->get('password') !== $request->get('confirmpassword')) {
+
+                $request->getSession()->getFlashBag()->add("errormsg","Password and Confirm password should match!!!");
+               
+            }
             
+            else {
+                $date = intval($request->get('DOB'));
+                $regis = new User();
+                $date = new DateTimeImmutable($request->get('DOB'));
 
-            $plainPassword=$request->get('password');
+                $regis->setLastName($request->get('lastname'));
+                $regis->setFirstName($request->get('firstname'));
+                $regis->setEmail($request->get('email'));
+                $regis->setRoles(['ROLE_STUDENT']);
+                $regis->setCellphone($request->get('tel'));
+                $regis->setRollNumber($request->get('roll_no'));
+                $regis->setRegistrationNumber($request->get('reg_no'));
+                $regis->setDepartment($request->get('Dept'));
+                $regis->setDob($date);
+                $regis->setAcademicYear($request->get('year'));
 
-            $regis->setPassword($passwordHasher->hashPassword($regis,$plainPassword));
 
-            $em->persist($regis);
-            $em->flush();
+                $plainPassword = $request->get('password');
+
+                $regis->setpassword($passwordHasher->hashPassword($regis, $plainPassword));
+
+                $em->persist($regis);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add("successmsg","Congratulation you have register successfully !!!");
+                
+            }
+
+            return $this->redirect($this->generateUrl('web_signup'));
         }
-
         return $this->render('/login/signup.html.twig', []);
     }
 
     #[Route('/login/signin', name: 'signin')]
-    public function Login(Request $request, ManagerRegistry $doctrine): Response
+    public function Login(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
     {
         // $msg = "";
+        $em = $doctrine->getManager();
 
         if ($request->getMethod() == "POST") {
-            $em = $doctrine->getManager();
+            $regis = new User();
+
             $email = $request->get('email');
-            $password = $request->get('password');
+            $plainpassword = $request->get('password');
+            $password = $passwordHasher->hashPassword($regis, $plainpassword);
+
+
+            dump($email);
             // dd("SELECT u from App:StudentRegis u where u.email= '$email' and u.password ='$password'  ");
-          
+
 
             // $code=$doctrine->getRepository('App:StudentRegis')->findBy( ['email'=>$request->get('email')] && ['password'=>$request->get('password') ]);
-            $query = $em->createQuery("SELECT u from App:User u where u.email= '$email' AND   password_verify( $password,u.password)==true");
+            $query = $em->createQuery("SELECT u from App:User u where u.email= '$email' and u.password='$password'");
+            dump($query);
             $result =  $query->getResult();
             dd($result);
 
-            if (count($result) > 0) {
+            if (count($result) == 1) {
 
                 return $this->redirect($this->generateUrl('web_add_notice'));
             } else

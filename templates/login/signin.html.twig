@@ -151,11 +151,11 @@
                 <div class="form-box">
                    
                         
-                    <form id="login" class="input-group-login" action="" method="get">
+                    <form id="login" class="input-group-login" action="" method="post">
                         <label for="">email:</label>
-                        <input type="email" class="input-field form-control" placeholder="Email Id" required>
+                        <input type="email"name="email" class="input-field form-control" placeholder="Email Id" required>
                         <label for="">password:</label>
-                        <input type="password" class="input-field form-control" placeholder="Enter password" required><br><br><br><br>
+                        <input type="password" name="password" class="input-field form-control" placeholder="Enter password" required><br><br><br><br>
                         <button type="submit" class="submit-btn">Log in</button>
 
                         <a class="nav-link" href="{{path('web_signup')}}">create account</a>
