@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{parent()}}Manage Notice
+{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block body %}
+<table id="list-notice" class="table">
+    <thead>
+        <tr>
+            <th>Book Id</th>
+            <th>Book Name</th>
+            <th>Author Name</th>
+            <th>Publisher Name</th>
+            <th>Edition</th>
+            <th>No Of Book Available</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in books %}
+        <tr>
+            <td>{{record.id}}</td>
+            <td>{{record.title}}</td>
+            <td>{{record.author}}</td>
+            <td>{{record.publisher}}</td>
+            <td>{{record.edition}}</td>
+            
+
+        </tr>
+
+
+    
+        {% endfor %}
+    </tbody>
+</table>{% endblock %}{% block javascripts %}
+<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#list-notice').DataTable();
+    });
+</script>{% endblock %}

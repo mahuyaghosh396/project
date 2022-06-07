@@ -1,73 +1,61 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}
-{{parent()}}
-{% endblock %}
-{% block stylesheets %}
-
-{% endblock %}
+{% block title %}{{parent()}}{% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-4"></div>
-        
-    <form>
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-          <input type="email" id="form2Example1" class="form-control" />
-          <label class="form-label" for="form2Example1">Book Title</label>
-        </div>
-      
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-          <input type="password" id="form2Example2" class="form-control" />
-          <label class="form-label" for="form2Example2"></label>
-        </div>
-      
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-          <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-              <label class="form-check-label" for="form2Example31"> Remember me </label>
-            </div>
-          </div>
-      
-          <div class="col">
-            <!-- Simple link -->
-            <a href="#!">Forgot password?</a>
-          </div>
-        </div>
-      
-        <!-- Submit button -->
-        <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
-      
-        <!-- Register buttons -->
-        <div class="text-center">
-          <p>Not a member? <a href="#!">Register</a></p>
-          <p>or sign up with:</p>
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-facebook-f"></i>
-          </button>
-      
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-google"></i>
-          </button>
-      
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-twitter"></i>
-          </button>
-      
-          <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-github"></i>
-          </button>
-        </div>
-      </form>
+    <div class="row">
+        <div class="col-4"></div>
         <div class="col-4">
+            <div class="px-5 py-4 shadow">
+                <form action=" " method="post">
+                    
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="email">Book Title</label>
+                        <input type="text" name="title"  class="form-control"  />
+                      
+                    </div>
+        
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="password">Author Name</label>
+                        <input type="text"  class="form-control" name="author" />
+                       
+                    </div>
+        
 
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="password">Publisher</label>
+                      <input type="text"  class="form-control" name="publisher" />
+                      
+                  </div>
+      
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Edition</label>
+                    <input type="text" class="form-control" name="edition" />
+                    
+                </div>
+    
+
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="password">No Of Books Available</label>
+                  <input type="text" class="form-control" name="no_of_book" />
+                 
+              </div>
+  
+        
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+                    
+                    
+                    <!-- Register buttons -->
+                   
+                        
+                </form>
+            </div>
+        </div>
+        <div class="col-4"></div>
     </div>
-</div>
-
 {% endblock %}
-

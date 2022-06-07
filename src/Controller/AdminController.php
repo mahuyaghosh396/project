@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
+use App\Entity\LibraryBook;
 use App\Entity\Notice;
 use App\Entity\User;
 use App\Form\ContactType;
@@ -302,9 +303,40 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    #[Route('/signup', name: 'web_signup')]
-    public function signup(): Response
+   
+
+    #[Route('/add_book', name: 'web_add-book')]
+    public function add_book(Request $request, ManagerRegistry $doctrine): Response
     {
-        return $this->render('admin/signup.html.twig', []);
+
+        $em = $doctrine->getManager();
+
+        if ($request->getMethod() == "POST"){
+         $book=new LibraryBook();
+         $book->setTitle($request->get('title'));
+         $book->setAuthor($request->get('author'));
+         $book->setPublisher($request->get('publisher'));
+         $book->setEdition($request->get('edition'));
+         $book->setAvailableBook($request->get('no_of_book'));
+
+
+
+         $em->persist($book);
+         $em->flush();
+        }
+
+
+        return $this->render('admin/add-book.html.twig', []);
     }
+
+
+    #[Route('/list/book', name: 'app_admin_list_book')]
+    public function listbook(ManagerRegistry $doctrine): Response
+    {
+        $books = $doctrine->getRepository(LibraryBook::class)->findAll();
+        return $this->render('admin/list_book.html.twig', [
+            "books" => $books
+        ]);
+    }
+
 }

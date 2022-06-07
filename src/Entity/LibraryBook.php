@@ -22,6 +22,12 @@ class LibraryBook
     #[ORM\Column(type: 'string', length: 255)]
     private $available_book;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $edition;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $publisher;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +67,30 @@ class LibraryBook
     public function setAvailableBook(string $available_book): self
     {
         $this->available_book = $available_book;
+
+        return $this;
+    }
+
+    public function getEdition(): ?string
+    {
+        return $this->edition;
+    }
+
+    public function setEdition(string $edition): self
+    {
+        $this->edition = $edition;
+
+        return $this;
+    }
+
+    public function getPublisher(): ?string
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(string $publisher): self
+    {
+        $this->publisher = $publisher;
 
         return $this;
     }
