@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\LibraryBookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Node\Expr\Cast\String_;
 
 #[ORM\Entity(repositoryClass: LibraryBookRepository::class)]
 class LibraryBook

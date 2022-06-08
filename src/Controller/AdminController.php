@@ -82,14 +82,14 @@ class AdminController extends AbstractController
         return $this->redirect($this->generateUrl('app_admin_list_user'));
     }
     #[Route('admin/view/user', name: 'web_view_ajax_user')]
-    public function ajaxView(ManagerRegistry $mr,Request $request): JsonResponse
+    public function ajaxView(ManagerRegistry $mr, Request $request): JsonResponse
     {
-       
+
         $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $request->get('id')]);
-        $html= $this->renderView('admin/ajax_view.html.twig', [
+        $html = $this->renderView('admin/ajax_view.html.twig', [
             'title' => "View User",
             'record' => $user,
-            'value'=>$user->getRoles()
+            'value' => $user->getRoles()
         ]);
         $response = new JsonResponse();
         $response->setData($html);
@@ -98,18 +98,17 @@ class AdminController extends AbstractController
     #[Route('admin/view/{id}', name: 'app_admin_view_user')]
     public function userView(ManagerRegistry $mr, $id): Response
     {
-      
+
         $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
-       
+
         return $this->render('admin/user_view.html.twig', [
             'title' => "View User",
             'title' => "View",
             'record' => $user,
-            'value'=>$user->getRoles()
-            
+            'value' => $user->getRoles()
+
 
         ]);
-       
     }
 
 
@@ -140,7 +139,7 @@ class AdminController extends AbstractController
             "notices" => $notices
         ]);
     }
-    #[Route('/admin/list/user', name: 'app_admin_list_user')]
+    #[Route('/list/user', name: 'app_admin_list_user')]
     public function listUser(ManagerRegistry $doctrine): Response
     {
         $users = $doctrine->getRepository(User::class)->findAll();
@@ -184,17 +183,17 @@ class AdminController extends AbstractController
 
             $query = $em->createQuery("SELECT u from App:Notice u");
             $query->getResult();
-            $num="1";
+            $num = "1";
         } else {
             $today = new \DateTime();
             $query = $em->createQuery("SELECT u from App:Notice u where u.noticeTo > :today and u.status ='active'");
             $query->setParameter('today', $today);
-            $num="0";
+            $num = "0";
         }
 
         return $this->render('admin/list_notice.html.twig', [
             "notices" => $query->getResult(),
-            "value"=> $num
+            "value" => $num
         ]);
     }
 
@@ -303,26 +302,26 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-   
 
-    #[Route('/add_book', name: 'web_add-book')]
+
+    #[Route('admin/add_book', name: 'web_add-book')]
     public function add_book(Request $request, ManagerRegistry $doctrine): Response
     {
 
         $em = $doctrine->getManager();
 
-        if ($request->getMethod() == "POST"){
-         $book=new LibraryBook();
-         $book->setTitle($request->get('title'));
-         $book->setAuthor($request->get('author'));
-         $book->setPublisher($request->get('publisher'));
-         $book->setEdition($request->get('edition'));
-         $book->setAvailableBook($request->get('no_of_book'));
+        if ($request->getMethod() == "POST") {
+            $book = new LibraryBook();
+            $book->setTitle($request->get('title'));
+            $book->setAuthor($request->get('author'));
+            $book->setPublisher($request->get('publisher'));
+            $book->setEdition($request->get('edition'));
+            $book->setAvailableBook($request->get('no_of_book'));
 
 
 
-         $em->persist($book);
-         $em->flush();
+            $em->persist($book);
+            $em->flush();
         }
 
 
@@ -330,7 +329,7 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/list/book', name: 'app_admin_list_book')]
+    #[Route('admin/list/book', name: 'app_admin_list_book')]
     public function listbook(ManagerRegistry $doctrine): Response
     {
         $books = $doctrine->getRepository(LibraryBook::class)->findAll();
@@ -339,4 +338,49 @@ class AdminController extends AbstractController
         ]);
     }
 
+
+    #[Route('admin/edit/book/{id}', name: 'web_edit-book')]
+    public function edit_book(Request $request, ManagerRegistry $doctrine, $id): Response
+    {
+
+        $em = $doctrine->getManager();
+        $book = $doctrine->getRepository("App\Entity\LibraryBook")->findOneBy(["id" => $id]);
+
+
+        $title = $book->getTitle();
+        $author = $book->getAuthor();
+        $publisher = $book->getPublisher();
+        $edition = $book->getEdition();
+        $no_of_book = $book->getAvailableBook();
+
+
+
+
+        if ($request->getMethod() == "POST") {
+
+            $book->setTitle($request->get('title'));
+            $book->setAuthor($request->get('author'));
+            $book->setPublisher($request->get('publisher'));
+            $book->setEdition($request->get('edition'));
+            $book->setAvailableBook($request->get('no_of_book'));
+
+
+
+            $em->persist($book);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('app_admin_list_book'));
+        }
+
+
+        return $this->render('admin/update_book.html.twig', [
+
+            'Title' => $title,
+            'Author' => $author,
+            'Publisher' => $publisher,
+            'Edition' => $edition,
+            'No_of_book' => $no_of_book,
+
+        ]);
+    }
 }

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-{{parent()}}Manage Notice
+{{parent()}}Manage Library
 {% endblock %}
 {% block stylesheets %}
 {{parent()}}
@@ -9,7 +9,12 @@
 {% endblock %}
 
 {% block body %}
-<table id="list-notice" class="table">
+
+<div class="my-3">
+    <a href="{{path('web_add-book')}} ">
+        <button type="input" class="btn btn-outline-success">Add Book</button> </a>
+</div>
+<table id="list-library" class="table">
     <thead>
         <tr>
             <th>Book Id</th>
@@ -17,8 +22,10 @@
             <th>Author Name</th>
             <th>Publisher Name</th>
             <th>Edition</th>
-            <th>No Of Book Available</th>
-            
+            <th>No Of Available book</th>
+            <th>Action</th>
+
+
         </tr>
     </thead>
     <tbody>
@@ -29,18 +36,25 @@
             <td>{{record.author}}</td>
             <td>{{record.publisher}}</td>
             <td>{{record.edition}}</td>
-            
+            <td>{{record.getAvailableBook}}</td>
+            <td>
+                <a href="{{path('web_edit-book',{id: record.id})}}">
+                    <button type="button" class="btn btn-outline-success">Update</button> </a>
+            </td>
+
+
+
 
         </tr>
 
 
-    
+
         {% endfor %}
     </tbody>
 </table>{% endblock %}{% block javascripts %}
 <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#list-notice').DataTable();
+        $('#list-library').DataTable();
     });
 </script>{% endblock %}
