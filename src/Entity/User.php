@@ -77,6 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->enable = 0;
         $this->status = 'Active';
+        $this->roles = ['ROLE_STUDENT'];
     }
 
     public function getId(): ?int

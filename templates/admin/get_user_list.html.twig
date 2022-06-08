@@ -1,0 +1,48 @@
+<div class="row">
+        <div class="col-12">
+           
+            <table id="list-user" class="table">
+                <thead>
+                    <tr>
+                        <th>User Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>DOB</th>
+                        <th>Cellphone</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in users %}
+
+
+                    <tr>
+                        <td>{{record.id}}</td>
+                        <td>{{record.firstName}}
+                            {{record.lastName}}</td>
+                        <td>{{record.email}}</td>
+                        <td>{{record.department}}</td>
+                        <td>{{record.dob|date('d-m-Y')}}</td>
+                        <td>{{record.cellphone}}</td>
+                        <td>{{record.created|date('d-m-Y @ h:i')}}</td>
+                        <td>{{record.updated|date('d-m-Y @ h:i')}}</td>
+
+                        <td>
+                            <a onclick="return confirm('Are you sure?')"
+                                href="{{path('app_update_user',{id: record.id})}}" class="btn btn-info text-white ">
+                                {{record.status}}</a>
+                        </td>
+
+                         <td>
+                            <a href="javascript:void(0)"
+                                class="btn btn-info text-white js-fetch-user" userid="{{record.id}}">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>

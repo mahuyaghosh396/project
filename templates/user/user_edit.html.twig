@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{parent()}}Signup
+{% endblock %}
+{% block stylesheets %}
+	<style>
+		.full-page {
+			height: 150px;
+			width: 120px;
+			background-image: linear linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+			padding-left: 400px;
+			background-size: cover;
+		}
+
+		body {
+			background-image: url('https://redpithemes.com/Documentation/assets/img/page_bg/page_bg_blur02.jpg');
+		}
+
+		.form-box {
+			width: 800px;
+			height: 800px;
+			margin: 5% auto;
+			background: rgba(53, 80, 88, 0.315);
+		}
+
+		.button-box {
+			position: relative;
+		}
+
+		#btn {
+			top: 0;
+			left: 0;
+			position: absolute;
+			width: 100px;
+			height: 100%;
+			background: #F3c693;
+			border-radius: 0.5s;
+		}
+
+		.input-group-register {
+			top: 120px;
+			padding-left: 100px;
+			width: 700px;
+			transition: 0.5s;
+		}
+
+		.input-feild {
+			width: 300px;
+			margin: 16px 0;
+		}
+
+		.submit-btn {
+			width: 120px;
+			padding: 13px 15px;
+			cursor: pointer;
+			display: block;
+			margin: auto;
+			background: #93d0f3;
+			border: 0;
+			outline: none;
+			border-radius: 30px;
+		}
+
+		.check-box {
+			margin: 7px 5px 7px 18px;
+		}
+
+		span {
+			color: rgb(17, 17, 17);
+			font-size: 16px;
+
+			position: absolute;
+		}
+
+		#register {
+			left: 450px;
+		}
+
+		#register input {
+			color: black;
+			font-size: 15;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+	<div class=".bimg">
+		<div class="full-page">
+			<div class="navbar"></div>
+			<div id="login-form" class="login-page">
+				<div class="form-box">
+					<h1 style="text-align:center">Register Here</h1>
+					{{ form_start(form) }}
+					<br>
+
+					<div class="row">
+						<div class="col-6 input-field">
+							{{ form_row(form.firstName) }}
+
+						</div>
+						<div class="col-6 input-field">
+							{{ form_row(form.lastName) }}
+
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-6 input-field">
+							{{ form_row(form.email) }}
+						</div>
+						<div class="col-6 input-field">
+							{{ form_row(form.cellphone) }}
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-6 input-field">
+							{{ form_row(form.academicYear) }}
+						</div>
+						<div class="col-6 input-field">
+							{{ form_row(form.dob) }}
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-6 input-field">
+							{{ form_row(form.registrationNumber) }}
+						</div>
+						<div class="col-6 input-field">
+							{{ form_row(form.rollNumber) }}
+						</div>
+					</div>
+					<br>
+					<br>
+					<div class="row">
+						<div class="col-6 input-field">
+							<label>Department:</label>
+							<Select name="Dept" id="sem" class="input-field form-control" required>
+								<option value="{{department}}">{{department}}</option>
+								<option value="CST">CST</option>
+								<option value="ETC">ETCE</option>
+								<option value="ARCH">ARCH</option>
+							</Select>
+						</div>
+						<div class="col-6 ">
+							{{ form_row(form.address) }}
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-6">
+							<label for="">password:</label>
+							<input type="password" name="password" class="input-field form-control" placeholder="Enter password">
+						</div>
+						<div class="col-6">
+							<label for="">confirm password:</label>
+							<input type="password" name="conpassword" class="input-field form-control" placeholder="Confirm password">
+						</div>
+					</div>
+					<br>
+
+					<input type="checkbox" class="check-box"><span>I agree to the terms & Conditions</span>
+					<br>
+
+					<div class="row mb-3 submit-btn">
+						<div class="col-4">
+							<input type="submit" value="update" class="btn btn-success">
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	{{ form_rest(form) }}
+	{{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+{% endblock %}
