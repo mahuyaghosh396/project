@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Form\ContactType;
 use App\Form\NoticeType;
 use App\Form\UserType;
-use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -23,26 +22,21 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin', name: 'app_admin')]
+    #[Route('/admin/dashboard', name: 'admin_dashboard')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        return $this->render('admin/dashboard.html.twig', [
+            'title' => 'Admin Dashboard',
         ]);
     }
 
-    #[Route('/admin', name: 'admin_dashboard')]
-    public function adminDashboard(): Response
+    #[Route('admin/list/user', name: 'app_admin_list_user')]
+    public function listUser(ManagerRegistry $mr): Response
     {
-
-        return $this->redirect($this->generateUrl('web_homepage'));
-    }
-    #[Route('/student', name: 'student_dashboard')]
-    public function studentDashboard(): Response
-    {
-
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        $users = $mr->getRepository("App\Entity\User")->findAll();
+        return $this->render('admin/list_user.html.twig', [
+            'title' => "List User",
+            'users' => $users,
         ]);
     }
 
@@ -63,6 +57,7 @@ class AdminController extends AbstractController
         }
         return $this->redirect($this->generateUrl('web_all_notice'));
     }
+
     #[Route('/update/user/{id}', name: 'app_update_user')]
     public function updateUser(ManagerRegistry $doctrine, $id): Response
     {
@@ -82,6 +77,7 @@ class AdminController extends AbstractController
         }
         return $this->redirect($this->generateUrl('app_admin_list_user'));
     }
+
     #[Route('admin/view/user', name: 'web_view_ajax_user')]
     public function ajaxView(ManagerRegistry $mr, Request $request): JsonResponse
     {
@@ -96,6 +92,7 @@ class AdminController extends AbstractController
         $response->setData($html);
         return $response;
     }
+
     #[Route('admin/view/{id}', name: 'app_admin_view_user')]
     public function userView(ManagerRegistry $mr, $id): Response
     {
@@ -113,47 +110,12 @@ class AdminController extends AbstractController
     }
 
 
-    // #[Route('admin/add/user', name: 'app_admin_add_user')]
-    // public function addUser(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
-    // {
-    //     $em = $doctrine->getManager();
-    //     $user = new User();
-    //     $user->setFirstName('Ankita');
-    //     $user->setLastName('Baidya');
-    //     $user->setEmail('ankita@g.c');
-    //     $user->setCellphone('12345');
-    //     $user->setRoles(['ROLE_STUDENT']);
-    //     $user->setPassword($passwordHasher->hashPassword($user, "1234"));
-    //     $em->persist($user);
-    //     $em->flush();
-    //     return $this->render('admin/index.html.twig', [
-    //         'controller_name' => 'AdminController',
-    //     ]);
-    // }
-
-
     #[Route('/admin/list/notice', name: 'app_admin_list_notice')]
     public function listNotice(ManagerRegistry $doctrine): Response
     {
         $notices = $doctrine->getRepository(Notice::class)->findAll();
         return $this->render('admin/list_notice.html.twig', [
             "notices" => $notices
-        ]);
-    }
-    #[Route('admin/list/user', name: 'app_admin_list_user')]
-    public function listUser(ManagerRegistry $mr): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('manage_user'),
-        ]);
-
-        $users = $mr->getRepository("App\Entity\User")->findAll();
-        return $this->render('admin/list_user.html.twig', [
-            'title' => "List",
-            'users' => $users,
-            'form' => $form->createView()
-
         ]);
     }
 
@@ -181,12 +143,6 @@ class AdminController extends AbstractController
     {
 
         $em = $doctrine->getManager();
-
-        // $abc=$this->getUser();
-        // $query = $em->createQuery("SELECT u.roles from App:User u where u= :abc");
-        // $query->setParameter('abc', $abc);
-        // $a=$query->getResult();
-        // dump($a);
 
         if ($this->isGranted('ROLE_ADMIN')) {
 
@@ -285,6 +241,7 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
     #[Route('/contact', name: 'web_contact')]
     public function contact(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -312,7 +269,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-
     #[Route('admin/add_book', name: 'web_add-book')]
     public function add_book(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -337,7 +293,6 @@ class AdminController extends AbstractController
         return $this->render('admin/add-book.html.twig', []);
     }
 
-
     #[Route('admin/list/book', name: 'app_admin_list_book')]
     public function listbook(ManagerRegistry $doctrine): Response
     {
@@ -346,7 +301,6 @@ class AdminController extends AbstractController
             "books" => $books
         ]);
     }
-
 
     #[Route('admin/edit/book/{id}', name: 'web_edit-book')]
     public function edit_book(Request $request, ManagerRegistry $doctrine, $id): Response

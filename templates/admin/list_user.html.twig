@@ -1,235 +1,70 @@
-{% extends 'base.html.twig' %}
+{% extends 'back_end_base.html.twig' %}
 
-{% block title %}
-{{parent()}}Manage User
-{% endblock %}
+{% block title %}{{parent()}}{{title}}{% endblock %}
 {% block stylesheets %}
 {{parent()}}
 <link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
 {% endblock %}
 
 {% block body %}
 
-<!-- Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                            <div class="form-box">
-                                <h1 style="text-align:center">Register Here</h1>
-                                {{ form_start(form, { 'attr' : { 'id': 'add-form' } })}}
-                                <br>
-
-                                <div class="row">
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.firstName) }}
-
-                                    </div>
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.lastName) }}
-
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.email) }}
-                                    </div>
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.cellphone) }}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.academicYear) }}
-                                    </div>
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.dob) }}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.registrationNumber) }}
-                                    </div>
-                                    <div class="col-6 input-field">
-                                        {{ form_row(form.rollNumber) }}
-                                    </div>
-                                </div>
-                                <br>
-                                <br>
-                                <div class="row">
-                                    <div class="col-6 input-field">
-                                        <label>Department:</label>
-                                        <Select name="Dept" id="sem" class="input-field form-control" required>
-                                            <option value="">select</option>
-                                            <option value="CST">CST</option>
-                                            <option value="ETC">ETC</option>
-                                            <option value="ARCH">ARCH</option>
-                                        </Select>
-                                    </div>
-                                    <div class="col-6 ">
-                                        {{ form_row(form.address) }}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="">password:</label>
-                                        <input type="password" name="password" class="input-field form-control"
-                                            placeholder="Enter password" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="">confirm password:</label>
-                                        <input type="password" name="conpassword" class="input-field form-control"
-                                            placeholder="Confirm password" required>
-                                    </div>
-                                </div>
-                                <br>
-
-                                <input type="checkbox" class="check-box"><span>I agree to the terms &
-                                    Conditions</span>
-                                <br>
-
-                                 <div class="row mb-3">
-                            <div class="col-4">
-                                <input type="submit" value="submit" class="btn btn-success">
-                            </div>
-                            </div>
-                        </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                {{ form_rest(form) }}
-                {{ form_end(form) }}
-                <div class="modal-footer"></div>
-            </div>
+<div class="row">
+    <div class="col-12">
+        <div class="my-3 mx-2">
+            <a href="#" class="btn btn-info text-white" data-toggle="modal" data-target="#addModal">+ Add User</a>
         </div>
-    </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="updateEdit"></div>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
+        <table id="list-user" class="table">
+            <thead>
+                <tr>
+                    <th>User Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>DOB</th>
+                    <th>Cellphone</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in users %}
+                <tr>
+                    <td>{{record.id}}</td>
+                    <td>{{record.firstName}}
+                        {{record.lastName}}</td>
+                    <td>{{record.email}}</td>
+                    <td>{{record.department}}</td>
+                    <td>{{record.dob|date('d-m-Y')}}</td>
+                    <td>{{record.cellphone}}</td>
+                    <td>{{record.created|date('d-m-Y @ h:i')}}</td>
+                    <td>{{record.updated|date('d-m-Y @ h:i')}}</td>
+
+                    <td>
+                        <a onclick="return confirm('Are you sure?')" href="{{path('app_update_user',{id: record.id})}}"
+                            class="btn btn-info text-white ">
+                            {{record.status}}</a>
+                    </td>
+
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-info text-white js-fetch-user"
+                            userid="{{record.id}}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
+{% endblock %}
 
-
-    <div class="row">
-        <div class="col-12">
-            <div class="my-3 mx-2">
-                <a href="#" class="btn btn-info text-white" data-toggle="modal" data-target="#addModal">+ Add User</a>
-            </div>
-            <table id="list-user" class="table">
-                <thead>
-                    <tr>
-                        <th>User Id</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Department</th>
-                        <th>DOB</th>
-                        <th>Cellphone</th>
-                        <th>Created</th>
-                        <th>Updated</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for record in users %}
-
-
-                    <tr>
-                        <td>{{record.id}}</td>
-                        <td>{{record.firstName}}
-                            {{record.lastName}}</td>
-                        <td>{{record.email}}</td>
-                        <td>{{record.department}}</td>
-                        <td>{{record.dob|date('d-m-Y')}}</td>
-                        <td>{{record.cellphone}}</td>
-                        <td>{{record.created|date('d-m-Y @ h:i')}}</td>
-                        <td>{{record.updated|date('d-m-Y @ h:i')}}</td>
-
-                        <td>
-                            <a onclick="return confirm('Are you sure?')"
-                                href="{{path('app_update_user',{id: record.id})}}" class="btn btn-info text-white ">
-                                {{record.status}}</a>
-                        </td>
-
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="btn btn-info text-white js-fetch-user" userid="{{record.id}}">Edit</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>{% endblock %}{% block javascripts %}
-        <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
-        <script>$(document).ready(function () {
-                $('#list-user').DataTable();
-            });</script>
-        <script>
-
-        jQuery('body').on('click',".js-fetch-user",function () {
-        var id = jQuery(this).attr('userid');
-
-        $.ajax({
-            type: "GET",
-            url: "/admin/web/ajax/edit/abc",
-            data: {
-                id
-            },
-            dataType: 'json',
-            success: function (returns) {
-                jQuery('#updateEdit').html(returns);
-                jQuery('#editModal').modal('show');
-            },
-            error: function (xhr) { }
-        });
-    })
-
-            jQuery('body').on('submit', "#edit-form,#add-form", function (e) {
-                e.preventDefault();
-                var formURL = "{{path('web_ajax_user')}}";
-                var formData = new FormData(jQuery(this)[0]);
-                $.ajax({
-                    type: "POST",
-                    dataType: 'json',
-                    url:formURL,
-                    data: formData,
-                    processData: false,
-                    cache: false,
-                    contentType:false,
-                    success: function (returns) {
-                        jQuery("#list-user").html(returns);
-                         jQuery('#editModal').modal('hide');
-                        jQuery('#addModal').modal('hide');
-                    },
-                    error: function (xhr) { }
-                });
-
-            }); </script>
-        {% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#list-user').DataTable();
+    });
+</script>
+{% endblock %}
