@@ -9,21 +9,16 @@
 {% block body %}
 
 <div class="row">
-    <div class="col-12">
-        <div class="my-3 mx-2">
-            <a href="#" class="btn btn-info text-white" data-toggle="modal" data-target="#addModal">+ Add User</a>
-        </div>
+    <div class="col-12">        
         <table id="list-user" class="table">
             <thead>
                 <tr>
-                    <th>User Id</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Department</th>
                     <th>DOB</th>
                     <th>Cellphone</th>
-                    <th>Created</th>
-                    <th>Updated</th>
+                    <th>Roles</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -31,16 +26,12 @@
             <tbody>
                 {% for record in users %}
                 <tr>
-                    <td>{{record.id}}</td>
-                    <td>{{record.firstName}}
-                        {{record.lastName}}</td>
+                    <td>{{record.getFullName}}</td>
                     <td>{{record.email}}</td>
                     <td>{{record.department}}</td>
                     <td>{{record.dob|date('d-m-Y')}}</td>
                     <td>{{record.cellphone}}</td>
-                    <td>{{record.created|date('d-m-Y @ h:i')}}</td>
-                    <td>{{record.updated|date('d-m-Y @ h:i')}}</td>
-
+                    <td>{{record.getDisplayRoles}}</td>
                     <td>
                         <a onclick="return confirm('Are you sure?')" href="{{path('app_update_user',{id: record.id})}}"
                             class="btn btn-info text-white ">

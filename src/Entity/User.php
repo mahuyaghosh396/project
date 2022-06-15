@@ -125,6 +125,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
+    public function getDisplayRoles(): string
+    {
+        return implode(', ', $this->getRoles());
+    }
 
     /**
      * @see PasswordAuthenticatedUserInterface
