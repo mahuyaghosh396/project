@@ -151,14 +151,14 @@
                         <th>Department</th>
                         <th>DOB</th>
                         <th>Cellphone</th>
-                        <th>Created</th>
-                        <th>Updated</th>
+                        <th>Role</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for record in users %}
+                      
 
 
                     <tr>
@@ -169,12 +169,18 @@
                         <td>{{record.department}}</td>
                         <td>{{record.dob|date('d-m-Y')}}</td>
                         <td>{{record.cellphone}}</td>
-                        <td>{{record.created|date('d-m-Y @ h:i')}}</td>
-                        <td>{{record.updated|date('d-m-Y @ h:i')}}</td>
+                         
+                        <td>
+
+                        {{record.roles|join(', ')}}
+                        </td>
+                       
+                        
+                        
 
                         <td>
                             <a onclick="return confirm('Are you sure?')"
-                                href="{{path('app_update_user',{id: record.id})}}" class="btn btn-info text-white ">
+                                href="{{path('app_update_user',{id: record.id})}}" >
                                 {{record.status}}</a>
                         </td>
 
@@ -184,6 +190,7 @@
                         </td>
                     </tr>
                     {% endfor %}
+                     
                 </tbody>
             </table>
         </div>{% endblock %}{% block javascripts %}

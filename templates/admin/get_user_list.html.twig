@@ -10,8 +10,6 @@
                         <th>Department</th>
                         <th>DOB</th>
                         <th>Cellphone</th>
-                        <th>Created</th>
-                        <th>Updated</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -28,8 +26,7 @@
                         <td>{{record.department}}</td>
                         <td>{{record.dob|date('d-m-Y')}}</td>
                         <td>{{record.cellphone}}</td>
-                        <td>{{record.created|date('d-m-Y @ h:i')}}</td>
-                        <td>{{record.updated|date('d-m-Y @ h:i')}}</td>
+                        
 
                         <td>
                             <a onclick="return confirm('Are you sure?')"

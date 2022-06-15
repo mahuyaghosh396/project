@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Doctrine\DBAL\Types\DateType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -21,16 +21,16 @@ class UserType extends AbstractType
             //->add('roles')
             //->add('password')
             ->add('cellphone',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'Phone number']])
-            ->add('academicYear',NumberType::class,['attr' => ['class' => 'form-control','placeholder' => 'Academic year']])
-            ->add('registrationNumber',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'Registration number']])
-            ->add('rollNumber',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'Roll number']])
+            ->add('academicYear',NumberType::class,['attr' => ['class' => 'form-control','placeholder' => 'Academic year'],'required'=>false])
+            ->add('registrationNumber',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'Registration number'],'required'=>false])
+            ->add('rollNumber',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'Roll number'],'required'=>false])
             // ->add('department')
             // ->add('profilePic')
-            ->add('firstName',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'First name ']])
+            ->add('firstName',TextType::class,['attr' => ['class' =>'form-control','placeholder' => 'First name ']])
             ->add('lastName',TextType::class,['attr' => ['class' => 'form-control','placeholder' => 'Last name']])
             ->add('address',TextareaType::class,['attr' => ['class' => 'form-control','placeholder' => 'Address']])
             //->add('enable')
-            ->add('dob',TypeDateType::class,['attr' => ['class' => 'form-control','placeholder' => 'Date of birth']])
+            ->add('dob',TypeDateType::class,['attr' => ['class' => 'form-control','placeholder' => 'Date of birth'],'required'=>false])
             //->add('status')
             //->add('created')
             //->add('updated')

@@ -143,16 +143,24 @@ class AdminController extends AbstractController
     #[Route('admin/list/user', name: 'app_admin_list_user')]
     public function listUser(ManagerRegistry $mr): Response
     {
+        $em=$mr->getManager();
         $user = new User();
         $form = $this->createForm(UserType::class, $user, [
             'action' => $this->generateUrl('manage_user'),
         ]);
+        
+        $users=$mr->getRepository("App\Entity\User")->findAll();
+        //$user=$mr->getRepository("App\Entity\User")->findByRoles("ROLE_LECTURER");
+        $query = $em->createQuery("SELECT u.roles from App\Entity\User u ");
+        
+        $role=$query->getResult();
+       
 
-        $users = $mr->getRepository("App\Entity\User")->findAll();
         return $this->render('admin/list_user.html.twig', [
             'title' => "List",
             'users' => $users,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'role'=>$role
 
         ]);
     }
@@ -423,6 +431,8 @@ class AdminController extends AbstractController
 
             $form = $this->createForm(UserType::class, $user);
             if ($request->getMethod() == "POST") {
+
+                $user->setRoles($request->get('role'));
                 $user->setDepartment($request->get('Dept'));
                 $form->handleRequest($request);
                 $em = $mr->getManager();
@@ -451,6 +461,19 @@ class AdminController extends AbstractController
         $id = $request->get('id');
         $user = $mr->getRepository('App\Entity\User')->findOneBy(["id" => $id]);
         $dept = $user->getDepartment();
+        $role=$user->getRoles();
+        if($role==["ROLE_LECTURER","ROLE_USER"]){
+        $role="Lecturer";
+       
+        }
+        elseif($role==["ROLE_STUDENT","ROLE_USER"]){
+            $role="Student";
+           
+        }
+        else{
+            $role="Admin";
+            
+        }
         $form = $this->createForm(UserType::class, $user, [
             'action' => $this->generateUrl('manage_user', ['id' => $id]),
         ]);
@@ -458,7 +481,8 @@ class AdminController extends AbstractController
             'title' => "Edit User",
             'form' => $form->createView(),
             'id' => $id,
-            'dept' => $dept
+            'dept' => $dept,
+            'role' => $role
         ]);
         $response->setData($html);
         return $response;
@@ -469,6 +493,8 @@ class AdminController extends AbstractController
     {
 
         $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
+        
+        
         if (!$user) {
 
             $user = new User();
