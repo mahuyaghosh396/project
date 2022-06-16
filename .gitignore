@@ -6,6 +6,9 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /public/img/
+/public/img/*.*
+/public/images/*.*
+/public/images/
 /public/css/
 /public/js/
 /public/fonts/
