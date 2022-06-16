@@ -25,14 +25,15 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/front', name: 'web_frontpage')]
-    public function home(): Response
+    #[Route('/about/college', name: 'web_college')]
+    public function aboutCollege(): Response
     {
-        return $this->render('home/home.html.twig', []);
+        return $this->render('home/about_college.html.twig', []);
     }
-    #[Route('/about', name: 'web_about_us')]
-    public function aboutUs(): Response
+
+    #[Route('/gallery', name: 'web_gallery')]
+    public function gallery(): Response
     {
-        return $this->render('home/about_us.html.twig', []);
+        return $this->render('home/gallery.html.twig', []);
     }
 }

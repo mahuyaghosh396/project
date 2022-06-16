@@ -9,6 +9,7 @@
 /public/img/*.*
 /public/images/*.*
 /public/images/
+/public/plugins/
 /public/css/
 /public/js/
 /public/fonts/

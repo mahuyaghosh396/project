@@ -50,13 +50,10 @@
 					<a class="nav-link" href="javascript:void(0)">About Us</a>
 					<ul class="sub-menu list-unstyled ">
 						<li>
-							<a class="" href="">ABC</a>
+							<a class="" href="{{path('web_college')}}">About College</a>
 						</li>
-						<li>
-							<a class="" href="#">ABC</a>
-						</li>
-						<li>
-							<a class="" href="#">ABC</a>
+						<li>							
+							<a class="" href="{{path('web_gallery')}}">Gallery</a>
 						</li>
 					</ul>
 				</li>
@@ -225,7 +222,9 @@
 			</div>
 		</div>
 	</footer>
-	{% block javascripts %}{% endblock %}
+	{% block javascripts %}
+		<script src="/js/index.js"></script>
+	{% endblock %}
 </body>
 
 </html>

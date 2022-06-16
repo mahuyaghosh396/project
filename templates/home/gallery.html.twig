@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{parent()}}About-College
+{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block body %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="gallery" style="display:none;">
+            <img class="gallery-item" src="/images/img1 (1).jpg" alt="">
+            <img class="gallery-item" src="/images/img1 (2).jpg" alt="">
+            <img class="gallery-item" src="/images/img1 (3).jpg" alt="">
+            <img class="gallery-item" src="/images/img1 (4).jpg" alt="">
+            <img class="gallery-item" src="/images/img1 (5).jpg" alt="">
+            <img class="gallery-item" src="/images/img1 (6).jpg" alt="">
+            <img class="gallery-item" src="/images/img1 (7).jpg" alt="">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script src="/plugins/jquery-mau-gallery/mauGallery.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.gallery').mauGallery({
+            columns: 4,
+            showTags: false,
+            lightboxId: 'myAwesomeLightbox',
+        });
+
+    });
+</script>
+{% endblock %}
