@@ -23,7 +23,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class AdminController extends AbstractController
 {
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
-    public function index(): Response
+    public function dashboard(): Response
     {
         return $this->render('admin/dashboard.html.twig', [
             'title' => 'Admin Dashboard',
@@ -37,6 +37,47 @@ class AdminController extends AbstractController
         return $this->render('admin/list_user.html.twig', [
             'title' => "List User",
             'users' => $users,
+        ]);
+    }
+
+    #[Route('admin/manage/user/{id}', name: 'manage_user')]
+    public function manageUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher, $id = -1): Response
+    {
+
+        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
+        if (!$user) {
+            $user = new User();
+        }
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($request->getMethod() == "POST") {
+
+            if ($form->isSubmitted() and $form->isValid()) {
+                if ($request->get('password') != $request->get('conpassword')) {
+                    $request->getSession()->getFlashBag()->add("errormsg", "Passwords are not same ");
+                    return $this->redirect($this->generateUrl('manage_user'));
+                }
+                $em = $mr->getManager();
+                $user->setDepartment($request->get('Dept'));
+
+                $plainPassword = $request->get('password');
+
+                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+                $em->persist($user);
+                $em->flush();
+                return $this->redirect($this->generateUrl('app_admin_list_user'));
+            }
+        }
+        $dept = $user->getDepartment();
+        return $this->render('admin/user_manage.html.twig', [
+            'title' => "Edit user",
+            'user' => $user,
+            'form' => $form->createView(),
+            'id' => $id,
+
+
+
         ]);
     }
 
@@ -418,45 +459,4 @@ class AdminController extends AbstractController
         return $response;
     }
 
-    #[Route('admin/manage/user/{id}', name: 'manage_user')]
-    public function manageUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher, $id = -1): Response
-    {
-
-        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
-        if (!$user) {
-
-            $user = new User();
-        }
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($request->getMethod() == "POST") {
-
-            if ($form->isSubmitted() and $form->isValid()) {
-                if ($request->get('password') != $request->get('conpassword')) {
-                    $request->getSession()->getFlashBag()->add("errormsg", "Passwords are not same ");
-                    return $this->redirect($this->generateUrl('manage_user'));
-                }
-                $em = $mr->getManager();
-                $user->setDepartment($request->get('Dept'));
-
-                $plainPassword = $request->get('password');
-
-                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-                $em->persist($user);
-                $em->flush();
-                return $this->redirect($this->generateUrl('app_admin_list_user'));
-            }
-        }
-        $dept = $user->getDepartment();
-        return $this->render('admin/user_manage.html.twig', [
-            'title' => "Edit user",
-            'user' => $user,
-            'form' => $form->createView(),
-            'id' => $id,
-
-
-
-        ]);
-    }
 }
