@@ -1,120 +1,12 @@
-{# templates/login/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}{{parent()}}Login{% endblock %}
 {% block stylesheets %}
-<style>
-    .full-page {
-        height: 150px;
-        width: 120px;
-        background-image: linear linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-        padding-left: 500px;
-        background-size: cover;
-    }
-    body {
-        background-image: url(https://redpithemes.com/Documentation/assets/img/page_bg/page_bg_blur02.jpg);
-    }
-    .form-box {
-        width: 500px;
-        height: 500px;
-        position: absolute;
-        margin: 5% auto;
-        background: rgba(53, 80, 88, 0.315);
-        padding: 40px;
-        overflow: hidden;
-    }
-    /* .form-box1 {
-        width: 800px;
-        height: 900px;
-        position: absolute;
-        margin: 5% auto;
-        background: rgba(53, 80, 88, 0.315);
-        padding: 40px;
-        overflow: hidden;
-    } */
-    .button-box {
-        width: 220px;
-        margin: 10px auto;
-        position: relative;
-        box-shadow: 0 0 5px 5px #ff61241f;
-        border-radius: 10px;
-    }
-    .toggle-btn {
-        padding: 15px 27px;
-        background: transparent;
-        border: 0;
-        outline: none;
-        position: relative;
-    }
-    #btn {
-        top: 0;
-        left: 0;
-        position: absolute;
-        width: 100px;
-        height: 100%;
-        background: #F3c693;
-        border-radius: .5s;
-    }
-    .input-group-login {
-        top: 150px;
-        position: absolute;
-        width: 280px;
-        transition: .5s;
-    }
-    .input-group-register {
-        top: 120px;
-        position: absolute;
-        width: 280px;
-        transition: .5s;
-    }
-    .input-feild {
-        width: 100%;
-        padding: 10px 0;
-        margin: 5px 0;
-        border-left: 0;
-        border-top: 0;
-        border-right: 0;
-        border-bottom: 0;
-    }
-    .submit-btn {
-        width: 120px;
-        padding: 10px 30px;
-        cursor: pointer;
-        display: block;
-        margin: auto;
-        background: #93d0f3;
-        border: 0;
-        outline: none;
-        border-radius: 30px;
-    }
-    .check-box {
-        margin: 30px 10px 34px 10px;
-    }
-    span {
-        color: rgb(17, 17, 17);
-        font-size: 12px;
-        bottom: 68px;
-        position: absolute;
-    }
-    #login {
-        left: 50px;
-    }
-    #login input {
-        color: black;
-        font-size: 15px;
-    }
-    #register {
-        left: 450px;
-    }
-    #register input {
-        color: black;
-        font-size: 15;
-    }
-</style>
+{{parent()}}
 {% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-4"></div>
         <div class="col-4">
             <div class="px-5 py-4 shadow">
