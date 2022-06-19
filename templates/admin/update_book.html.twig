@@ -1,6 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'back_end_base.html.twig' %}
 
-{% block title %}{{parent()}}{% endblock %}
+{% block title %}{{parent()}}{{title}}{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
 
 {% block body %}
     <div class="row">
