@@ -79,6 +79,7 @@ class UserType extends AbstractType
 
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'js-datepicker form-control'],
+                'format' => 'dd-MM-yyyy'
             ])
 
             ->add('enable', ChoiceType::class, [

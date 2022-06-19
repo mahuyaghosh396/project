@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 {{parent()}}
-<link rel="stylesheet" href="/plugins/bootstrap-datetimepicker/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="/plugins/datetimepicker-master/jquery.datetimepicker.min.css">
 {% endblock %}
 
 {% block body %}
@@ -73,7 +73,7 @@
     <div class="col-3">
         {% if user.id %}
             <div class="shadow py-3 px-4 bg-white">
-                <form action="{{path('app_reset_password', {id: user.id})}}" method="post">
+                <form action="{{path('web_reset_password', {id: user.id})}}" method="post">
                     <div class="form-group">
                         <label for="password">Change Password</label>
                         <input type="text" class="form-control" name="password" id="password" required>
@@ -89,10 +89,13 @@
 {% endblock %}
 {% block javascripts %}
 {{parent()}}
-<script src="/plugins/bootstrap-datetimepicker/bootstrap-datepicker.min.js"></script>
+<script src="/plugins/datetimepicker-master/jquery.datetimepicker.full.js"></script>
 <script>
     $(function () {
-        $('.js-datepicker').datepicker();
+        $('.js-datepicker').datetimepicker({
+            format:'d-m-Y',
+            timepicker:false,
+        });
     });
 </script>
 {% endblock %}

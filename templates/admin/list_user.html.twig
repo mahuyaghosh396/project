@@ -34,7 +34,7 @@
                     <td>{{record.getDisplayRoles}}</td>
                     <td>{{record.created|date('d-m-y h:i:s')}}</td>
                     <td>
-                        <a href="{{path('app_admin_manage_user', {id: record.id})}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a href="{{path('web_admin_manage_user', {id: record.id})}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
