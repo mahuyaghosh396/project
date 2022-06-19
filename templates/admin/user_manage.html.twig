@@ -1,9 +1,10 @@
 {% extends 'back_end_base.html.twig' %}
 
-{% block title %}{{parent()}}-{{title}}{% endblock %}
+{% block title %}{{parent()}}{{title}}{% endblock %}
 
 {% block stylesheets %}
 {{parent()}}
+<link rel="stylesheet" href="/plugins/bootstrap-datetimepicker/bootstrap-datepicker.min.css">
 {% endblock %}
 
 {% block body %}
@@ -35,6 +36,9 @@
             </div>
             <div class="row mt-3">
                 <div class="col-4">
+                    {{ form_row(form.department) }}
+                </div>
+                <div class="col-4">
                     {{ form_row(form.registrationNumber) }}
                 </div>
                 <div class="col-4">
@@ -42,13 +46,24 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-4">
+                    {{ form_row(form.roles) }}
+                </div>
+                <div class="col-4">
+                    {{ form_row(form.enable) }}
+                </div>
+                <div class="col-4">
+                    {{ form_row(form.status) }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-8">
                     {{ form_row(form.address) }}
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-3">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">{{title}}</button>
                 </div>
             </div>
             {{ form_rest(form) }}
@@ -56,21 +71,28 @@
         </div>
     </div>
     <div class="col-3">
-        <div class="shadow py-3 px-4 bg-white">
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="password">Change Password</label>
-                    <input type="text" class="form-control" name="password" id="password" required>
-                </div>
-                <div class="form-group mt-3">
-                    <button type="submit" value="Change" class="btn btn-danger">Change</button>
-                </div>
-            </form>
-        </div>
+        {% if user.id %}
+            <div class="shadow py-3 px-4 bg-white">
+                <form action="{{path('app_reset_password', {id: user.id})}}" method="post">
+                    <div class="form-group">
+                        <label for="password">Change Password</label>
+                        <input type="text" class="form-control" name="password" id="password" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" value="Change" class="btn btn-danger">Change</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
 {% block javascripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js" integrity="sha512-PDFb+YK2iaqtG4XelS5upP1/tFSmLUVJ/BVL8ToREQjsuXC5tyqEfAQV7Ca7s8b7RLHptOmTJak9jxlA2H9xQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {{parent()}}
+<script src="/plugins/bootstrap-datetimepicker/bootstrap-datepicker.min.js"></script>
+<script>
+    $(function () {
+        $('.js-datepicker').datepicker();
+    });
+</script>
 {% endblock %}

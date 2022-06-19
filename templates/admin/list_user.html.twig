@@ -9,7 +9,7 @@
 {% block body %}
 
 <div class="row">
-    <div class="col-12">        
+    <div class="col-12">
         <table id="list-user" class="table">
             <thead>
                 <tr>
@@ -19,7 +19,7 @@
                     <th>DOB</th>
                     <th>Cellphone</th>
                     <th>Roles</th>
-                    <th>Status</th>
+                    <th>Created</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -32,15 +32,9 @@
                     <td>{{record.dob|date('d-m-Y')}}</td>
                     <td>{{record.cellphone}}</td>
                     <td>{{record.getDisplayRoles}}</td>
+                    <td>{{record.created|date('d-m-y h:i:s')}}</td>
                     <td>
-                        <a onclick="return confirm('Are you sure?')" href="{{path('app_update_user',{id: record.id})}}"
-                            class="btn btn-info text-white ">
-                            {{record.status}}</a>
-                    </td>
-
-                    <td>
-                        <a href="javascript:void(0)" class="btn btn-info text-white js-fetch-user"
-                            userid="{{record.id}}">Edit</a>
+                        <a href="{{path('app_admin_manage_user', {id: record.id})}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </td>
                 </tr>
                 {% endfor %}

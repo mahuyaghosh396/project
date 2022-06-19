@@ -40,13 +40,15 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('admin/manage/user/{id}', name: 'manage_user')]
+    #[Route('admin/manage/user/{id}', name: 'app_admin_manage_user')]
     public function manageUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher, $id = -1): Response
     {
-
+        $title = "Update User";
+        $em = $mr->getManager();
         $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
         if (!$user) {
             $user = new User();
+            $title = "Add User";
         }
 
         $form = $this->createForm(UserType::class, $user);
@@ -54,31 +56,36 @@ class AdminController extends AbstractController
         if ($request->getMethod() == "POST") {
 
             if ($form->isSubmitted() and $form->isValid()) {
-                if ($request->get('password') != $request->get('conpassword')) {
-                    $request->getSession()->getFlashBag()->add("errormsg", "Passwords are not same ");
-                    return $this->redirect($this->generateUrl('manage_user'));
+
+                $message = "User Updated!";
+                // if new user default password will cellphone
+                if (!$user->getId()) {
+                    $user->setPassword($passwordHasher->hashPassword($user, $request->get('user')['cellphone']));
+                    $message = "User Added!";
                 }
-                $em = $mr->getManager();
-                $user->setDepartment($request->get('Dept'));
-
-                $plainPassword = $request->get('password');
-
-                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
                 $em->persist($user);
                 $em->flush();
+                $request->getSession()->getFlashBag()->add("successmsg", $message);
                 return $this->redirect($this->generateUrl('app_admin_list_user'));
             }
         }
-        $dept = $user->getDepartment();
         return $this->render('admin/user_manage.html.twig', [
-            'title' => "Edit user",
+            'title' => $title,
             'user' => $user,
             'form' => $form->createView(),
-            'id' => $id,
-
-
-
         ]);
+    }
+
+    #[Route('admin/reset/password/{id}', name: 'app_reset_password')]
+    public function resetPassword(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, $id): Response
+    {
+        $em = $doctrine->getManager();
+        $user = $doctrine->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
+        $user->setPassword($passwordHasher->hashPassword($user, $request->get('password')));
+        $em->persist($user);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add("successmsg", "Password Changed!");
+        return $this->redirect($this->generateUrl('app_admin_manage_user', ['id' => $id]));
     }
 
     #[Route('admin/update/notice/{id}', name: 'app_update_notice')]
@@ -458,5 +465,4 @@ class AdminController extends AbstractController
         $response->setData($html);
         return $response;
     }
-
 }
