@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    
     #[Route('/', name: 'web_homepage')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -25,14 +26,31 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/front', name: 'web_frontpage')]
-    public function home(): Response
+    #[Route('/redirect', name: 'web_redirect')]
+    public function checkRedirect(Request $request): Response
     {
-        return $this->render('home/home.html.twig', []);
+        $url = 'web_homepage';
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $url = 'admin_dashboard';
+        } elseif ($this->isGranted('ROLE_STUDENT')) {
+            $url = 'student_dashboard';
+        } elseif ($this->isGranted('ROLE_LECTURER')) {
+            $url = 'lecturer_dashboard';
+        } else {
+        }
+
+        return $this->redirect($this->generateUrl($url));
     }
-    #[Route('/about', name: 'web_about_us')]
-    public function aboutUs(): Response
+    
+    #[Route('/about/college', name: 'web_college')]
+    public function aboutCollege(): Response
     {
-        return $this->render('home/about_us.html.twig', []);
+        return $this->render('home/about_college.html.twig', []);
+    }
+
+    #[Route('/gallery', name: 'web_gallery')]
+    public function gallery(): Response
+    {
+        return $this->render('home/gallery.html.twig', []);
     }
 }
