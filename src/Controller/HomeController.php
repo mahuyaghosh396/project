@@ -17,12 +17,22 @@ class HomeController extends AbstractController
     {
         $em = $doctrine->getManager();
         $today = new \DateTime("today");
-        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom < :today  and u.status ='active' and u.noticeTo > :today");
+        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom < :today  and u.status ='Active' and u.type='Student' and u.noticeTo > :today");
         $query->setParameter('today', $today);
-        $notices = $query->getResult();
-        //dd($query->getResult());
+        $studentNotices = $query->getResult();
+
+        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom < :today  and u.status ='Active' and u.type='Faculty' and u.noticeTo > :today");
+        $query->setParameter('today', $today);
+        $facultyNotices = $query->getResult();
+
+        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom < :today  and u.status ='Active' and u.type='Tender' and u.noticeTo > :today");
+        $query->setParameter('today', $today);
+        $tenderNotices = $query->getResult();
+       
         return $this->render('home/index.html.twig', [
-            "notices" => $notices
+            "studentNotices" => $studentNotices,
+            "facultyNotices" => $facultyNotices,
+            "tenderNotices" => $tenderNotices,
         ]);
     }
 

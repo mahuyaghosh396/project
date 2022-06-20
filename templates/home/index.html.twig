@@ -73,35 +73,44 @@
 <div class="row mt-4">
 	<div class="col-12 col-md-4">
 		<div class="section2-hdng h4 mb-0 text-white text-center">
-			Notices
+			Student Notices
 		</div>
 		<ul class="list-group h5">
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
+			{% for notice in studentNotices %}
+			<li class="list-group-item">
+				<a href="{{path('web_download', {path:'notices' , file: notice.file})}}">
+					{{notice.name}}
+				</a>
+			</li>
+			{% endfor %}
 		</ul>
 	</div>
 	<div class="col-12 col-md-4">
 		<div class="section2-hdng h4 mb-0 text-white text-center">
-			Notices
+			Faculty Notices
 		</div>
 		<ul class="list-group h5">
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
+			{% for notice in facultyNotices %}
+			<li class="list-group-item">
+				<a href="{{path('web_download', {path:'notices' , file: notice.file})}}">
+					{{notice.name}}
+				</a>
+			</li>
+			{% endfor %}
 		</ul>
 	</div>
 	<div class="col-12 col-md-4">
 		<div class="section2-hdng h4 mb-0 text-white text-center">
-			Notices
+			Tender Notices
 		</div>
 		<ul class="list-group h5">
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
-			<li class="list-group-item">Holiday List 2022</li>
+			{% for notice in tenderNotices %}
+			<li class="list-group-item">
+				<a href="{{path('web_download', {path:'notices' , file: notice.file})}}">
+					{{notice.name}}
+				</a>
+			</li>
+			{% endfor %}
 		</ul>
 	</div>
 </div>
