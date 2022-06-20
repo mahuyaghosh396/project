@@ -222,6 +222,8 @@ class AdminController extends AbstractController
             $book->setAvailableBook($request->get('no_of_book'));
             $em->persist($book);
             $em->flush();
+            $request->getSession()->getFlashBag()->add("successmsg", "Book added!");
+            return $this->redirect($this->generateUrl('web_admin_list_book'));
         }
 
         return $this->render('admin/add-book.html.twig', [
@@ -260,7 +262,7 @@ class AdminController extends AbstractController
             $book->setAvailableBook($request->get('no_of_book'));
             $em->persist($book);
             $em->flush();
-
+            $request->getSession()->getFlashBag()->add("successmsg", "Book updated!");
             return $this->redirect($this->generateUrl('web_admin_list_book'));
         }
 
