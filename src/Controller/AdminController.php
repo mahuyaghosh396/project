@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Form\ContactType;
 use App\Form\NoticeType;
 use App\Form\UserType;
-use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -23,186 +22,148 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin', name: 'app_admin')]
-    public function index(): Response
+    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    public function dashboard(): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        return $this->render('admin/dashboard.html.twig', [
+            'title' => 'Admin Dashboard',
         ]);
     }
 
-    #[Route('/admin', name: 'admin_dashboard')]
-    public function adminDashboard(): Response
+    #[Route('admin/list/user', name: 'web_admin_list_user')]
+    public function listUser(ManagerRegistry $mr): Response
     {
-
-        return $this->redirect($this->generateUrl('web_homepage'));
-    }
-    #[Route('/student', name: 'student_dashboard')]
-    public function studentDashboard(): Response
-    {
-
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        $users = $mr->getRepository("App\Entity\User")->findAll();
+        return $this->render('admin/list_user.html.twig', [
+            'title' => "List User",
+            'users' => $users,
         ]);
     }
 
-    #[Route('admin/update/notice/{id}', name: 'app_update_notice')]
-    public function updateNotice(ManagerRegistry $doctrine, $id): Response
+    #[Route('admin/manage/user/{id}', name: 'web_admin_manage_user')]
+    public function manageUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher, $id = -1): Response
     {
-
-        $em = $doctrine->getManager();
-        $notice = $doctrine->getRepository("App\Entity\Notice")->findOneBy(["id" => $id]);
-        if ($notice->getStatus() == "Active") {
-            $notice->setStatus("Deleted");
-            $em->persist($notice);
-            $em->flush();
-        } else {
-            $notice->setStatus("Active");
-            $em->persist($notice);
-            $em->flush();
+        $title = "Update User";
+        $em = $mr->getManager();
+        $user = $mr->getRepository(User::class)->findOneBy(["id" => $id]);
+        if (!$user) {
+            $user = new User();
+            $title = "Add User";
         }
-        return $this->redirect($this->generateUrl('web_all_notice'));
-    }
-    #[Route('/update/user/{id}', name: 'app_update_user')]
-    public function updateUser(ManagerRegistry $doctrine, $id): Response
-    {
 
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($request->getMethod() == "POST") {
+
+            if ($form->isSubmitted() and $form->isValid()) {
+
+                $message = "User Updated!";
+                // if new user default password will cellphone
+                if (!$user->getId()) {
+                    $user->setPassword($passwordHasher->hashPassword($user, $request->get('user')['cellphone']));
+                    $message = "User Added!";
+                }
+                $em->persist($user);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add("successmsg", $message);
+                return $this->redirect($this->generateUrl('web_admin_list_user'));
+            }
+        }
+        return $this->render('admin/manage_user.html.twig', [
+            'title' => $title,
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('admin/reset/password/{id}', name: 'web_reset_password')]
+    public function resetPassword(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, $id): Response
+    {
         $em = $doctrine->getManager();
         $user = $doctrine->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
-        if ($user->getStatus() == "Active") {
-            $user->setStatus("Deleted");
-            $user->setEnable(0);
-            $em->persist($user);
-            $em->flush();
-        } else {
-            $user->setStatus("Active");
-            $user->setEnable(0);
-            $em->persist($user);
-            $em->flush();
-        }
-        return $this->redirect($this->generateUrl('app_admin_list_user'));
-    }
-    #[Route('admin/view/user', name: 'web_view_ajax_user')]
-    public function ajaxView(ManagerRegistry $mr, Request $request): JsonResponse
-    {
-
-        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $request->get('id')]);
-        $html = $this->renderView('admin/ajax_view.html.twig', [
-            'title' => "View User",
-            'record' => $user,
-            'value' => $user->getRoles()
-        ]);
-        $response = new JsonResponse();
-        $response->setData($html);
-        return $response;
-    }
-    #[Route('admin/view/{id}', name: 'app_admin_view_user')]
-    public function userView(ManagerRegistry $mr, $id): Response
-    {
-
-        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
-
-        return $this->render('admin/user_view.html.twig', [
-            'title' => "View User",
-            'title' => "View",
-            'record' => $user,
-            'value' => $user->getRoles()
-
-
-        ]);
+        $user->setPassword($passwordHasher->hashPassword($user, $request->get('password')));
+        $em->persist($user);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add("successmsg", "Password Changed!");
+        return $this->redirect($this->generateUrl('web_admin_manage_user', ['id' => $id]));
     }
 
-
-    // #[Route('admin/add/user', name: 'app_admin_add_user')]
-    // public function addUser(ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher): Response
-    // {
-    //     $em = $doctrine->getManager();
-    //     $user = new User();
-    //     $user->setFirstName('Ankita');
-    //     $user->setLastName('Baidya');
-    //     $user->setEmail('ankita@g.c');
-    //     $user->setCellphone('12345');
-    //     $user->setRoles(['ROLE_STUDENT']);
-    //     $user->setPassword($passwordHasher->hashPassword($user, "1234"));
-    //     $em->persist($user);
-    //     $em->flush();
-    //     return $this->render('admin/index.html.twig', [
-    //         'controller_name' => 'AdminController',
-    //     ]);
-    // }
-
-
-    #[Route('/admin/list/notice', name: 'app_admin_list_notice')]
+    #[Route('/admin/list/notice', name: 'web_admin_list_notice')]
     public function listNotice(ManagerRegistry $doctrine): Response
     {
         $notices = $doctrine->getRepository(Notice::class)->findAll();
         return $this->render('admin/list_notice.html.twig', [
-            "notices" => $notices
-        ]);
-    }
-    #[Route('admin/list/user', name: 'app_admin_list_user')]
-    public function listUser(ManagerRegistry $mr): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('manage_user'),
-        ]);
-
-        $users = $mr->getRepository("App\Entity\User")->findAll();
-        return $this->render('admin/list_user.html.twig', [
-            'title' => "List",
-            'users' => $users,
-            'form' => $form->createView()
-
+            "notices" => $notices,
+            "title" => 'List Notice'
         ]);
     }
 
-    #[Route('/download/{path}/{file}', name: 'app_admin_download')]
-    public function download($path, $file)
+    #[Route('/admin/manage/notice/{id}', name: 'web_admin_manage_notice')]
+    public function manageNotice(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, $id = -1): Response
+
     {
-        $filename = $this->getParameter('upload_directory') . "/" . $path . "/" . $file;
-        //dd(file_exists($filename));
-        // Generate response
-        $response = new Response();
-
-        // Set headers
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', mime_content_type($filename));
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($filename) . '";');
-        $response->headers->set('Content-length', filesize($filename));
-        // Send headers before outputting anything
-        $response->sendHeaders();
-        $response->setContent(file_get_contents($filename));
-        return $response;
-    }
-
-    #[Route('/view/notice', name: 'web_all_notice')]
-    public function viewNotice(ManagerRegistry $doctrine): Response
-    {
-
+        $title = "Update Notice";
+        $message = "Notice Updated!";
         $em = $doctrine->getManager();
-
-        // $abc=$this->getUser();
-        // $query = $em->createQuery("SELECT u.roles from App:User u where u= :abc");
-        // $query->setParameter('abc', $abc);
-        // $a=$query->getResult();
-        // dump($a);
-
-        if ($this->isGranted('ROLE_ADMIN')) {
-
-            $query = $em->createQuery("SELECT u from App:Notice u");
-            $query->getResult();
-            $num = "1";
-        } else {
-            $today = new \DateTime();
-            $query = $em->createQuery("SELECT u from App:Notice u where u.noticeTo > :today and u.status ='active'");
-            $query->setParameter('today', $today);
-            $num = "0";
+        $notice = $doctrine->getRepository(Notice::class)->findOneBy(["id" => $id]);
+        if (!$notice) {
+            $notice = new Notice();
+            $title = "Add Notice";
+            $message = "Notice Created!";
         }
 
-        return $this->render('admin/list_notice.html.twig', [
-            "notices" => $query->getResult(),
-            "value" => $num
+        $form = $this->createForm(NoticeType::class, $notice);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() and $form->isValid()) {
+
+            /** @var UploadedFile $upload */
+            $upload = $form->get('file')->getData();
+
+            if ($upload) {
+
+                /*original file name..if my file name is "my_first_notice"..then $originalfilename
+                return the actual name of the file*/
+                $originalFilename = pathinfo($upload->getClientOriginalName(), PATHINFO_FILENAME);
+
+                //$filename returns the file name like that " my-first-notice " 
+                $Filename = $slugger->slug($originalFilename);
+
+                //$newFilename returns a unique file name with extension..like that" my-first-notice.pdf"
+                //guessExtension()is a method which returns the original extension of the file.
+                $newFilename = uniqid() . '_' . $Filename . '.' . $upload->guessExtension();
+
+                //move uploaded file....
+                try {
+                    $upload->move(
+                        $this->getParameter('upload_directory') . "/notices/",
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                //set file name....with it's new file name....
+                $notice->setFile($newFilename);               
+                $em->persist($notice);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add("successmsg", $message);
+                return $this->redirect($this->generateUrl('web_admin_list_notice'));
+            } elseif(!$upload) {
+                $em->persist($notice);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add("successmsg", $message);
+                return $this->redirect($this->generateUrl('web_admin_list_notice'));
+            } else {
+                $request->getSession()->getFlashBag()->add("errormsg", "something went wrong!!");
+                return $this->redirect($this->generateUrl('web_admin_list_notice'));
+            }
+        }
+
+        return $this->render('admin/manage_notice.html.twig', [
+            'title' => $title,
+            'notice' => $notice,
+            'form' => $form->createView()
         ]);
     }
 
@@ -220,71 +181,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/manage/notice', name: 'web_manage_notice')]
-    public function manageNotice(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
-
-    {
-
-        $notice = new Notice();
-        $form = $this->createForm(NoticeType::class, $notice);
-        $form->handleRequest($request);
-        if ($request->getMethod() == "POST") {
-
-            if ($form->isSubmitted() and $form->isValid()) {
-
-                /** @var UploadedFile $upload */
-                $upload = $form->get('file')->getData();
-
-                if ($upload) {
-
-                    /*original file name..if my file name is "my_first_notice"..then $originalfilename
-                    return the actual name of the file*/
-                    $originalFilename = pathinfo($upload->getClientOriginalName(), PATHINFO_FILENAME);
-
-                    //$filename returns the file name like that " my-first-notice " 
-                    $Filename = $slugger->slug($originalFilename);
-
-                    //$newFilename returns a unique file name with extension..like that" my-first-notice.pdf"
-                    //guessExtension()is a method which returns the original extension of the file.
-                    $newFilename = $Filename . '-' . uniqid() . '.' . $upload->guessExtension();
-
-                    //move uploaded file....
-                    try {
-                        $upload->move(
-                            $this->getParameter('upload_directory') . "/notices/",
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
-                    }
-
-
-                    //set file name....with it's new file name....
-                    $notice->setFile($newFilename);
-
-
-
-
-                    $em = $doctrine->getManager();
-
-                    $em->persist($notice);
-
-                    $em->flush();
-
-                    $request->getSession()->getFlashBag()->add("successmsg", "Notice uploaded Successfully");
-                    return $this->redirect($this->generateUrl('web_add_notice'));
-                } else {
-                    $request->getSession()->getFlashBag()->add("errormsg", "something went wrong!!");
-                    return $this->redirect($this->generateUrl('web_add_notice'));
-                }
-            }
-        }
-
-        return $this->render('admin/manage_notice.html.twig', [
-            'title' => "Add Notice",
-            'form' => $form->createView()
-        ]);
-    }
     #[Route('/contact', name: 'web_contact')]
     public function contact(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -312,11 +208,9 @@ class AdminController extends AbstractController
         ]);
     }
 
-
-    #[Route('admin/add_book', name: 'web_add-book')]
+    #[Route('/admin/add_book', name: 'web_add-book')]
     public function add_book(Request $request, ManagerRegistry $doctrine): Response
     {
-
         $em = $doctrine->getManager();
 
         if ($request->getMethod() == "POST") {
@@ -326,44 +220,36 @@ class AdminController extends AbstractController
             $book->setPublisher($request->get('publisher'));
             $book->setEdition($request->get('edition'));
             $book->setAvailableBook($request->get('no_of_book'));
-
-
-
             $em->persist($book);
             $em->flush();
         }
 
-
-        return $this->render('admin/add-book.html.twig', []);
+        return $this->render('admin/add-book.html.twig', [
+            'title' => 'Add Book'
+        ]);
     }
 
-
-    #[Route('admin/list/book', name: 'app_admin_list_book')]
+    #[Route('/admin/list/book', name: 'web_admin_list_book')]
     public function listbook(ManagerRegistry $doctrine): Response
     {
         $books = $doctrine->getRepository(LibraryBook::class)->findAll();
         return $this->render('admin/list_book.html.twig', [
-            "books" => $books
+            "books" => $books,
+            'title' => 'List Book'
         ]);
     }
 
-
-    #[Route('admin/edit/book/{id}', name: 'web_edit-book')]
+    #[Route('/admin/edit/book/{id}', name: 'web_edit-book')]
     public function edit_book(Request $request, ManagerRegistry $doctrine, $id): Response
     {
 
         $em = $doctrine->getManager();
         $book = $doctrine->getRepository("App\Entity\LibraryBook")->findOneBy(["id" => $id]);
-
-
         $title = $book->getTitle();
         $author = $book->getAuthor();
         $publisher = $book->getPublisher();
         $edition = $book->getEdition();
         $no_of_book = $book->getAvailableBook();
-
-
-
 
         if ($request->getMethod() == "POST") {
 
@@ -372,136 +258,21 @@ class AdminController extends AbstractController
             $book->setPublisher($request->get('publisher'));
             $book->setEdition($request->get('edition'));
             $book->setAvailableBook($request->get('no_of_book'));
-
-
-
             $em->persist($book);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('app_admin_list_book'));
+            return $this->redirect($this->generateUrl('web_admin_list_book'));
         }
 
 
         return $this->render('admin/update_book.html.twig', [
 
+            'title' => "Edit Book",
             'Title' => $title,
             'Author' => $author,
             'Publisher' => $publisher,
             'Edition' => $edition,
             'No_of_book' => $no_of_book,
-
-        ]);
-    }
-
-    #[Route('admin/web/ajax', name: 'web_ajax_user')]
-    public function ajaxUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher): JsonResponse
-    {
-        $id = $request->get('id');
-        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
-        if (!$user) {
-            $user = new User();
-
-
-            $form = $this->createForm(UserType::class, $user);
-
-            $form->handleRequest($request);
-            if ($request->getMethod() == "POST") {
-
-
-                if ($form->isSubmitted() and $form->isValid()) {
-
-                    $em = $mr->getManager();
-
-                    $plainPassword = $request->get('password');
-                    $user->setDepartment($request->get('Dept'));
-                    $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-                    $em->persist($user);
-                    $em->flush();
-                }
-            }
-        } else {
-
-            $form = $this->createForm(UserType::class, $user);
-            if ($request->getMethod() == "POST") {
-                $user->setDepartment($request->get('Dept'));
-                $form->handleRequest($request);
-                $em = $mr->getManager();
-                $em->persist($user);
-                $em->flush();
-            }
-        }
-        $users = $mr->getRepository("App\Entity\User")->findAll();
-        $html = $this->renderView('admin/get_user_list.html.twig', [
-            'title' => "manage User",
-            'form' => $form->createView(),
-            'id' => $id,
-            'users' => $users,
-
-        ]);
-
-        $response = new JsonResponse();
-        $response->setData($html);
-        return $response;
-    }
-    #[Route('admin/web/ajax/edit/abc', name: 'web_ajax_get_user_form')]
-
-    public function getUserForm(Request $request, ManagerRegistry $mr): JsonResponse
-    {
-        $response = new JsonResponse();
-        $id = $request->get('id');
-        $user = $mr->getRepository('App\Entity\User')->findOneBy(["id" => $id]);
-        $dept = $user->getDepartment();
-        $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('manage_user', ['id' => $id]),
-        ]);
-        $html = $this->renderView('admin/get_user_form.html.twig', [
-            'title' => "Edit User",
-            'form' => $form->createView(),
-            'id' => $id,
-            'dept' => $dept
-        ]);
-        $response->setData($html);
-        return $response;
-    }
-
-    #[Route('admin/manage/user/{id}', name: 'manage_user')]
-    public function manageUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher, $id = -1): Response
-    {
-
-        $user = $mr->getRepository("App\Entity\User")->findOneBy(["id" => $id]);
-        if (!$user) {
-
-            $user = new User();
-        }
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($request->getMethod() == "POST") {
-
-            if ($form->isSubmitted() and $form->isValid()) {
-                if ($request->get('password') != $request->get('conpassword')) {
-                    $request->getSession()->getFlashBag()->add("errormsg", "Passwords are not same ");
-                    return $this->redirect($this->generateUrl('manage_user'));
-                }
-                $em = $mr->getManager();
-                $user->setDepartment($request->get('Dept'));
-
-                $plainPassword = $request->get('password');
-
-                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-                $em->persist($user);
-                $em->flush();
-                return $this->redirect($this->generateUrl('app_admin_list_user'));
-            }
-        }
-        $dept = $user->getDepartment();
-        return $this->render('admin/user_manage.html.twig', [
-            'title' => "Edit user",
-            'user' => $user,
-            'form' => $form->createView(),
-            'id' => $id,
-
-
 
         ]);
     }

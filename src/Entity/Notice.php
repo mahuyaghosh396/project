@@ -26,6 +26,9 @@ class Notice
 
     #[ORM\Column(type: "string", columnDefinition: "ENUM('Active', 'Deleted')")]
     private $status;
+   
+    #[ORM\Column(type: "string", columnDefinition: "ENUM('General', 'Student', 'Faculty', 'Tender')")]
+    private $type;
 
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
@@ -41,6 +44,7 @@ class Notice
     public function __construct()
     {
         $this->status = 'Active';
+        $this->type = 'General';
     }
 
     public function getId(): ?int
@@ -141,5 +145,17 @@ class Notice
             $isNew = true;
         }
         return $isNew;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

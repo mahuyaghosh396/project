@@ -125,6 +125,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
+    public function getDisplayRoles(): string
+    {
+        return implode(', ', $this->getRoles());
+    }
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -244,6 +249,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->firstName ." ".$this->lastName;
     }
 
     public function getAddress(): ?string
