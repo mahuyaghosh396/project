@@ -143,13 +143,13 @@ class AdminController extends AbstractController
                 }
 
                 //set file name....with it's new file name....
-                $notice->setFile($newFilename);               
+                $notice->setFile($newFilename);
                 $em->persist($notice);
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add("successmsg", $message);
                 return $this->redirect($this->generateUrl('web_admin_list_notice'));
-            } elseif(!$upload) {
+            } elseif (!$upload) {
                 $em->persist($notice);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("successmsg", $message);
@@ -178,33 +178,6 @@ class AdminController extends AbstractController
 
         return $this->render('admin/current_notice.html.twig', [
             "notices" => $query->getResult()
-        ]);
-    }
-
-    #[Route('/contact', name: 'web_contact')]
-    public function contact(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $contact = new Contact();
-        $form = $this->createForm(ContactType::class, $contact);
-        $form->handleRequest($request);
-        if ($request->getMethod() == "POST") {
-
-            if ($form->isSubmitted() and $form->isValid()) {
-
-                $em = $doctrine->getManager();
-                $em->persist($contact);
-                $em->flush();
-                $request->getSession()->getFlashBag()->add("successmsg", "Your message has been received successfully");
-                return $this->redirect($this->generateUrl('web_contact'));
-            } else {
-                $request->getSession()->getFlashBag()->add("errormsg", "something went wrong!!");
-                return $this->redirect($this->generateUrl('web_contact'));
-            }
-        }
-
-        return $this->render('admin/contact.html.twig', [
-            'title' => "Contact",
-            'form' => $form->createView()
         ]);
     }
 
