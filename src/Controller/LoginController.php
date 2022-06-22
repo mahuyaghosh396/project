@@ -76,7 +76,6 @@ class LoginController extends AbstractController
                 $date = intval($request->get('DOB'));
                 $regis = new User();
                 $date = new DateTimeImmutable($request->get('DOB'));
-
                 $regis->setLastName($request->get('lastname'));
                 $regis->setFirstName($request->get('firstname'));
                 $regis->setEmail($request->get('email'));
