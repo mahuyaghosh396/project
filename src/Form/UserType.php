@@ -44,15 +44,15 @@ class UserType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Roll number']
             ])
-            ->add('department', ChoiceType::class, [
-                'choices' => [
-                    '' => '',
-                    'CST' => 'ARCH',
-                    'ETCE' => 'ETCE',
-                    'ARCH' => 'ARCH',
-                ],
-                'attr' => ['class' => 'form-control']
-            ])
+            // ->add('department', ChoiceType::class, [
+            //     'choices' => [
+            //         '' => '',
+            //         'CST' => 'ARCH',
+            //         'ETCE' => 'ETCE',
+            //         'ARCH' => 'ARCH',
+            //     ],
+            //     'attr' => ['class' => 'form-control']
+            // ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     '' => '',

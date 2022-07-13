@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
+use App\Entity\Department;
 use App\Entity\LibraryBook;
 use App\Entity\Notice;
 use App\Entity\User;
-use App\Form\ContactType;
 use App\Form\NoticeType;
 use App\Form\UserType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -30,6 +28,40 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/manage/department/{id}', name: 'admin_department')]
+    public function department(Request $request, ManagerRegistry $mr, $id = -1): Response
+    {
+
+        $dept = $mr->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
+       
+        if (!$dept) {
+            $dep = new Department();
+            $name = " ";
+            $code = " ";
+        } elseif($dept){
+            $name = $dept->getName();
+            $code = $dept->getCode();
+        }
+        
+        
+
+        if ($request->getMethod() == "POST") {
+            $em = $mr->getManager();
+            $dep->setName($request->get("dept"));
+            $dep->setCode($request->get("code"));
+
+            $em->persist($dep);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add("successmsg", "Department added");
+            return $this->redirect($this->generateUrl('admin_department'));
+        }
+        return $this->render('admin/department.html.twig', [
+            'title' => 'Add Department',
+            'name' => $name,
+            'code' => $code
+        ]);
+    }
+
     #[Route('admin/list/user', name: 'web_admin_list_user')]
     public function listUser(ManagerRegistry $mr): Response
     {
@@ -40,19 +72,21 @@ class AdminController extends AbstractController
         ]);
     }
 
+
     #[Route('admin/manage/user/{id}', name: 'web_admin_manage_user')]
     public function manageUser(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher, $id = -1): Response
     {
         $title = "Update User";
         $em = $mr->getManager();
         $user = $mr->getRepository(User::class)->findOneBy(["id" => $id]);
+        $dept = $mr->getRepository("App\Entity\Department")->findAll();
         if (!$user) {
             $user = new User();
             $title = "Add User";
         }
 
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $ab = $form->handleRequest($request);
         if ($request->getMethod() == "POST") {
 
             if ($form->isSubmitted() and $form->isValid()) {
@@ -63,6 +97,7 @@ class AdminController extends AbstractController
                     $user->setPassword($passwordHasher->hashPassword($user, $request->get('user')['cellphone']));
                     $message = "User Added!";
                 }
+                $user->setDepartment($request->get("dept"));
                 $em->persist($user);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("successmsg", $message);
@@ -73,6 +108,7 @@ class AdminController extends AbstractController
             'title' => $title,
             'user' => $user,
             'form' => $form->createView(),
+            'dept' => $dept,
         ]);
     }
 

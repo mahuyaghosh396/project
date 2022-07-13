@@ -36,7 +36,15 @@
             </div>
             <div class="row mt-3">
                 <div class="col-4">
-                    {{ form_row(form.department) }}
+
+                    <label for="department">Department</label>
+                    <select name="dept" class="form-control">
+                        <option value="">Select</option>
+                        {% for data in dept %}
+                        <option value="{{data.name}}">{{data.name}}</option>
+                        {% endfor %}
+                    </select>
+
                 </div>
                 <div class="col-4">
                     {{ form_row(form.registrationNumber) }}
@@ -45,6 +53,7 @@
                     {{ form_row(form.rollNumber) }}
                 </div>
             </div>
+
             <div class="row mt-3">
                 <div class="col-4">
                     {{ form_row(form.roles) }}
@@ -72,17 +81,17 @@
     </div>
     <div class="col-3">
         {% if user.id %}
-            <div class="shadow py-3 px-4 bg-white">
-                <form action="{{path('web_reset_password', {id: user.id})}}" method="post">
-                    <div class="form-group">
-                        <label for="password">Change Password</label>
-                        <input type="text" class="form-control" name="password" id="password" required>
-                    </div>
-                    <div class="form-group mt-3">
-                        <button type="submit" value="Change" class="btn btn-danger">Change</button>
-                    </div>
-                </form>
-            </div>
+        <div class="shadow py-3 px-4 bg-white">
+            <form action="{{path('web_reset_password', {id: user.id})}}" method="post">
+                <div class="form-group">
+                    <label for="password">Change Password</label>
+                    <input type="text" class="form-control" name="password" id="password" required>
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit" value="Change" class="btn btn-danger">Change</button>
+                </div>
+            </form>
+        </div>
         {% endif %}
     </div>
 </div>
@@ -92,9 +101,9 @@
 <script src="/plugins/datetimepicker-master/jquery.datetimepicker.full.js"></script>
 <script>
     $(function () {
-        $('.js-datepicker').datetimepicker({
-            format:'d-m-Y',
-            timepicker:false,
+        $('.js-datetimepicker').datetimepicker({
+            format: 'd-m-Y',
+            timepicker: false,
         });
     });
 </script>
