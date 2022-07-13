@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+{{parent()}}{{title}}
+{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@1,200;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/contact.css">
+{% endblock %}
+
+{% block body %}
+<form action=" " method="post">
+	<div class="title">
+		<h2>CONTACT</h2>
+	</div>
+	<div class="half">
+		<div class="item">
+			<label for="">Name</label>
+            <input type="text" name="name"  required>
+		</div>
+
+		<div class="item">
+			<label for="">Email</label>
+            <input type="email" name="email"  required>
+		</div>
+	</div>
+	<div class="full">
+		<label for="">Message</label>
+           <textarea name="msg" id="message"></textarea>
+	</div>
+	<div class="action">
+		<input type="submit" value="Send Message">
+		<input type="reset" value="Reset">
+	</div>
+	<div class="icons">
+		<a href="" class="fa fa-twitter"></a>
+		<a href="" class="fa fa-facebook"></a>
+		<a href="" class="fa fa-instagram"></a>
+		<a href="" class="fa fa-github"></a>
+	</div>
+</form>
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+{% endblock %}

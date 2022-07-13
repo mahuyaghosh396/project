@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+{{parent()}}
+{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<style>
+    .back {
+        padding-left: 6%;
+        padding-right: 5%;
+
+    }
+
+    .color {
+
+        background-color: #C0C0C0;
+    }
+</style>
+{% endblock %}
+{% block body %}
+
+<body>
+    <style>
+        .back {
+            padding-left: 6%;
+            padding-right: 5%;
+
+        }
+
+        .color {
+
+            background-color: #C0C0C0;
+        }
+    </style>
+</body>
+
+<body>
+    <h2 align="center">Details of
+        {{record.firstname}}</h2>
+    <div class="container-xl back">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row"></div>
+            </div>
+            <table class="table table-striped table-hover color" cellpadding="0" cellspacing="0" border="0"
+                class="display table table-bordered" id="hidden-table-info">
+                <tbody>
+
+                    <tr>
+                        <th>Name:</th>
+                        <td>{{record.firstname}}
+                            {{record.lastname}}</td>
+                            <th>Date Of Birth</th>
+                        <td>{{record.dob}}</td>
+                        {% if value==[['ROLE_STUDENT','ROLE_USER']] %}
+                        
+                        <th>Registration No:</th>
+                        <td>{{record.registrationNumber}}</td>
+                        {% endif %}
+                    </tr>
+
+                    <tr>
+                         {% if value==[['ROLE_STUDENT','ROLE_USER']] %}
+                         <th>Roll Number</th>
+                         <td>{{record.rollNumber}}</td>
+                         <th>Department</th>
+                         <td>{{record.department}}</td>
+                          {% endif %}
+                        <th>Email</th>
+                        <td>{{record.email}}</td>
+                        <th>Status</th>
+                        <td>
+                            <a onclick="return confirm('Are you sure?')"
+                                href="{{path('web_update_user',{id: record.id})}} ">
+                                {{record.status}}</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                    {% if value==[['ROLE_STUDENT','ROLE_USER']] %}
+                         <th>Address</th>
+                         <td>{{record.address}}</td>
+                         <th>Academic Year</th>
+                         <td>{{record.academicYear}}</td>
+                          {% endif %}
+                        <th>Contact Number</th>
+                        <td>{{record.cellphone}}</td>
+                        <th>Creation date</th>
+                        <td>{{record.created|date('y-m-d h:m:s')}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+{% endblock %}

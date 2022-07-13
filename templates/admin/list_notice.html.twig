@@ -1,0 +1,55 @@
+{% extends 'back_end_base.html.twig' %}
+
+{% block title %}{{parent()}}{{title}}{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block body %}
+<table id="list-notice" class="table">
+	<thead>
+		<tr>
+			<th>Notice Id</th>
+			<th>Notice Name</th>
+			<th>From</th>
+			<th>To</th>
+			<th>Status</th>
+			<th>File</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for record in notices %}
+		<tr>
+			<td>{{record.id}}</td>
+			<td>{{record.name}}</td>
+			<td>{{record.noticeFrom|date('d-m-Y @ h:i A')}}</td>
+			<td>{{record.noticeTo|date('d-m-Y @ h:i A')}}</td>			
+			<td>{{record.status}}</td>
+			<td>
+				<a href="{{path('web_download', {path:'notices' , file: record.file})}}">
+					<i class="fa fa-download" aria-hidden="true"></i>
+				</a>
+			</td>
+			<td>
+				<a href="{{path('web_admin_manage_notice', {id: record.id})}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			</td>
+		</tr>
+
+
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.table').DataTable();
+	});
+</script>
+{% endblock %}

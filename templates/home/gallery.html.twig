@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{parent()}}About-College
+{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block body %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="gallery" style="display:none;">
+            <img class="gallery-item" src="/images/pic (3).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (5).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (6).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (8).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (9).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (10).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (11).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (12).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (13).jpeg" alt="">
+            <img class="gallery-item" src="/images/pic (14).jpeg" alt="">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script src="/plugins/jquery-mau-gallery/mauGallery.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.gallery').mauGallery({
+            columns: 4,
+            showTags: false,
+            lightboxId: 'myAwesomeLightbox',
+        });
+
+    });
+</script>
+{% endblock %}

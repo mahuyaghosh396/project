@@ -1,0 +1,59 @@
+{% extends 'back_end_base.html.twig' %}
+
+{% block title %}{{parent()}}{{title}}{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="my-3">
+    <a href="{{path('web_add-book')}} ">
+        <button type="input" class="btn btn-outline-success">Add Book</button> </a>
+</div>
+<table id="list-library" class="table">
+    <thead>
+        <tr>
+            <th>Book Id</th>
+            <th>Book Name</th>
+            <th>Author Name</th>
+            <th>Publisher Name</th>
+            <th>Edition</th>
+            <th>No Of Available book</th>
+            <th>Action</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in books %}
+        <tr>
+            <td>{{record.id}}</td>
+            <td>{{record.title}}</td>
+            <td>{{record.author}}</td>
+            <td>{{record.publisher}}</td>
+            <td>{{record.edition}}</td>
+            <td>{{record.getAvailableBook}}</td>
+            <td>
+                <a href="{{path('web_edit-book',{id: record.id})}}">
+                    <button type="button" class="btn btn-outline-success">Update</button> </a>
+            </td>
+
+
+
+
+        </tr>
+
+
+
+        {% endfor %}
+    </tbody>
+</table>{% endblock %}{% block javascripts %}
+<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#list-library').DataTable();
+    });
+</script>{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Admission{% endblock %}
+
+{% block stylesheets %}
+   
+    <link rel="stylesheet" type="text/css" href="/css/Teacher_Style.css">
+
+{% endblock %}
+
+{% block bootstrap %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+{% block body %}
+    <body class="back-img">
+        <section>
+            <div class="container-fluid text-black pad-top">
+                <form action="process.php" method="post">
+    
+                    <div class="row">
+                        <div class="col-lg-4">
+    
+                        </div>
+                        <div class="col-lg-4 bg-light">
+                            <h1 class="text-center">LOGIN</h1>
+                            <table class="table">
+    
+                                <tr>
+                                    <td>Reg No.</td>
+                                </tr>
+                                <tr>
+                                    <td> <input type="text" name="_id" id="id" class="form-control" required></td>
+                                </tr>
+                                <tr>
+                                    <td>DOB</td>
+                                </tr>
+                                <tr>
+                                    <td> <input type="Date" name="_DOB" id="DOB" class="form-control" required></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="submit" name="sub" value="login" id="submit"></td>
+                                    
+    
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-4">
+                        </div>
+                    </div>
+                </form>
+        </section>
+    </body>
+    {% endblock %}

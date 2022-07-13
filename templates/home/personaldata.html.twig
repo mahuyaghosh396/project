@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Admission{% endblock %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" type="text/css" href="\css\style3.css">
+{% endblock %}
+
+{% block bootstrap %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% endblock %}
+{% block body %}
+
+<section class="h-100 h-custom gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <h3 class="fw-normal mb-5" style="color: #4835d4;"> Educational Details </h3>
+
+                  <div class="mb-4 pb-2">
+                    <select class="select">
+                      <option value="1">Last Examination passed</option>
+                      <option value="2">Secondary </option>
+                      <option value="3">Higher Secondary</option>
+                      <option value="4">Graduation</option>
+                    </select>
+                  </div>
+
+                  <div class="row">
+                    <div class=" mb-4 pb-2">
+
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev2" class="form-control form-control-lg" placeholder="" />
+                        <label class="form-label" for="form3Examplev2"> district</label>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6 mb-4 pb-2">
+
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev3" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplev3">state</label>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <select class="select">
+                      <option value="1">Position</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="4">Four</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline">
+                      <input type="text" id="form3Examplev4"name="adress" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplev4">Adress</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev5" name="zip_no" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplev5">Zip no</label>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                      <select class="select">
+                        <option value="1">Employees</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                        <option value="4">Four</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-6 ">
+                <div class="p-5">
+                  <h3 class="fw-normal mb-5">Contact Details</h3>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea2"name="district" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea2">District</label>
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea3"  class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea3">Additional Information</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea4" name="" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea4"> </label>
+                      </div>
+
+                    </div>
+                    <div class="col-md-7 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea5" name="state" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea5">state</label>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea6" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea6">Country</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea7" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea7">Code +</label>
+                      </div>
+
+                    </div>
+                    <div class="col-md-7 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea8" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea8">Phone Number</label>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea9" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea9">Your Email</label>
+                    </div>
+                  </div>
+
+                  <div class="form-check d-flex justify-content-start mb-4 pb-3">
+                    <input class="form-check-input me-3" type="checkbox" value="" id="form2Example3c" />
+                    <label class="form-check-label text-white" for="form2Example3">
+                      I do accept the <a href="#!" class="text-white"><u>Terms and Conditions</u></a> of your
+                      site.
+                    </label>
+                  </div>
+
+                  <div class="mt-4 pt-2">
+                    <a href="#" class="btn btn-primary">submit</a>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

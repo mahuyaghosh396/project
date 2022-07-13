@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{parent()}}Homepage
+{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css"
+	integrity="sha512-UBY4KATrDAEKgEEU+RAfY4yWrK0ah43NGwNr5o/xmncxsT+rv8jp7MI3a00I0Ep3NbAx05U5kw3DvyNCoz+Wcw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+{% block slider %}
+<div class="home-slider">
+	<ul id="slider">
+		<li>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Oahu_Landscape.jpg" alt="Pic">
+		</li>
+		<li>
+			<img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-after/Landscape-BW.jpg"
+				alt="Pic">
+		</li>
+		<li>
+			<img src="https://thumbs.dreamstime.com/b/sun-rays-mountain-landscape-5721010.jpg" alt="Pic">
+		</li>
+		<li>
+			<img src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"
+				alt="Pic">
+		</li>
+	</ul>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="row mt-5">
+	<div class="col-12 col-md-3">
+		<h3 class="text-info text-center">Facilities</h3>
+		<div class="section1-img"><img class="w-100" src="/images/lab_cse2.jpg"></div>
+		<div class="h5 mt-3">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s.
+			<a class="" href="#">Show More</a>
+		</div>
+	</div>
+	<div class="col-12 col-md-3">
+		<h3 class="text-info text-center">Facilities</h3>
+		<div class="section1-img"><img class="w-100" src="/images/small_hostel.jpg"></div>
+		<div class="h5 mt-3">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s.
+			<a class="" href="#">Show More</a>
+		</div>
+	</div>
+	<div class="col-12 col-md-3">
+		<h3 class="text-info text-center">Facilities</h3>
+		<div class="section1-img"><img class="w-100" src="/images/small_campus.jpg"></div>
+		<div class="h5 mt-3">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s.
+			<a class="" href="#">Show More</a>
+		</div>
+	</div>
+	<div class="col-12 col-md-3">
+		<h3 class="text-info text-center">Facilities</h3>
+		<div class="section1-img"><img class="w-100" src="/images/lab_cse2.jpg"></div>
+		<div class="h5 mt-3">
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s.
+			<a class="" href="#">Show More</a>
+		</div>
+	</div>
+</div>
+<div class="row mt-4">
+	<div class="col-12 col-md-4">
+		<div class="section2-hdng h4 mb-0 text-white text-center">
+			Student Notices
+		</div>
+		<ul class="list-group h5">
+			{% for notice in studentNotices %}
+			<li class="list-group-item">
+				<a href="{{path('web_download', {path:'notices' , file: notice.file})}}">
+					{{notice.name}}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-12 col-md-4">
+		<div class="section2-hdng h4 mb-0 text-white text-center">
+			Faculty Notices
+		</div>
+		<ul class="list-group h5">
+			{% for notice in facultyNotices %}
+			<li class="list-group-item">
+				<a href="{{path('web_download', {path:'notices' , file: notice.file})}}">
+					{{notice.name}}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-12 col-md-4">
+		<div class="section2-hdng h4 mb-0 text-white text-center">
+			Tender Notices
+		</div>
+		<ul class="list-group h5">
+			{% for notice in tenderNotices %}
+			<li class="list-group-item">
+				<a href="{{path('web_download', {path:'notices' , file: notice.file})}}">
+					{{notice.name}}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"
+	integrity="sha512-p55Bpm5gf7tvTsmkwyszUe4oVMwxJMoff7Jq3J/oHaBk+tNQvDKNz9/gLxn9vyCjgd6SAoqLnL13fnuZzCYAUA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	$(document).ready(function () {
+		$('#slider').bxSlider();
+	});
+</script>
+{% endblock %}
