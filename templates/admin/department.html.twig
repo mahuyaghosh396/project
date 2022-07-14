@@ -8,24 +8,23 @@
 {% block body %}
 <div class="row">
     <div class="col-4"></div>
-    <div class="col-4">
-        
+    <div class="col-5">
         <div class="px-5 py-4 shadow">
-            <form action=" " method="post">
-                <div class="form-outline mb-4">
-                    <label class="form-label">Department</label>
-                    <input type="text" name="dept"  class="form-control" value= {{name}}>
-
-                    <label class="form-label">Code</label>
-                    <input type="text" name="code"  class="form-control" value= {{code}}>
+            {{ form_start(form) }}
+            <div class="form-outline mb-5">
+                {{ form_row(form.name) }}
+                {{ form_row(form.code) }}
+            </div>
+            <div class="row mt-3">
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary">{{btn}}</button>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-            </form>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
         </div>
+
     </div>
+</div>
 </div>
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Department;
 use App\Entity\LibraryBook;
 use App\Entity\Notice;
 use App\Entity\User;
+use App\Form\DepartmentType;
 use App\Form\NoticeType;
 use App\Form\UserType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -28,39 +29,139 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/manage/department/{id}', name: 'admin_department')]
+    //..........................[[ Manage Department ]]...............................
+
+
+    #[Route('/admin/manage/department/{id}', name: 'admin_manage_department')]
     public function department(Request $request, ManagerRegistry $mr, $id = -1): Response
     {
 
         $dept = $mr->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
-       
+
+        $message = "Department updated";
+        $btn = "Update";
+
         if (!$dept) {
-            $dep = new Department();
-            $name = " ";
-            $code = " ";
-        } elseif($dept){
-            $name = $dept->getName();
-            $code = $dept->getCode();
+            $dept = new Department();
+            $message = "Department added";
+            $btn = "Add";
+        } else {
+            $dpt_name = $dept->getName();
+            $dpt_code = $dept->getCode();
         }
-        
-        
+        $form = $this->createForm(DepartmentType::class, $dept);
+        $form->handleRequest($request);
 
         if ($request->getMethod() == "POST") {
             $em = $mr->getManager();
-            $dep->setName($request->get("dept"));
-            $dep->setCode($request->get("code"));
 
-            $em->persist($dep);
+            if ($id == -1) {
+
+                $name = $dept->getName();
+                $query = $em->createQuery("SELECT u.name from App:Department u where u.name= :deptname");
+                $query->setParameter('deptname', $name);
+                $result = $query->getResult();
+
+                $code = $dept->getCode();
+                $query = $em->createQuery("SELECT u.code from App:Department u where u.name= :deptcode");
+                $query->setParameter('deptcode', $code);
+                $dcode = $query->getResult();
+
+                if ($dcode and $result) {
+
+                    $request->getSession()->getFlashBag()->add("errormsg", "The department name and code you entered
+                    both are already exist...Please use different name & code");
+                    return $this->redirect($this->generateUrl('admin_manage_department'));
+                }
+
+                if ($result) {
+
+                    $request->getSession()->getFlashBag()->add("errormsg", "The department name you entered
+                    is already exist...Please use another name");
+                    return $this->redirect($this->generateUrl('admin_manage_department'));
+                }
+
+                if ($dcode) {
+
+                    $request->getSession()->getFlashBag()->add("errormsg", "The department code you entered
+                    is already exist...Please use another code");
+                    return $this->redirect($this->generateUrl('admin_manage_department'));
+                }
+            } else {
+                $name = $dept->getName();
+                $query = $em->createQuery("SELECT u.name from App:Department u where u.name= :dptname and u.name!= :d");
+                $query->setParameter('dptname', $name);
+                $query->setParameter('d', $dpt_name);
+                $rs = $query->getResult();
+
+                $code = $dept->getCode();
+                $query = $em->createQuery("SELECT u.code from App:Department u where u.name= :dptcode and u.name!= :c");
+                $query->setParameter('dptcode', $code);
+                $query->setParameter('c', $dpt_code);
+                $dcode = $query->getResult();
+
+                if ($dcode and $rs) {
+                    $request->getSession()->getFlashBag()->add("errormsg", "The department name and code you entered
+                    both are already exist...Please use different name & code");
+                    return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
+                }
+
+
+                if ($rs) {
+                    $request->getSession()->getFlashBag()->add("errormsg", "The department name you entered
+                    is already exist...Please use another name");
+                    return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
+                }
+
+
+
+                if ($dcode) {
+                    $request->getSession()->getFlashBag()->add("errormsg", "The department code you entered
+                    is already exist...Please use another code");
+                    return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
+                }
+            }
+            $em->persist($dept);
             $em->flush();
-            $request->getSession()->getFlashBag()->add("successmsg", "Department added");
-            return $this->redirect($this->generateUrl('admin_department'));
+            $request->getSession()->getFlashBag()->add("successmsg", $message);
+            return $this->redirect($this->generateUrl('web_admin_list_department'));
         }
         return $this->render('admin/department.html.twig', [
-            'title' => 'Add Department',
-            'name' => $name,
-            'code' => $code
+            'title' => 'Manage Department',
+            'form' => $form->createView(),
+            'btn' => $btn
         ]);
     }
+
+    #[Route('admin/list/department', name: 'web_admin_list_department')]
+    public function listDept(ManagerRegistry $mr): Response
+    {
+        $dept = $mr->getRepository("App\Entity\Department")->findAll();
+        return $this->render('admin/list_department.html.twig', [
+            'title' => "List Department",
+            'dept' => $dept,
+        ]);
+    }
+    #[Route('admin/update/department/{id}', name: 'update_department')]
+    public function updateDepartment(ManagerRegistry $doctrine, $id): Response
+    {
+
+        $em = $doctrine->getManager();
+        $dept = $doctrine->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
+        if ($dept->getStatus() == "Active") {
+            $dept->setStatus("Deleted");
+            $em->persist($dept);
+            $em->flush();
+        } else {
+            $dept->setStatus("Active");
+            $em->persist($dept);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('web_admin_list_department'));
+    }
+
+    //..................................[[manage user]]..........................................
+
 
     #[Route('admin/list/user', name: 'web_admin_list_user')]
     public function listUser(ManagerRegistry $mr): Response
@@ -79,14 +180,24 @@ class AdminController extends AbstractController
         $title = "Update User";
         $em = $mr->getManager();
         $user = $mr->getRepository(User::class)->findOneBy(["id" => $id]);
-        $dept = $mr->getRepository("App\Entity\Department")->findAll();
+
+        $query = $em->createQuery("SELECT u from App:Department u where  u.status ='Active'");
+        $result = $query->getResult();
+
         if (!$user) {
             $user = new User();
             $title = "Add User";
+            $value = "Select";
+        } else {
+            $value = $user->getDepartment();
+            $name = $user->getDepartment();
+            $query = $em->createQuery("SELECT u from App:Department u where u.status ='Active' and u.name != :dname");
+            $query->setParameter('dname', $name);
+            $result = $query->getResult();
         }
 
         $form = $this->createForm(UserType::class, $user);
-        $ab = $form->handleRequest($request);
+        $form->handleRequest($request);
         if ($request->getMethod() == "POST") {
 
             if ($form->isSubmitted() and $form->isValid()) {
@@ -108,7 +219,8 @@ class AdminController extends AbstractController
             'title' => $title,
             'user' => $user,
             'form' => $form->createView(),
-            'dept' => $dept,
+            'dept' => $result,
+            'value' => $value,
         ]);
     }
 
