@@ -29,93 +29,105 @@
                 </a>
 
                 <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        <i class="align-middle" data-feather="home"></i> <span class="align-middle ms-1">Home</span>
-                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle ms-1">Home</span>
+                        </li>
 
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="{{path('admin_dashboard')}}">
-                            <span class="align-middle ms-3">Dashboard</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="{{path('admin_dashboard')}}">
+                                <span class="align-middle ms-3">Dashboard</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-header">
-                        <i class="align-middle" data-feather="users"></i> <span class="align-middle ms-1">Manage
-                            User</span>
-                    </li>
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle ms-1">Manage
+                                User</span>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_manage_user')}}">
-                            <span class="align-middle ms-3">Add User</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_manage_user')}}">
+                                <span class="align-middle ms-3">Add User</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_list_user')}}">
-                            <span class="align-middle ms-3">List User</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_list_user')}}">
+                                <span class="align-middle ms-3">List User</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-header">
-                        <i class="align-middle" data-feather="book"></i> <span class="align-middle ms-1">Manage
-                            Book</span>
-                    </li>
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle ms-1">Manage
+                                Book</span>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_add-book')}}">
-                            <span class="align-middle ms-3">Add Book</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_add-book')}}">
+                                <span class="align-middle ms-3">Add Book</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_list_book')}}">
-                            <span class="align-middle ms-3">List Books</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_list_book')}}">
+                                <span class="align-middle ms-3">List Books</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-header">
-                        <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Manage
-                            Notice</span>
-                    </li>
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Manage
+                                Notice</span>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_manage_notice')}}">
-                            <span class="align-middle ms-3">Add Notice</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_manage_notice')}}">
+                                <span class="align-middle ms-3">Add Notice</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_list_notice')}}">
-                            <span class="align-middle ms-3">List Notices</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_list_notice')}}">
+                                <span class="align-middle ms-3">List Notices</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-header">
-                        <i class="align-middle" data-feather="align-justify"></i> <span class="align-middle ms-1">Manage
-                            Department</span>
-                    </li>
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="align-justify"></i> <span class="align-middle ms-1">Manage
+                                Department</span>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_manage_department')}}">
-                            <span class="align-middle ms-3">Add Department</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_manage_department')}}">
+                                <span class="align-middle ms-3">Add Department</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_admin_list_department')}}">
-                            <span class="align-middle ms-3">List Department</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_admin_list_department')}}">
+                                <span class="align-middle ms-3">List Department</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-header">
-                        <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Contact</span>
-                    </li>
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Contact</span>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{path('web_list_contact')}}">
-                            <span class="align-middle ms-3">list Contact</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{path('web_list_contact')}}">
+                                <span class="align-middle ms-3">list Contact</span>
+                            </a>
+                        </li>
+                    {% elseif is_granted('ROLE_STUDENT') %}
+                        <li class="sidebar-header">
+                            <i class="align-middle" data-feather="home"></i> <span class="align-middle ms-1">Home</span>
+                        </li>
+
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="{{path('student_dashboard')}}">
+                                <span class="align-middle ms-3">Dashboard</span>
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
