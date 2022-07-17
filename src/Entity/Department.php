@@ -4,9 +4,20 @@ namespace App\Entity;
 
 use App\Repository\DepartmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DepartmentRepository::class)]
 #[ORM\Table("web_department")]
+#[UniqueEntity(
+    fields: 'code',
+    errorPath: 'code',
+    message: 'This department code is already exist..try another code'
+)]
+#[UniqueEntity(
+    fields: 'name',
+    errorPath: 'name',
+    message: 'This department name is already exist..try another name'
+)]
 class Department
 {
     #[ORM\Id]
@@ -14,17 +25,17 @@ class Department
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255, unique:true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255,unique:true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $code;
 
-    #[ORM\Column(type: 'string',columnDefinition: "ENUM('Active', 'Deleted')")]
+    #[ORM\Column(type: 'string', columnDefinition: "ENUM('Active', 'Deleted')")]
     private $status;
 
     public function __construct()
-    {  
+    {
         $this->status = 'Active';
     }
 
