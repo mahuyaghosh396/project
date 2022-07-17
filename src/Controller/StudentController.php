@@ -12,7 +12,7 @@ class StudentController extends AbstractController
     public function dashboard(): Response
     {
         return $this->render('student/dashboard.html.twig', [
-            'title' => 'StudentController',
+            'title' => 'Student Dashboard',
         ]);
     }
 }
