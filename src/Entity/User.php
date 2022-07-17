@@ -7,9 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+
+#[ORM\Entity(repositoryClass:UserRepository::class)]
 #[ORM\Table("web_user")]
+#[UniqueEntity(
+     fields:"email",
+     errorPath:"email",
+     message:"Email already used by another user." 
+)]
+ 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(type: 'string', length: 180, unique:true)]
     private $email;
 
     #[ORM\Column(type: 'json')]
