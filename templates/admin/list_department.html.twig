@@ -26,11 +26,11 @@
             <td>{{record.name}}</td>
             <td>{{record.code}}</td>
             <td>
-                <a onclick="return confirm('Are you sure?')" href="{{path('update_department',{id: record.id})}}">
+                <a onclick="return confirm('Are you sure?')" href="{{path('web_admin_toggle_department_status',{id: record.id})}}">
                     {{record.status}}</a>
             </td>
             <td>
-                <a href="{{path('admin_manage_department', {id: record.id})}}">
+                <a href="{{path('web_admin_manage_department', {id: record.id})}}">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
             </td>
