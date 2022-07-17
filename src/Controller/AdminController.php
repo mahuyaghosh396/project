@@ -21,6 +21,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
+    // ---------------------------[[dashboard]]-----------------------------------------------------
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
     public function dashboard(): Response
     {
@@ -29,136 +30,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    //..........................[[ Manage Department ]]...............................
 
-
-    #[Route('/admin/manage/department/{id}', name: 'admin_manage_department')]
-    public function department(Request $request, ManagerRegistry $mr, $id = -1): Response
-    {
-
-        $dept = $mr->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
-
-        $message = "Department updated";
-        $btn = "Update";
-
-        if (!$dept) {
-            $dept = new Department();
-            $message = "Department added";
-            $btn = "Add";
-        } else {
-            $dpt_name = $dept->getName();
-            $dpt_code = $dept->getCode();
-        }
-        $form = $this->createForm(DepartmentType::class, $dept);
-        $form->handleRequest($request);
-
-        if ($request->getMethod() == "POST") {
-            $em = $mr->getManager();
-
-            if ($id == -1) {
-
-                $name = $dept->getName();
-                $query = $em->createQuery("SELECT u.name from App:Department u where u.name= :deptname");
-                $query->setParameter('deptname', $name);
-                $result = $query->getResult();
-
-                $code = $dept->getCode();
-                $query = $em->createQuery("SELECT u.code from App:Department u where u.name= :deptcode");
-                $query->setParameter('deptcode', $code);
-                $dcode = $query->getResult();
-
-                if ($dcode and $result) {
-
-                    $request->getSession()->getFlashBag()->add("errormsg", "The department name and code you entered
-                    both are already exist...Please use different name & code");
-                    return $this->redirect($this->generateUrl('admin_manage_department'));
-                }
-
-                if ($result) {
-
-                    $request->getSession()->getFlashBag()->add("errormsg", "The department name you entered
-                    is already exist...Please use another name");
-                    return $this->redirect($this->generateUrl('admin_manage_department'));
-                }
-
-                if ($dcode) {
-
-                    $request->getSession()->getFlashBag()->add("errormsg", "The department code you entered
-                    is already exist...Please use another code");
-                    return $this->redirect($this->generateUrl('admin_manage_department'));
-                }
-            } else {
-                $name = $dept->getName();
-                $query = $em->createQuery("SELECT u.name from App:Department u where u.name= :dptname and u.name!= :d");
-                $query->setParameter('dptname', $name);
-                $query->setParameter('d', $dpt_name);
-                $rs = $query->getResult();
-
-                $code = $dept->getCode();
-                $query = $em->createQuery("SELECT u.code from App:Department u where u.name= :dptcode and u.name!= :c");
-                $query->setParameter('dptcode', $code);
-                $query->setParameter('c', $dpt_code);
-                $dcode = $query->getResult();
-
-                if ($dcode and $rs) {
-                    $request->getSession()->getFlashBag()->add("errormsg", "The department name and code you entered
-                    both are already exist...Please use different name & code");
-                    return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
-                }
-
-
-                if ($rs) {
-                    $request->getSession()->getFlashBag()->add("errormsg", "The department name you entered
-                    is already exist...Please use another name");
-                    return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
-                }
-
-
-
-                if ($dcode) {
-                    $request->getSession()->getFlashBag()->add("errormsg", "The department code you entered
-                    is already exist...Please use another code");
-                    return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
-                }
-            }
-            $em->persist($dept);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add("successmsg", $message);
-            return $this->redirect($this->generateUrl('web_admin_list_department'));
-        }
-        return $this->render('admin/department.html.twig', [
-            'title' => 'Manage Department',
-            'form' => $form->createView(),
-            'btn' => $btn
-        ]);
-    }
-
-    #[Route('admin/list/department', name: 'web_admin_list_department')]
-    public function listDept(ManagerRegistry $mr): Response
-    {
-        $dept = $mr->getRepository("App\Entity\Department")->findAll();
-        return $this->render('admin/list_department.html.twig', [
-            'title' => "List Department",
-            'dept' => $dept,
-        ]);
-    }
-    #[Route('admin/update/department/{id}', name: 'update_department')]
-    public function updateDepartment(ManagerRegistry $doctrine, $id): Response
-    {
-
-        $em = $doctrine->getManager();
-        $dept = $doctrine->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
-        if ($dept->getStatus() == "Active") {
-            $dept->setStatus("Deleted");
-            $em->persist($dept);
-            $em->flush();
-        } else {
-            $dept->setStatus("Active");
-            $em->persist($dept);
-            $em->flush();
-        }
-        return $this->redirect($this->generateUrl('web_admin_list_department'));
-    }
 
     //..................................[[manage user]]..........................................
 
@@ -180,7 +52,6 @@ class AdminController extends AbstractController
         $title = "Update User";
         $em = $mr->getManager();
         $user = $mr->getRepository(User::class)->findOneBy(["id" => $id]);
-
         $query = $em->createQuery("SELECT u from App:Department u where  u.status ='Active'");
         $result = $query->getResult();
 
@@ -245,6 +116,10 @@ class AdminController extends AbstractController
             "title" => 'List Notice'
         ]);
     }
+
+
+    // ------------------------[[manage notice]]--------------------------------
+
 
     #[Route('/admin/manage/notice/{id}', name: 'web_admin_manage_notice')]
     public function manageNotice(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, $id = -1): Response
@@ -329,6 +204,10 @@ class AdminController extends AbstractController
         ]);
     }
 
+
+    // -------------------[[Manage Book]]------------------------
+
+
     #[Route('/admin/add_book', name: 'web_add-book')]
     public function add_book(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -398,5 +277,138 @@ class AdminController extends AbstractController
             'No_of_book' => $no_of_book,
 
         ]);
+    }
+
+    //..........................[[ Manage Department ]]...............................
+
+
+    #[Route('/admin/manage/department/{id}', name: 'admin_manage_department')]
+    public function department(Request $request, ManagerRegistry $mr, $id = -1): Response
+    {
+
+        $dept = $mr->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
+        $message = "Department updated";
+        $btn = "Update";
+
+        if (!$dept) {
+            $dept = new Department();
+            $message = "Department added";
+            $btn = "Add";
+        }
+        // } else {
+        //     $dpt_name = $dept->getName();
+        //     $dpt_code = $dept->getCode();
+        // }
+        $form = $this->createForm(DepartmentType::class, $dept);
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == "POST") {
+            if ($form->isSubmitted() and $form->isValid()) {
+                $em = $mr->getManager();
+
+                // if ($id == -1) {
+
+                //     $name = $dept->getName();
+                //     $query = $em->createQuery("SELECT u.name from App:Department u where u.name= :deptname");
+                //     $query->setParameter('deptname', $name);
+                //     $result = $query->getResult();
+
+                //     $code = $dept->getCode();
+                //     $query = $em->createQuery("SELECT u.code from App:Department u where u.name= :deptcode");
+                //     $query->setParameter('deptcode', $code);
+                //     $dcode = $query->getResult();
+
+                //     if ($dcode and $result) {
+
+                //         $request->getSession()->getFlashBag()->add("errormsg", "The department name and code you entered
+                //         both are already exist...Please use different name & code");
+                //         return $this->redirect($this->generateUrl('admin_manage_department'));
+                //     }
+
+                //     if ($result) {
+
+                //         $request->getSession()->getFlashBag()->add("errormsg", "The department name you entered
+                //         is already exist...Please use another name");
+                //         return $this->redirect($this->generateUrl('admin_manage_department'));
+                //     }
+
+                //     if ($dcode) {
+
+                //         $request->getSession()->getFlashBag()->add("errormsg", "The department code you entered
+                //         is already exist...Please use another code");
+                //         return $this->redirect($this->generateUrl('admin_manage_department'));
+                //     }
+                // } else {
+                //     $name = $dept->getName();
+                //     $query = $em->createQuery("SELECT u.name from App:Department u where u.name= :dptname and u.name!= :d");
+                //     $query->setParameter('dptname', $name);
+                //     $query->setParameter('d', $dpt_name);
+                //     $rs = $query->getResult();
+
+                //     $code = $dept->getCode();
+                //     $query = $em->createQuery("SELECT u.code from App:Department u where u.name= :dptcode and u.name!= :c");
+                //     $query->setParameter('dptcode', $code);
+                //     $query->setParameter('c', $dpt_code);
+                //     $dcode = $query->getResult();
+
+                //     if ($dcode and $rs) {
+                //         $request->getSession()->getFlashBag()->add("errormsg", "The department name and code you entered
+                //         both are already exist...Please use different name & code");
+                //         return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
+                //     }
+
+
+                //     if ($rs) {
+                //         $request->getSession()->getFlashBag()->add("errormsg", "The department name you entered
+                //         is already exist...Please use another name");
+                //         return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
+                //     }
+
+
+
+                //     if ($dcode) {
+                //         $request->getSession()->getFlashBag()->add("errormsg", "The department code you entered
+                //         is already exist...Please use another code");
+                //         return $this->redirect($this->generateUrl('admin_manage_department', ["id" => $id]));
+                //     }
+                // }
+                $em->persist($dept);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add("successmsg", $message);
+                return $this->redirect($this->generateUrl('web_admin_list_department'));
+            }
+        }
+        return $this->render('admin/department.html.twig', [
+            'title' => 'Manage Department',
+            'form' => $form->createView(),
+            'btn' => $btn
+        ]);
+    }
+
+    #[Route('admin/list/department', name: 'web_admin_list_department')]
+    public function listDept(ManagerRegistry $mr): Response
+    {
+        $dept = $mr->getRepository("App\Entity\Department")->findAll();
+        return $this->render('admin/list_department.html.twig', [
+            'title' => "List Department",
+            'dept' => $dept,
+        ]);
+    }
+    #[Route('admin/update/department/{id}', name: 'update_department')]
+    public function updateDepartment(ManagerRegistry $doctrine, $id): Response
+    {
+
+        $em = $doctrine->getManager();
+        $dept = $doctrine->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
+        if ($dept->getStatus() == "Active") {
+            $dept->setStatus("Deleted");
+            $em->persist($dept);
+            $em->flush();
+        } else {
+            $dept->setStatus("Active");
+            $em->persist($dept);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('web_admin_list_department'));
     }
 }
