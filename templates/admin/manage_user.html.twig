@@ -39,7 +39,7 @@
 
                     <label for="department">Department</label>
                     <select name="dept" class="form-control">
-                        <option value="">Select</option>
+                        <option value="">{{value}}</option>
                         {% for data in dept %}
                         <option value="{{data.name}}">{{data.name}}</option>
                         {% endfor %}

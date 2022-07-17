@@ -1,0 +1,48 @@
+{% extends 'back_end_base.html.twig' %}
+
+{% block title %}
+{{parent()}}{{title}}
+{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block body %}
+<table id="list-department" class="table">
+    <thead>
+        <tr>
+            <th>Department Id</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in dept %}
+        <tr>
+            <td>{{record.id}}</td>
+            <td>{{record.name}}</td>
+            <td>{{record.code}}</td>
+            <td>
+                <a onclick="return confirm('Are you sure?')" href="{{path('web_admin_toggle_department_status',{id: record.id})}}">
+                    {{record.status}}</a>
+            </td>
+            <td>
+                <a href="{{path('web_admin_manage_department', {id: record.id})}}">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>{% endblock %}{% block javascripts %}
+{{parent()}}
+<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.table').DataTable();
+    });
+</script>{% endblock %}

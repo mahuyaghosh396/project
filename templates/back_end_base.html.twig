@@ -11,8 +11,11 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="/css/backend/app.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% endblock %}
 </head>
@@ -37,7 +40,8 @@
                     </li>
 
                     <li class="sidebar-header">
-                        <i class="align-middle" data-feather="users"></i> <span class="align-middle ms-1">Manage User</span>
+                        <i class="align-middle" data-feather="users"></i> <span class="align-middle ms-1">Manage
+                            User</span>
                     </li>
 
                     <li class="sidebar-item">
@@ -53,7 +57,8 @@
                     </li>
 
                     <li class="sidebar-header">
-                        <i class="align-middle" data-feather="book"></i> <span class="align-middle ms-1">Manage Book</span>
+                        <i class="align-middle" data-feather="book"></i> <span class="align-middle ms-1">Manage
+                            Book</span>
                     </li>
 
                     <li class="sidebar-item">
@@ -69,7 +74,8 @@
                     </li>
 
                     <li class="sidebar-header">
-                        <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Manage Notice</span>
+                        <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Manage
+                            Notice</span>
                     </li>
 
                     <li class="sidebar-item">
@@ -84,7 +90,24 @@
                         </a>
                     </li>
 
-                     <li class="sidebar-header">
+                    <li class="sidebar-header">
+                        <i class="align-middle" data-feather="align-justify"></i> <span class="align-middle ms-1">Manage
+                            Department</span>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{path('web_admin_manage_department')}}">
+                            <span class="align-middle ms-3">Add Department</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{path('web_admin_list_department')}}">
+                            <span class="align-middle ms-3">List Department</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">
                         <i class="align-middle" data-feather="bell"></i> <span class="align-middle ms-1">Contact</span>
                     </li>
 
@@ -292,7 +315,8 @@
                                 <div class="col-12">
                                     {% for flashMessage in app.session.flashbag.get('successmsg') %}
                                     <div class="alert alert-success alert-dismissible" role="alert">
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
                                         <div class="alert-message">
                                             <strong>Success!</strong> {{ flashMessage }}
                                         </div>
