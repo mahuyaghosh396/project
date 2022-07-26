@@ -47,9 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $rollNumber;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private $department;
-
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $profilePic;
 
     #[ORM\Column(type: 'string', length: 50)]
@@ -80,6 +77,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $lastLogin;
+
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: 'users')]
+    private $department;
 
     public function __construct()
     {
@@ -211,18 +211,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDepartment(): ?string
-    {
-        return $this->department;
-    }
-
-    public function setDepartment(?string $department): self
-    {
-        $this->department = $department;
-
-        return $this;
-    }
-
     public function getProfilePic(): ?string
     {
         return $this->profilePic;
@@ -344,6 +332,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): self
+    {
+        $this->department = $department;
 
         return $this;
     }

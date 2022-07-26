@@ -22,7 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class AdminController extends AbstractController
 {
     // ---------------------------[[dashboard]]-----------------------------------------------------
-    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    #[Route('/admin/dashboard', name: 'web_admin_dashboard')]
     public function dashboard(): Response
     {
         return $this->render('admin/dashboard.html.twig', [
@@ -32,16 +32,18 @@ class AdminController extends AbstractController
 
 
 
-    //..................................[[manage user]]..........................................
+    //....................................[[manage user]]......................................
 
 
     #[Route('admin/list/user', name: 'web_admin_list_user')]
     public function listUser(ManagerRegistry $doctrine): Response
     {
-        $users = $doctrine->getRepository("App\Entity\User")->findAll();
+        $em = $doctrine->getManager();
+        $user = $doctrine->getRepository("App\Entity\User")->findAll();
+
         return $this->render('admin/list_user.html.twig', [
             'title' => "List User",
-            'users' => $users,
+            'users' => $user,
         ]);
     }
 
@@ -54,6 +56,7 @@ class AdminController extends AbstractController
         $user = $doctrine->getRepository(User::class)->findOneBy(["id" => $id]);
         $query = $em->createQuery("SELECT u from App:Department u where  u.status ='Active'");
         $result = $query->getResult();
+
 
         if (!$user) {
             $user = new User();
@@ -79,11 +82,13 @@ class AdminController extends AbstractController
                     $user->setPassword($passwordHasher->hashPassword($user, $request->get('user')['cellphone']));
                     $message = "User Added!";
                 }
-                $user->setDepartment($request->get("dept"));
+
+                $dept = $doctrine->getRepository("App\Entity\Department")->findOneBy(["name" => $request->get("dept")]);
+                $user->setDepartment($dept);
                 $em->persist($user);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("successmsg", $message);
-                return $this->redirect($this->generateUrl('web_admin_list_user'));
+                return $this->redirect($this->generateUrl('web_admin_manage_user'));
             }
         }
         return $this->render('admin/manage_user.html.twig', [
@@ -283,7 +288,7 @@ class AdminController extends AbstractController
 
 
     #[Route('/admin/manage/department/{id}', name: 'web_admin_manage_department')]
-    public function department(Request $request, ManagerRegistry $doctrine, $id = -1): Response
+    public function manageDepartment(Request $request, ManagerRegistry $doctrine, $id = -1): Response
     {
 
         $dept = $doctrine->getRepository("App\Entity\Department")->findOneBy(["id" => $id]);
@@ -335,13 +340,13 @@ class AdminController extends AbstractController
             $dept->setStatus("Deleted");
             $em->persist($dept);
             $em->flush();
-            $request->getSession()->getFlashBag()->add("successmsg", "Department Deleted!");            
+            $request->getSession()->getFlashBag()->add("successmsg", "Department Deleted!");
         } else {
             $dept->setStatus("Active");
             $em->persist($dept);
             $em->flush();
             $request->getSession()->getFlashBag()->add("successmsg", "Department Activated!");
-        }        
+        }
         return $this->redirect($this->generateUrl('web_admin_list_department'));
     }
 }

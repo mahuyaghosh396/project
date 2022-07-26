@@ -1,55 +1,61 @@
 {% extends 'back_end_base.html.twig' %}
 
-{% block title %}{{parent()}}{{title}}{% endblock %}
+{% block title %}
+	{{parent()}}{{title}}
+{% endblock %}
 {% block stylesheets %}
-{{parent()}}
-<link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+	{{parent()}}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block body %}
 
-<div class="row">
-    <div class="col-12">
-        <table id="list-user" class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Department</th>
-                    <th>DOB</th>
-                    <th>Cellphone</th>
-                    <th>Roles</th>
-                    <th>Created</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in users %}
-                <tr>
-                    <td>{{record.getFullName}}</td>
-                    <td>{{record.email}}</td>
-                    <td>{{record.department}}</td>
-                    <td>{{record.dob|date('d-m-Y')}}</td>
-                    <td>{{record.cellphone}}</td>
-                    <td>{{record.getDisplayRoles}}</td>
-                    <td>{{record.created|date('d-m-y h:i:s')}}</td>
-                    <td>
-                        <a href="{{path('web_admin_manage_user', {id: record.id})}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+	<div class="row">
+		<div class="col-12">
+			<table id="list-user" class="table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Department</th>
+						<th>DOB</th>
+						<th>Cellphone</th>
+						<th>Roles</th>
+						<th>Created</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for record in users %}
+
+						<tr>
+							<td>{{record.getFullName}}</td>
+							<td>{{record.email}}</td>
+							<td>{{record.department ? record.department.name : "N/A" }}</td>
+							<td>{{record.dob|date('d-m-Y')}}</td>
+							<td>{{record.cellphone}}</td>
+							<td>{{record.getDisplayRoles}}</td>
+							<td>{{record.created|date('d-m-y h:i:s')}}</td>
+							<td>
+								<a href="{{path('web_admin_manage_user', {id: record.id})}}">
+									<i class="fa fa-pencil" aria-hidden="true"></i>
+								</a>
+							</td>
+						</tr>
+
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
-{{parent()}}
-<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#list-user').DataTable();
-    });
-</script>
+	{{parent()}}
+	<script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('#list-user').DataTable();
+});
+	</script>
 {% endblock %}
