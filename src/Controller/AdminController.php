@@ -42,6 +42,7 @@ class AdminController extends AbstractController
         $title = "Update User";
         $em = $doctrine->getManager();
         $user = $doctrine->getRepository(User::class)->findOneBy(["id" => $id]);
+
         $query = $em->createQuery("SELECT u from App:Department u where  u.status ='Active'");
         $result = $query->getResult();
 
@@ -51,11 +52,20 @@ class AdminController extends AbstractController
             $title = "Add User";
             $value = "Select";
         } else {
-            $value = $user->getDepartment();
-            $name = $user->getDepartment();
-            $query = $em->createQuery("SELECT u from App:Department u where u.status ='Active' and u.name != :dname");
-            $query->setParameter('dname', $name);
-            $result = $query->getResult();
+
+            if ($user->getDepartment() == null) {
+                $value = "Select";
+                $query = $em->createQuery("SELECT u from App:Department u where  u.status ='Active'");
+                $result = $query->getResult();
+            } else {
+                $dpt_id = $user->getDepartment()->getId();
+                $dpt = $doctrine->getRepository("App\Entity\Department")->findOneBy(["id" => $dpt_id, "status" => 'Active']);
+                $value = $dpt->getName();
+                $name = $user->getDepartment()->getId();
+                $query = $em->createQuery("SELECT u from App:Department u where u.status ='Active' and u.id != :dId");
+                $query->setParameter('dId', $name);
+                $result = $query->getResult();
+            }
         }
 
         $form = $this->createForm(UserType::class, $user);
@@ -76,7 +86,7 @@ class AdminController extends AbstractController
                 $em->persist($user);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("successmsg", $message);
-                return $this->redirect($this->generateUrl('web_admin_manage_user'));
+                return $this->redirect($this->generateUrl('web_admin_list_user'));
             }
         }
         return $this->render('admin/manage_user.html.twig', [
