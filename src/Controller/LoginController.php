@@ -62,17 +62,11 @@ class LoginController extends AbstractController
 
             if (count($result) == 1) {
 
-               $request->getSession()->getFlashBag()->add("errormsg","Email already Exist!!!");
-             
-            }
+                $request->getSession()->getFlashBag()->add("errormsg", "Email already Exist!!!");
+            } elseif ($request->get('password') !== $request->get('confirmpassword')) {
 
-            elseif ($request->get('password') !== $request->get('confirmpassword')) {
-
-                $request->getSession()->getFlashBag()->add("errormsg","Password and Confirm password should match!!!");
-               
-            }
-            
-            else {
+                $request->getSession()->getFlashBag()->add("errormsg", "Password and Confirm password should match!!!");
+            } else {
                 $date = intval($request->get('DOB'));
                 $regis = new User();
                 $date = new DateTimeImmutable($request->get('DOB'));
@@ -95,16 +89,11 @@ class LoginController extends AbstractController
                 $em->persist($regis);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add("successmsg","Congratulation you have register successfully !!!");
-                
+                $request->getSession()->getFlashBag()->add("successmsg", "Congratulation you have register successfully !!!");
             }
 
             return $this->redirect($this->generateUrl('web_signup'));
         }
         return $this->render('/login/signup.html.twig', []);
     }
-
-   
-
-
 }

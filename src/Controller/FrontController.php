@@ -24,7 +24,7 @@ class FrontController extends AbstractController
         if ($this->isGranted('ROLE_ADMIN')) {
             $url = 'web_admin_dashboard';
         } elseif ($this->isGranted('ROLE_STUDENT')) {
-            $url = 'student_dashboard';
+            $url = 'web_student_dashboard';
         } elseif ($this->isGranted('ROLE_LECTURER')) {
             $url = 'lecturer_dashboard';
         } else {

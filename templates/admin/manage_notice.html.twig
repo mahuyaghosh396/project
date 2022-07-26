@@ -1,59 +1,59 @@
 {% extends 'back_end_base.html.twig' %}
 
-{% block title %}{{parent()}}{{title}}{% endblock %}
+{% block title %}
+	{{parent()}}{{title}}
+{% endblock %}
 
 {% block stylesheets %}
-{{parent()}}
-<link rel="stylesheet" href="/plugins/datetimepicker-master/jquery.datetimepicker.min.css">
+	{{parent()}}
+	<link rel="stylesheet" href="/plugins/datetimepicker-master/jquery.datetimepicker.min.css">
 {% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-12">
-        <div class="shadow py-3 px-4 bg-white">
-            {{ form_start(form) }}
-            <div class="row">
-                <div class="col-4">
-                    {{ form_row(form.name) }}
-                </div>
-                <div class="col-4">
-                    {{ form_row(form.noticeFrom) }}
-                </div>
-                <div class="col-4">
-                    {{ form_row(form.noticeTo) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    {{ form_row(form.file) }}
-                    {{notice.file|split('_')|last}}
-                </div>
-                <div class="col-4">
-                    {{ form_row(form.status) }}
-                </div>
-                <div class="col-4">
-                    {{ form_row(form.type) }}
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-3">
-                    <button type="submit" class="btn btn-primary">{{title}}</button>
-                </div>
-            </div>
-            {{ form_rest(form) }}
-            {{ form_end(form) }}
-        </div>
-    </div>
-</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="shadow py-3 px-4 bg-white">
+				{{ form_start(form) }}
+				<div class="row">
+					<div class="col-4">
+						{{ form_row(form.name) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.noticeFrom) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.noticeTo) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						{{ form_row(form.file) }}
+						{{notice.file|split('_')|last}}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.status) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.type) }}
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-3">
+						<button type="submit" class="btn btn-primary">{{title}}</button>
+					</div>
+				</div>
+				{{ form_rest(form) }}
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
 {% endblock %}
 {% block javascripts %}
-{{parent()}}
-<script src="/plugins/datetimepicker-master/jquery.datetimepicker.full.js"></script>
-<script>
-    $(function () {
-        $('.js-datepicker').datetimepicker({
-            format:'d-m-Y h:m A'
-        });
-    });
-</script>
+	{{parent()}}
+	<script src="/plugins/datetimepicker-master/jquery.datetimepicker.full.js"></script>
+	<script>
+		$(function () {
+$('.js-datepicker').datetimepicker({format: 'd-m-Y h:m A'});
+});
+	</script>
 {% endblock %}

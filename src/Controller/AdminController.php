@@ -22,30 +22,18 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class AdminController extends AbstractController
 {
     // ---------------------------[[dashboard]]-----------------------------------------------------
+
+
     #[Route('/admin/dashboard', name: 'web_admin_dashboard')]
     public function dashboard(): Response
     {
-        return $this->render('admin/dashboard.html.twig', [
+        return $this->render('admin/admin_dashboard.html.twig', [
             'title' => 'Admin Dashboard',
         ]);
     }
 
 
-
     //....................................[[manage user]]......................................
-
-
-    #[Route('admin/list/user', name: 'web_admin_list_user')]
-    public function listUser(ManagerRegistry $doctrine): Response
-    {
-        $em = $doctrine->getManager();
-        $user = $doctrine->getRepository("App\Entity\User")->findAll();
-
-        return $this->render('admin/list_user.html.twig', [
-            'title' => "List User",
-            'users' => $user,
-        ]);
-    }
 
 
     #[Route('admin/manage/user/{id}', name: 'web_admin_manage_user')]
@@ -100,6 +88,18 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('admin/list/user', name: 'web_admin_list_user')]
+    public function listUser(ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $user = $doctrine->getRepository("App\Entity\User")->findAll();
+
+        return $this->render('admin/list_user.html.twig', [
+            'title' => "List User",
+            'users' => $user,
+        ]);
+    }
+
     #[Route('admin/reset/password/{id}', name: 'web_reset_password')]
     public function resetPassword(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHasher, $id): Response
     {
@@ -110,16 +110,6 @@ class AdminController extends AbstractController
         $em->flush();
         $request->getSession()->getFlashBag()->add("successmsg", "Password Changed!");
         return $this->redirect($this->generateUrl('web_admin_manage_user', ['id' => $id]));
-    }
-
-    #[Route('/admin/list/notice', name: 'web_admin_list_notice')]
-    public function listNotice(ManagerRegistry $doctrine): Response
-    {
-        $notices = $doctrine->getRepository(Notice::class)->findAll();
-        return $this->render('admin/list_notice.html.twig', [
-            "notices" => $notices,
-            "title" => 'List Notice'
-        ]);
     }
 
 
@@ -195,17 +185,13 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/current/notice', name: 'web_current_notice')]
-    public function currentNotice(ManagerRegistry $doctrine): Response
+    #[Route('/admin/list/notice', name: 'web_admin_list_notice')]
+    public function listNotice(ManagerRegistry $doctrine): Response
     {
-
-        $em = $doctrine->getManager();
-        $yesterday = new \DateTime("yesterday");
-        $query = $em->createQuery("SELECT u from App:Notice u where u.noticeFrom > :yesterday");
-        $query->setParameter('yesterday', $yesterday);
-
-        return $this->render('admin/current_notice.html.twig', [
-            "notices" => $query->getResult()
+        $notices = $doctrine->getRepository(Notice::class)->findAll();
+        return $this->render('admin/list_notice.html.twig', [
+            "notices" => $notices,
+            "title" => 'List Notice'
         ]);
     }
 
@@ -213,7 +199,7 @@ class AdminController extends AbstractController
     // -------------------[[Manage Book]]------------------------
 
 
-    #[Route('/admin/add_book', name: 'web_add-book')]
+    #[Route('/admin/add_book', name: 'web_admin_add_book')]
     public function add_book(Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
@@ -236,17 +222,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/list/book', name: 'web_admin_list_book')]
-    public function listbook(ManagerRegistry $doctrine): Response
-    {
-        $books = $doctrine->getRepository(LibraryBook::class)->findAll();
-        return $this->render('admin/list_book.html.twig', [
-            "books" => $books,
-            'title' => 'List Book'
-        ]);
-    }
-
-    #[Route('/admin/edit/book/{id}', name: 'web_edit-book')]
+    #[Route('/admin/edit/book/{id}', name: 'web_admin_edit_book')]
     public function edit_book(Request $request, ManagerRegistry $doctrine, $id): Response
     {
 
@@ -272,7 +248,7 @@ class AdminController extends AbstractController
         }
 
 
-        return $this->render('admin/update_book.html.twig', [
+        return $this->render('admin/edit_book.html.twig', [
 
             'title' => "Edit Book",
             'Title' => $title,
@@ -283,6 +259,18 @@ class AdminController extends AbstractController
 
         ]);
     }
+
+    #[Route('/admin/list/book', name: 'web_admin_list_book')]
+    public function listbook(ManagerRegistry $doctrine): Response
+    {
+        $books = $doctrine->getRepository(LibraryBook::class)->findAll();
+        return $this->render('admin/list_book.html.twig', [
+            "books" => $books,
+            'title' => 'List Book'
+        ]);
+    }
+
+
 
     //..........................[[ Manage Department ]]...............................
 
@@ -313,7 +301,7 @@ class AdminController extends AbstractController
                 return $this->redirect($this->generateUrl('web_admin_list_department'));
             }
         }
-        return $this->render('admin/department.html.twig', [
+        return $this->render('admin/manage_department.html.twig', [
             'title' => 'Manage Department',
             'form' => $form->createView(),
             'btn' => $btn
@@ -321,7 +309,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('admin/list/department', name: 'web_admin_list_department')]
-    public function listDept(ManagerRegistry $doctrine): Response
+    public function listDepartment(ManagerRegistry $doctrine): Response
     {
         $dept = $doctrine->getRepository("App\Entity\Department")->findAll();
         return $this->render('admin/list_department.html.twig', [

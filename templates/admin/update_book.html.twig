@@ -1,63 +1,67 @@
 {% extends 'back_end_base.html.twig' %}
 
-{% block title %}{{parent()}}{{title}}{% endblock %}
+{% block title %}
+	{{parent()}}{{title}}
+{% endblock %}
 {% block stylesheets %}
-{{parent()}}
+	{{parent()}}
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <div class="px-5 py-4 shadow">
-                <form action=" " method="post">
-                    
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="email">Book Title</label>
-                        <input type="text" name="title"  class="form-control" value="{{Title}}" />
-                      
-                    </div>
-        
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="password">Author Name</label>
-                        <input type="text"  class="form-control" name="author" value="{{Author}}" />
-                       
-                    </div>
-        
+	<div class="row">
+		<div class="col-6">
+			<div class="shadow p-4 bg-white">
+				<form action=" " method="post">
 
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="password">Publisher</label>
-                      <input type="text"  class="form-control" name="publisher" value="{{Publisher}}" />
-                      
-                  </div>
-      
+					<div class="row">
+						<div class="col-10">
+							<label class="form-label">Book Title</label>
+							<input type="text" name="title" class="form-control" required="required" value="{{Title}}"/>
 
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="password">Edition</label>
-                    <input type="text" class="form-control" name="edition" value="{{Edition}}" />
-                    
-                </div>
-    
+						</div>
+					</div>
 
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="password">No Of Books Available</label>
-                  <input type="text" class="form-control" name="no_of_book"value="{{No_of_book}}"  />
-                 
-              </div>
-  
-        
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
-                    
-                    
-                    <!-- Register buttons -->
-                   
-                        
-                </form>
-            </div>
-        </div>
-        <div class="col-4"></div>
-    </div>
+					<div class="row my-3">
+						<div class="col-10">
+							<label class="form-label">Author Name</label>
+							<input type="text" class="form-control" required="required" name="author" value="{{Author}}"/>
+
+						</div>
+					</div>
+
+					<div class="row my-3">
+						<div class="col-10">
+							<label class="form-label">Publisher</label>
+							<input type="text" class="form-control" required="required" name="publisher" value="{{Publisher}}"/>
+
+						</div>
+					</div>
+
+					<div class="row my-3">
+						<div class="col-10">
+							<label class="form-label">Edition</label>
+							<input type="text" class="form-control" required="required" name="edition" value="{{Edition}}"/>
+
+						</div>
+					</div>
+
+					<div class="row my-3">
+						<div class="col-10">
+							<label class="form-label">No Of Books Available</label>
+							<input type="text" class="form-control" required="required" name="no_of_book" value="{{No_of_book}}"/>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+							<button type="submit" class="btn btn-primary btn-block mb-">Add</button>
+						</div>
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}

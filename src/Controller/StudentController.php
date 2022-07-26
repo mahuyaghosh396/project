@@ -8,7 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StudentController extends AbstractController
 {
-    #[Route('/student/dashboard', name: 'student_dashboard')]
+
+      // ---------------------------[[dashboard]]-----------------------------------------------------
+
+
+    #[Route('/student/dashboard', name: 'web_student_dashboard')]
     public function dashboard(): Response
     {
         return $this->render('student/dashboard.html.twig', [

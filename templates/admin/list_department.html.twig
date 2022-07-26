@@ -26,7 +26,8 @@
             <td>{{record.name}}</td>
             <td>{{record.code}}</td>
             <td>
-                <a onclick="return confirm('Are you sure?')" href="{{path('web_admin_toggle_department_status',{id: record.id})}}">
+                <a onclick="return confirm('Are you sure?')"
+                    href="{{path('web_admin_toggle_department_status',{id: record.id})}}">
                     {{record.status}}</a>
             </td>
             <td>
