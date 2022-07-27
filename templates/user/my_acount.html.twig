@@ -1,0 +1,109 @@
+{% extends 'back_end_base.html.twig' %}
+
+{% block title %}
+	{{parent()}}{{title}}
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="/plugins/datetimepicker-master/jquery.datetimepicker.min.css">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-9">
+			<div class="shadow py-3 px-4 bg-white">
+				{{ form_start(form) }}
+
+				<div class="row">
+					<div class="col-4">
+						{{ form_row(form.firstName) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.lastName) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.email) }}
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-4">
+						{{ form_row(form.cellphone) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.academicYear) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.dob) }}
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-4">
+
+						<label for="department">Department</label>
+						<select name="dept" class="form-control">
+							<option value="">{{value}}</option>
+							{% for data in dept %}
+								<option value="{{data.name}}">{{data.name}}</option>
+							{% endfor %}
+						</select>
+
+					</div>
+					<div class="col-4">
+						{{ form_row(form.registrationNumber) }}
+					</div>
+					<div class="col-4">
+						{{ form_row(form.rollNumber) }}
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-6">
+						{{ form_row(form.address) }}
+					</div>
+					<div class="col-6">
+						{{ form_row(form.profilePic) }}
+						{{user.profilePic|split('_')|last}}
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-3">
+						<button type="submit" class="btn btn-primary">Update</button>
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+		<div class="col-3">
+			{% if user.id %}
+				<div class="shadow py-3 px-4 bg-white">
+					<form action="{{path('web_user_reset_password')}}" method="post">
+						<div class="form-group">
+							<label for="c_password">current Password</label>
+							<input type="password" class="form-control" name="current_password" id="c_password" required>
+						</div>
+						<div class="form-group">
+							<label for="n_password">New Password</label>
+							<input type="password" class="form-control" name="new_password" id="n_password" required>
+						</div>
+						<div class="form-group">
+							<label for="cnf_password">Confirm Password</label>
+							<input type="password" class="form-control" name="con_password" id="cnf_password" required>
+						</div>
+						<div class="form-group mt-3">
+							<button type="submit" value="Change" class="btn btn-danger">Change</button>
+						</div>
+					</form>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+	<script src="/plugins/datetimepicker-master/jquery.datetimepicker.full.js"></script>
+	<script>
+		$(function () {
+$('.js-datepicker').datetimepicker({format: 'd-m-Y', timepicker: false});
+});
+	</script>
+{% endblock %}

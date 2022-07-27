@@ -282,18 +282,18 @@
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
-                                <img src="/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
+                                <img src="/profile/{{app.user.profilepic}}" class="avatar img-fluid rounded me-1"
                                     alt="{{app.user.getFullName}}" /> <span
                                     class="text-dark">{{app.user.getFullName}}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="align-middle me-1"
+                                <a class="dropdown-item" href="{{path('web_my_account')}}"><i class="align-middle me-1"
                                         data-feather="user"></i> Profile</a>
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                         data-feather="pie-chart"></i> Analytics</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{path('web_admin_dashboard')}}"><i class="align-middle me-1"
-                                        data-feather="settings"></i> Settings & Privacy</a>
+                                <a class="dropdown-item" href="{{path('web_admin_dashboard')}}"><i
+                                        class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
                                 <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                         data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>

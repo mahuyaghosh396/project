@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $registrationNumber;
-
+    
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $rollNumber;
 

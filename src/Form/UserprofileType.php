@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class UserprofileType extends AbstractType
 {
     private $academicYear;
 
@@ -29,10 +29,22 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', TextType::class, [
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Enter your email']
+                'attr' => ['class' => 'form-control', 'readonly' => true]
             ])
             ->add('cellphone', TextType::class, [
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Phone number']
+            ])
+            ->add('profilePic', FileType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Upload Pic',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '3m',
+                        'mimeTypesMessage' => 'Please upload an image with size below 3 mb ',
+                    ])
+                ]
             ])
             ->add('academicYear', ChoiceType::class, [
                 'choices' => array_combine($this->academicYear, $this->academicYear),
@@ -46,24 +58,8 @@ class UserType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Roll number']
             ])
-            // ->add('department', ChoiceType::class, [
-            //     'choices' => [
-            //         '' => '',
-            //         'CST' => 'ARCH',
-            //         'ETCE' => 'ETCE',
-            //         'ARCH' => 'ARCH',
-            //     ],
-            //     'attr' => ['class' => 'form-control']
-            // ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    '' => '',
-                    'Student' => 'ROLE_STUDENT',
-                    'Lecturer' => 'ROLE_LECTURER',
-                    'Admin' => 'ROLE_ADMIN',
-                ],
-                'attr' => ['class' => 'form-control']
-            ])
+
+
             ->add('firstName', TextType::class, [
                 'attr' => ['class' => 'form-control', 'placeholder' => 'First name ']
             ])
@@ -82,35 +78,7 @@ class UserType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'js-datepicker form-control'],
                 'format' => 'dd-MM-yyyy'
-            ])
-
-            ->add('enable', ChoiceType::class, [
-                'choices' => [
-                    'Yes' => 1,
-                    'No' => 0,
-                ],
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'Active' => 'Active',
-                    'Deleted' => 'Deleted',
-                ],
-                'attr' => ['class' => 'form-control']
             ]);
-
-        // Data transformer
-        $builder->get('roles')
-            ->addModelTransformer(new CallbackTransformer(
-                function ($rolesArray) {
-                    // transform the array to a string
-                    return count($rolesArray) ? $rolesArray[0] : null;
-                },
-                function ($rolesString) {
-                    // transform the string back to an array
-                    return [$rolesString];
-                }
-            ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

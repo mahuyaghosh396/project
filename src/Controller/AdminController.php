@@ -42,7 +42,6 @@ class AdminController extends AbstractController
         $title = "Update User";
         $em = $doctrine->getManager();
         $user = $doctrine->getRepository(User::class)->findOneBy(["id" => $id]);
-
         $query = $em->createQuery("SELECT u from App:Department u where  u.status ='Active'");
         $result = $query->getResult();
 
